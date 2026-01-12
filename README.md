@@ -1,6 +1,8 @@
 # NeuroHydra - Multimodal Biomedical AI Presentation System
 # NeuroHydra - 多模态生物医学 AI 演示系统
 
+A Generalizable DINOv3–Mamba Framework for Multimodal Biomedical AI
+
 [English](#english) | [中文](#中文)
 
 ---
