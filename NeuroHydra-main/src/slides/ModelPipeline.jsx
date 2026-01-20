@@ -221,10 +221,10 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   );
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
       
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         
         /* 关键修复：利用 mask-image 修复 Safari/Chrome 在 transform 时 overflow-hidden 圆角失效的问题 */
         .fix-safari-radius {
@@ -254,24 +254,6 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           animation: shimmer-subtle 3s linear infinite;
         }
 
-        @keyframes float-slow {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -20px) rotate(3deg); }
-        }
-        
-        @keyframes float-slower {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-25px, 25px) rotate(-3deg); }
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 25s ease-in-out infinite;
-        }
-        
-        .animate-float-slower {
-          animation: float-slower 30s ease-in-out infinite;
-        }
-        
         @keyframes gradient-xy {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -323,45 +305,10 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
         }
       `}</style>
 
-      {/* Background Gradient Blurs - Natural Colors */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Top-left gradient - 柔和天蓝 */}
-        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-20 animate-float-slow" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(96, 165, 250, 0.35) 0%, rgba(96, 165, 250, 0.28) 15%, rgba(147, 197, 253, 0.22) 30%, rgba(96, 165, 250, 0.14) 45%, rgba(96, 165, 250, 0.06) 60%, rgba(96, 165, 250, 0.02) 75%, transparent 90%)',
-               filter: 'blur(120px)',
-               willChange: 'transform',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-        
-        {/* Bottom-right gradient - 柔和翠绿 */}
-        <div className="absolute -bottom-40 -right-40 w-[800px] h-[800px] rounded-full opacity-18 animate-float-slower" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(52, 211, 153, 0.32) 0%, rgba(52, 211, 153, 0.26) 15%, rgba(110, 231, 183, 0.2) 30%, rgba(52, 211, 153, 0.12) 45%, rgba(52, 211, 153, 0.05) 60%, rgba(52, 211, 153, 0.02) 75%, transparent 90%)',
-               filter: 'blur(130px)',
-               willChange: 'transform',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-        
-        {/* Center accent - 淡紫色 */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-15" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(165, 180, 252, 0.3) 0%, rgba(165, 180, 252, 0.24) 15%, rgba(199, 210, 254, 0.18) 30%, rgba(165, 180, 252, 0.11) 45%, rgba(165, 180, 252, 0.04) 60%, rgba(165, 180, 252, 0.01) 75%, transparent 90%)',
-               filter: 'blur(125px)',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-      </div>
-
       {/* Main Canvas */}
       <div 
         ref={scrollContainerRef}
-        className="flex-1 overflow-x-auto overflow-y-hidden scroll-smooth flex items-center relative z-10"
+        className="flex-1 overflow-x-auto overflow-y-hidden bg-white scroll-smooth flex items-center"
         style={{ scrollBehavior: 'auto' }}
       >
         {/* 调整：添加 px-[50vw] 确保首尾元素可以居中 */}
@@ -501,54 +448,42 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           {/* --- MIDDLE PIPELINE --- */}
           <div className="flex items-center gap-8">
             
-            {/* AS-VSF Container with Dashed Border */}
-            <div className="relative p-8 rounded-3xl border-2 border-dashed border-indigo-300/60 bg-gradient-to-br from-indigo-50/30 via-purple-50/20 to-pink-50/30 backdrop-blur-sm transition-all duration-700">
-              
-              {/* AS-VSF Label */}
-              <div className="absolute -top-4 left-6 px-4 py-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-sm font-black tracking-wider uppercase rounded-full shadow-lg border-2 border-white">
-                AS-VSF
-              </div>
-              
-              <div className="flex items-center gap-8">
-                {/* Fusion Block */}
-                <div 
-                  ref={el => stageRefs.current[2] = el}
-                  className={`w-44 h-40 p-6 ${getCardStyle(2, 'purple')}`}
-                >
-                   <div className="flex justify-center mb-3">
-                      <IconBox active={isCardActive(2)} themeColor="purple">
-                         <Layers size={24} strokeWidth={2} />
-                      </IconBox>
-                   </div>
-                   <span className="text-sm font-bold tracking-tight uppercase text-center block mb-3">{t.fusion}</span>
-                   <div className="flex justify-center -space-x-2">
-                     {[1,2,3].map(i => (
-                        <div key={i} className={`w-8 h-8 rounded-full border-[3px] shadow-sm overflow-hidden transition-transform duration-700 ${isCardActive(2) ? 'border-white/20 scale-110' : 'border-white scale-100 grayscale bg-white'}`} style={{transitionDelay: isCardActive(2) ? `${i*100}ms` : '0ms'}}>
-                            <div className={`w-full h-full ${i===1?'bg-blue-400':i===2?'bg-green-400':'bg-purple-400'}`}></div>
-                        </div>
-                     ))}
-                   </div>
-                </div>
+            {/* Fusion Block */}
+            <div 
+              ref={el => stageRefs.current[2] = el}
+              className={`w-44 h-40 p-6 ${getCardStyle(2, 'purple')}`}
+            >
+               <div className="flex justify-center mb-3">
+                  <IconBox active={isCardActive(2)} themeColor="purple">
+                     <Layers size={24} strokeWidth={2} />
+                  </IconBox>
+               </div>
+               <span className="text-sm font-bold tracking-tight uppercase text-center block mb-3">{t.fusion}</span>
+               <div className="flex justify-center -space-x-2">
+                 {[1,2,3].map(i => (
+                    <div key={i} className={`w-8 h-8 rounded-full border-[3px] shadow-sm overflow-hidden transition-transform duration-700 ${isCardActive(2) ? 'border-white/20 scale-110' : 'border-white scale-100 grayscale bg-white'}`} style={{transitionDelay: isCardActive(2) ? `${i*100}ms` : '0ms'}}>
+                        <div className={`w-full h-full ${i===1?'bg-blue-400':i===2?'bg-green-400':'bg-purple-400'}`}></div>
+                    </div>
+                 ))}
+               </div>
+            </div>
 
-                <HConnector active={activeStage >= 3} width="w-12" />
+            <HConnector active={activeStage >= 3} width="w-12" />
 
-                {/* Merging Block */}
-                <div 
-                  ref={el => stageRefs.current[3] = el}
-                  className={`w-44 h-40 p-6 ${getCardStyle(3, 'amber')}`}
-                >
-                   <div className="flex justify-center mb-3">
-                      <IconBox active={isCardActive(3)} themeColor="amber">
-                         <Minimize2 size={24} strokeWidth={2} />
-                      </IconBox>
-                   </div>
-                   <span className="text-sm font-bold tracking-tight uppercase text-center block mb-3">{t.merging}</span>
-                   <div className="flex justify-center">
-                      <span className={`text-[10px] font-bold px-4 py-2 rounded-full tracking-wide transition-colors duration-700 ${isCardActive(3) ? 'bg-white/20 text-white' : 'bg-white border border-slate-200 text-orange-600'}`}>{t.coAxial}</span>
-                   </div>
-                </div>
-              </div>
-              
+            {/* Merging Block */}
+            <div 
+              ref={el => stageRefs.current[3] = el}
+              className={`w-44 h-40 p-6 ${getCardStyle(3, 'amber')}`}
+            >
+               <div className="flex justify-center mb-3">
+                  <IconBox active={isCardActive(3)} themeColor="amber">
+                     <Minimize2 size={24} strokeWidth={2} />
+                  </IconBox>
+               </div>
+               <span className="text-sm font-bold tracking-tight uppercase text-center block mb-3">{t.merging}</span>
+               <div className="flex justify-center">
+                  <span className={`text-[10px] font-bold px-4 py-2 rounded-full tracking-wide transition-colors duration-700 ${isCardActive(3) ? 'bg-white/20 text-white' : 'bg-white border border-slate-200 text-orange-600'}`}>{t.coAxial}</span>
+               </div>
             </div>
 
             <HConnector active={activeStage >= 4} width="w-12" />

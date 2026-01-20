@@ -67,24 +67,6 @@ const ExampleSlide = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         
-        @keyframes float-slow {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -20px) rotate(3deg); }
-        }
-        
-        @keyframes float-slower {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-25px, 25px) rotate(-3deg); }
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 25s ease-in-out infinite;
-        }
-        
-        .animate-float-slower {
-          animation: float-slower 30s ease-in-out infinite;
-        }
-        
         @keyframes float-gentle {
           0%, 100% { transform: translate(0, 0); }
           50% { transform: translate(20px, -20px); }
@@ -131,39 +113,12 @@ const ExampleSlide = () => {
         }
       `}</style>
 
-      {/* Background Gradient Blurs - Natural Colors */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Top-left gradient - 柔和靛蓝 */}
-        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-18 animate-float-slow" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(129, 140, 248, 0.32) 0%, rgba(129, 140, 248, 0.26) 15%, rgba(165, 180, 252, 0.2) 30%, rgba(129, 140, 248, 0.12) 45%, rgba(129, 140, 248, 0.05) 60%, rgba(129, 140, 248, 0.02) 75%, transparent 90%)',
-               filter: 'blur(120px)',
-               willChange: 'transform',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-        
-        {/* Bottom-right gradient - 柔和玫瑰 */}
-        <div className="absolute -bottom-40 -right-40 w-[800px] h-[800px] rounded-full opacity-16 animate-float-slower" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(244, 114, 182, 0.3) 0%, rgba(244, 114, 182, 0.24) 15%, rgba(251, 182, 206, 0.18) 30%, rgba(244, 114, 182, 0.11) 45%, rgba(244, 114, 182, 0.04) 60%, rgba(244, 114, 182, 0.01) 75%, transparent 90%)',
-               filter: 'blur(130px)',
-               willChange: 'transform',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-        
-        {/* Center accent - 淡蓝色 */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-14" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(147, 197, 253, 0.26) 0%, rgba(147, 197, 253, 0.2) 15%, rgba(191, 219, 254, 0.15) 30%, rgba(147, 197, 253, 0.09) 45%, rgba(147, 197, 253, 0.03) 60%, rgba(147, 197, 253, 0.01) 75%, transparent 90%)',
-               filter: 'blur(125px)',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
+      {/* 背景渐变模糊 */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full blur-3xl animate-float-gentle" 
+             style={{ background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)' }}></div>
+        <div className="absolute bottom-1/3 left-1/3 w-[500px] h-[500px] rounded-full blur-3xl" 
+             style={{ background: 'radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%)' }}></div>
       </div>
 
       {/* 主内容 */}

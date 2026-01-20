@@ -26,27 +26,27 @@ const TitleSlide = () => {
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         
         @keyframes float-slow {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(30px, -30px); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(20px, -20px) rotate(3deg); }
         }
         
         @keyframes float-slower {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(-40px, 40px); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(-25px, 25px) rotate(-3deg); }
+        }
+        
+        .animate-float-slow {
+          animation: float-slow 25s ease-in-out infinite;
+        }
+        
+        .animate-float-slower {
+          animation: float-slower 30s ease-in-out infinite;
         }
         
         @keyframes gradient-shift {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 20s ease-in-out infinite;
-        }
-        
-        .animate-float-slower {
-          animation: float-slower 25s ease-in-out infinite;
         }
         
         .animate-gradient-shift {
@@ -80,19 +80,65 @@ const TitleSlide = () => {
         }
       `}</style>
 
-      {/* 背景渐变模糊 */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* 左上角渐变 */}
-        <div className="absolute -top-48 -left-48 w-[900px] h-[900px] rounded-full blur-3xl animate-float-slow" 
-             style={{ background: 'radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(236, 72, 153, 0.25) 40%, transparent 70%)' }}></div>
+      {/* Background Gradient Blurs - Rich Colors */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Top-left gradient - 紫色 */}
+        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-25 animate-float-slow" 
+             style={{ 
+               background: 'radial-gradient(circle, rgba(167, 139, 250, 0.45) 0%, rgba(167, 139, 250, 0.36) 15%, rgba(196, 181, 253, 0.28) 30%, rgba(167, 139, 250, 0.18) 45%, rgba(167, 139, 250, 0.08) 60%, rgba(167, 139, 250, 0.03) 75%, transparent 90%)',
+               filter: 'blur(120px)',
+               willChange: 'transform',
+               transform: 'translateZ(0)',
+               backfaceVisibility: 'hidden',
+               WebkitFontSmoothing: 'antialiased',
+               animationDelay: '0s'
+             }}></div>
         
-        {/* 右下角渐变 */}
-        <div className="absolute -bottom-48 -right-48 w-[1000px] h-[1000px] rounded-full blur-3xl animate-float-slower" 
-             style={{ background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(99, 102, 241, 0.25) 40%, transparent 70%)' }}></div>
+        {/* Top-right gradient - 粉色 */}
+        <div className="absolute -top-20 -right-20 w-[600px] h-[600px] rounded-full opacity-22 animate-float-slower" 
+             style={{ 
+               background: 'radial-gradient(circle, rgba(244, 114, 182, 0.4) 0%, rgba(244, 114, 182, 0.32) 15%, rgba(251, 182, 206, 0.24) 30%, rgba(244, 114, 182, 0.15) 45%, rgba(244, 114, 182, 0.07) 60%, rgba(244, 114, 182, 0.02) 75%, transparent 90%)',
+               filter: 'blur(115px)',
+               willChange: 'transform',
+               transform: 'translateZ(0)',
+               backfaceVisibility: 'hidden',
+               WebkitFontSmoothing: 'antialiased',
+               animationDelay: '3s'
+             }}></div>
         
-        {/* 中间点缀 */}
-        <div className="absolute top-1/3 right-1/3 w-[700px] h-[700px] rounded-full blur-3xl" 
-             style={{ background: 'radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, rgba(20, 184, 166, 0.15) 50%, transparent 70%)' }}></div>
+        {/* Bottom-left gradient - 青色 */}
+        <div className="absolute -bottom-30 -left-30 w-[650px] h-[650px] rounded-full opacity-24 animate-float-slow" 
+             style={{ 
+               background: 'radial-gradient(circle, rgba(103, 232, 249, 0.42) 0%, rgba(103, 232, 249, 0.34) 15%, rgba(165, 243, 252, 0.26) 30%, rgba(103, 232, 249, 0.16) 45%, rgba(103, 232, 249, 0.07) 60%, rgba(103, 232, 249, 0.02) 75%, transparent 90%)',
+               filter: 'blur(125px)',
+               willChange: 'transform',
+               transform: 'translateZ(0)',
+               backfaceVisibility: 'hidden',
+               WebkitFontSmoothing: 'antialiased',
+               animationDelay: '6s'
+             }}></div>
+        
+        {/* Bottom-right gradient - 蓝色 */}
+        <div className="absolute -bottom-40 -right-40 w-[800px] h-[800px] rounded-full opacity-23 animate-float-slower" 
+             style={{ 
+               background: 'radial-gradient(circle, rgba(96, 165, 250, 0.4) 0%, rgba(96, 165, 250, 0.32) 15%, rgba(147, 197, 253, 0.25) 30%, rgba(96, 165, 250, 0.15) 45%, rgba(96, 165, 250, 0.06) 60%, rgba(96, 165, 250, 0.02) 75%, transparent 90%)',
+               filter: 'blur(130px)',
+               willChange: 'transform',
+               transform: 'translateZ(0)',
+               backfaceVisibility: 'hidden',
+               WebkitFontSmoothing: 'antialiased',
+               animationDelay: '9s'
+             }}></div>
+        
+        {/* Center accent - 玫瑰金 */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full opacity-18" 
+             style={{ 
+               background: 'radial-gradient(circle, rgba(251, 146, 60, 0.35) 0%, rgba(251, 146, 60, 0.28) 15%, rgba(253, 186, 116, 0.21) 30%, rgba(251, 146, 60, 0.13) 45%, rgba(251, 146, 60, 0.05) 60%, rgba(251, 146, 60, 0.02) 75%, transparent 90%)',
+               filter: 'blur(110px)',
+               transform: 'translateZ(0)',
+               backfaceVisibility: 'hidden',
+               WebkitFontSmoothing: 'antialiased'
+             }}></div>
       </div>
 
       {/* 主内容 */}

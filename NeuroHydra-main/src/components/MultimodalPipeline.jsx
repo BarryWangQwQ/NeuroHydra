@@ -408,10 +408,10 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const isMambaActive = isStageActive(2) || isAnimationComplete;
 
   return (
-    <div className="h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-screen bg-slate-50 text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
       
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         
         .fix-safari-radius {
           -webkit-mask-image: -webkit-radial-gradient(white, black);
@@ -437,24 +437,6 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           animation: shimmer-subtle 2s linear infinite;
         }
 
-        @keyframes float-slow {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -20px) rotate(3deg); }
-        }
-        
-        @keyframes float-slower {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-25px, 25px) rotate(-3deg); }
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 25s ease-in-out infinite;
-        }
-        
-        .animate-float-slower {
-          animation: float-slower 30s ease-in-out infinite;
-        }
-        
         @keyframes gradient-xy {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -474,45 +456,10 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
         }
       `}</style>
 
-      {/* Background Gradient Blurs - Natural Colors */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Top-left gradient - 柔和紫罗兰 */}
-        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-22 animate-float-slow" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(167, 139, 250, 0.35) 0%, rgba(167, 139, 250, 0.28) 15%, rgba(196, 181, 253, 0.22) 30%, rgba(167, 139, 250, 0.14) 45%, rgba(167, 139, 250, 0.06) 60%, rgba(167, 139, 250, 0.02) 75%, transparent 90%)',
-               filter: 'blur(120px)',
-               willChange: 'transform',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-        
-        {/* Bottom-right gradient - 柔和粉红 */}
-        <div className="absolute -bottom-40 -right-40 w-[800px] h-[800px] rounded-full opacity-18 animate-float-slower" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(251, 113, 133, 0.32) 0%, rgba(251, 113, 133, 0.26) 15%, rgba(252, 165, 165, 0.2) 30%, rgba(251, 113, 133, 0.12) 45%, rgba(251, 113, 133, 0.05) 60%, rgba(251, 113, 133, 0.02) 75%, transparent 90%)',
-               filter: 'blur(130px)',
-               willChange: 'transform',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-        
-        {/* Center accent - 淡蓝色 */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-16" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(147, 197, 253, 0.3) 0%, rgba(147, 197, 253, 0.24) 15%, rgba(191, 219, 254, 0.18) 30%, rgba(147, 197, 253, 0.11) 45%, rgba(147, 197, 253, 0.04) 60%, rgba(147, 197, 253, 0.01) 75%, transparent 90%)',
-               filter: 'blur(125px)',
-               transform: 'translateZ(0)',
-               backfaceVisibility: 'hidden',
-               WebkitFontSmoothing: 'antialiased'
-             }}></div>
-      </div>
-
       {/* Main Canvas */}
       <div 
         ref={scrollContainerRef}
-        className="flex-1 overflow-x-auto overflow-y-hidden scroll-smooth flex items-center relative z-10"
+        className="flex-1 overflow-x-auto overflow-y-hidden bg-slate-50/50 scroll-smooth flex items-center"
         style={{ scrollBehavior: 'auto' }}
       >
         <div className="flex items-center min-w-max px-[50vw] py-8 space-x-0">
