@@ -20,7 +20,7 @@ const ComponentsSlide = () => {
           description: 'State Space Model · 序列建模，可学习记忆'
         }
       ],
-      narration: 'NeuroHydra 有三个主要部分：DINOv3 读取图像，AS-VSF 融合不同类型的数据，Mamba 处理长序列。'
+      narration: 'NeuroHydra 由三个部分组成：DINOv3 负责看图，AS-VSF 负责融合信息，Mamba 负责记忆和推理。'
     },
     en: {
       items: [
@@ -37,7 +37,7 @@ const ComponentsSlide = () => {
           description: 'State Space Model · Sequential Modeling, Learnable Memory'
         }
       ],
-      narration: 'NeuroHydra has three main parts: DINOv3 reads images, AS-VSF combines different data types, and Mamba handles long sequences.'
+      narration: 'NeuroHydra has three parts: DINOv3 reads images, AS-VSF combines information, and Mamba handles memory and reasoning.'
     }
   };
 

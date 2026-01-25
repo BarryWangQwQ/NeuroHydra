@@ -30,3 +30,6 @@ yarn-error.log*
 
 # Cache
 .npm-cache/
+
+# Backup folders
+NeuroHydra-main-2/

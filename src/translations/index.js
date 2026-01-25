@@ -43,12 +43,12 @@ export const translations = {
       multiLabelProbabilities: '多标签概率',
       // 阶段描述（旁白）
       stageDescriptions: {
-        input: '现在看详细架构。输入有两种数据：MRI 图像和临床信息表。',
-        encoder: 'MRI 编码器用 DINOv3 读取图像。表格编码器处理临床数据。',
-        fusion: '融合层把图像特征和临床特征结合在一起。小数据不会被大数据淹没。',
-        merging: '合并层压缩重复信息，让计算更快。',
-        decoder: 'Mamba 解码器有记忆功能，能理解长序列，而且计算很快。',
-        heads: '最后输出三个结果：病灶位置、病理类型、手术预测。',
+        input: '接下来看详细结构。输入是两种数据：MRI 图像和病人信息。',
+        encoder: 'DINOv3 读取 MRI 图像，表格编码器处理病人信息。',
+        fusion: '这一层把两种数据混合起来，病人信息不会被忽略。',
+        merging: '这一层去掉多余信息，让模型跑得更快。',
+        decoder: 'Mamba 解码器有记忆功能，能理解长序列，计算也很快。',
+        heads: '最后输出三个结果：病灶位置、病因类型、手术预测。',
       },
     },
     // MultimodalPipeline 翻译
@@ -101,10 +101,10 @@ export const translations = {
       privacyPreserving: '隐私保护',
       // 阶段描述（旁白）
       stageDescriptions: {
-        input: '总结一下：今天展示的是一个具体实现，但框架本身是通用的。',
-        encoder: '彩色的模块是我们已经测试过的。灰色的是还没测试但可以扩展的，比如病理图像、基因数据、心电图等。',
-        processing: 'NeuroHydra 的设计原则是一样的：基础模型提取特征，AS-VSF 融合，Mamba 建模序列。',
-        heads: '我们的长期目标：建立通用的医疗 AI，能跨模态、跨时间推理，就像医生一样思考。谢谢！',
+        input: '现在来看看模型能处理哪些数据。',
+        encoder: '左边是各种医学数据类型。彩色的是我们已测试的，灰色的是将来可以扩展的。',
+        processing: 'NeuroHydra 在中间，把所有数据融合起来。它的设计对任何医学数据都适用。',
+        heads: '右边是模型能完成的任务：分割、分类、预测等。一个模型，多种任务。这就是我们的目标：通用的医疗 AI 框架。谢谢！',
       },
     },
     // SimulationSlide 翻译
@@ -127,7 +127,7 @@ export const translations = {
       patch: '块',
       fusion: '融合',
       // 旁白描述
-      description: '现在看速度对比。AS-VSF 压缩数据，让所有模型都变快。Mamba 加 AS-VSF 是最快的组合。',
+      description: '刚才说到压缩计算量，现在看看实际效果。这是一个模拟实时 3D MRI 数据输入的速度对比。AS-VSF 压缩数据后，所有模型都变快了。Mamba 加 AS-VSF 是最快的组合。',
     },
     // QuadrantSlide 翻译
     quadrantSlide: {
@@ -151,22 +151,23 @@ export const translations = {
       mamba2: 'Mamba2',
       mamba2Asvs: 'Mamba2 + AS-VSF',
       // 旁白描述
-      description: '这张图显示速度和准确度。右上角最好：又快又准。Mamba + AS-VSF 在右上角，是最好的选择。',
+      description: '这张图比较速度和准确度。右上角是目标：又快又准。我们的方法就在那里。',
     },
     // ASVSFSlide 翻译
     asvsfSlide: {
-      description: '结构感知视觉切片融合 — 学习 MRI 切片间可变形关系，重建 3D 体积上下文',
+      description: '结构感知视觉切片融合 — 融合 MRI 图像特征与临床表格数据',
       mriEncoder: 'MRI 编码器',
+      tabularEncoder: '表格编码器',
       triAxialSlicing: '三轴切片',
       positionEncoding: '位置编码',
       fusion: '特征融合',
       learnRelationships: '学习切片关系',
       tokenWarning: '⚠️ Token 体积大',
-      merging: '同轴合并',
+      merging: '合并',
       coAxialMerge: '压缩 Token',
       outputCompact: '✓ 紧凑表示',
       keyInsight: '核心思想',
-      insightDetail: 'AS-VSF 解决两个问题：一是 DINOv3 只能处理 2D，但 MRI 是 3D；二是 3D 数据产生的 Token 数量太大，计算量爆炸。所以我们把 3D 切成三个方向的 2D 切片，用 DINOv3 提取特征，融合后再压缩 Token 数量，大幅降低计算成本。',
+      insightDetail: '接下来看看 AS-VSF 是怎么工作的。MRI 是 3D 数据，但 DINOv3 只能处理 2D 图像。所以我们把 3D 切成三个方向的切片，加上位置编码保留空间信息。然后用 Fusion 融合 MRI 和病人信息。最后用可学习的 Merge 模块压缩 token 数量，大大降低计算量。',
     },
   },
   en: {
@@ -212,11 +213,11 @@ export const translations = {
       multiLabelProbabilities: 'Multi-label Probabilities',
       // Stage descriptions (narration)
       stageDescriptions: {
-        input: 'Now let\'s look at the detailed design. The input has two data types: MRI images and clinical tables.',
-        encoder: 'The MRI encoder uses DINOv3 to read images. The table encoder handles clinical data.',
-        fusion: 'The fusion layer combines image and clinical features. Small data won\'t be lost in big data.',
-        merging: 'The merging layer removes repeated info to make it faster.',
-        decoder: 'The Mamba decoder has memory. It can understand long sequences and runs very fast.',
+        input: 'Now let\'s look at the detailed structure. Input is two types of data: MRI images and patient records.',
+        encoder: 'DINOv3 reads the MRI images. The table encoder handles patient info.',
+        fusion: 'This layer mixes both types together. Small patient data stays important.',
+        merging: 'This layer removes extra info to make it run faster.',
+        decoder: 'The Mamba decoder has memory. It understands long sequences and runs fast.',
         heads: 'Finally, we get three outputs: lesion location, disease type, and surgery prediction.',
       },
     },
@@ -270,10 +271,10 @@ export const translations = {
       privacyPreserving: 'Privacy Preserving',
       // Stage descriptions (narration)
       stageDescriptions: {
-        input: 'To summarize: what you saw today is one implementation, but the framework itself is general.',
-        encoder: 'Colored modules are what we tested. Grey ones can be extended: pathology images, gene data, ECG, and more.',
-        processing: 'The design principles of NeuroHydra stay the same: foundation models extract features, AS-VSF fuses, Mamba models sequences.',
-        heads: 'Our long-term goal: build general medical AI that reasons across modalities and time, just like doctors do. Thank you!',
+        input: 'Now let\'s see what kinds of data the model can use.',
+        encoder: 'Left side shows different medical data types. Colored ones we tested. Gray ones can be added later.',
+        processing: 'NeuroHydra sits in the center and fuses all the data. Its design works for any medical data.',
+        heads: 'Right side shows tasks the model can do: segmentation, classification, prediction, and more. One model, many tasks. That\'s our goal: a general medical AI framework. Thank you!',
       },
     },
     // SimulationSlide translations
@@ -296,7 +297,7 @@ export const translations = {
       patch: 'Patch',
       fusion: 'Fusion',
       // Narration description
-      description: 'Now let\'s see the speed test. AS-VSF compresses data and makes all models faster. Mamba plus AS-VSF is the fastest.',
+      description: 'We just talked about reducing computation. Now let\'s see the actual results. This simulates real-time 3D MRI data processing speed. After AS-VSF compresses data, all models run faster. Mamba with AS-VSF is the fastest combination.',
     },
     // QuadrantSlide translations
     quadrantSlide: {
@@ -320,22 +321,23 @@ export const translations = {
       mamba2: 'Mamba2',
       mamba2Asvs: 'Mamba2 + AS-VSF',
       // Narration description
-      description: 'This chart shows speed and accuracy. Top-right is best: fast and accurate. Mamba + AS-VSF is in the top-right. It\'s the best choice.',
+      description: 'This chart compares speed and accuracy. Top-right is the goal: fast and accurate. Our method is right there.',
     },
     // ASVSFSlide translations
     asvsfSlide: {
-      description: 'Structure-Aware Visual Slice Fusion — Learn deformable relationships across MRI slices to reconstruct 3D volumetric context',
+      description: 'Structure-Aware Visual Slice Fusion — Combining MRI image features with clinical tabular data',
       mriEncoder: 'MRI Encoder',
+      tabularEncoder: 'Tabular Encoder',
       triAxialSlicing: 'Tri-Axial Slicing',
       positionEncoding: 'Position Encoding',
       fusion: 'Fusion',
       learnRelationships: 'Learn Slice Relations',
       tokenWarning: '⚠️ Massive Tokens',
-      merging: 'Co-Axial Merge',
+      merging: 'Merge',
       coAxialMerge: 'Compress Tokens',
       outputCompact: '✓ Compact Output',
       keyInsight: 'Key Idea',
-      insightDetail: 'AS-VSF solves two problems: first, DINOv3 only works on 2D, but MRI is 3D; second, 3D data creates too many tokens and the computation explodes. So we cut 3D into 2D slices from three directions, use DINOv3 to get features, fuse them, then compress the token count to save a lot of computation.',
+      insightDetail: 'Now let me show you how AS-VSF works. MRI is 3D, but DINOv3 only works on 2D images. So we slice 3D into three directions, and add position encoding to keep spatial info. Then Fusion combines MRI with patient data. Finally, a learnable Merge module compresses the token count, greatly reducing computation.',
     },
   },
 };

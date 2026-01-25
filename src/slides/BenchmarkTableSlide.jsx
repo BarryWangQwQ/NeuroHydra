@@ -17,7 +17,7 @@ const BenchmarkTableSlide = () => {
         'Specificity ↑',
         'Pathology Acc. ↑',
         'ILAE-5 AUROC ↑',
-        'FLOPs (G) ↓'
+        'FLOPs (T) ↓'
       ],
       rows: [
         {
@@ -28,7 +28,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.97',
           pathAcc: '0.78',
           auroc: '0.85',
-          flops: '156.2',
+          flops: '0.156',
           highlight: true
         },
         {
@@ -39,7 +39,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.95',
           pathAcc: '–',
           auroc: '–',
-          flops: '287.4'
+          flops: '0.287'
         },
         {
           method: 'UNETR',
@@ -49,7 +49,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.95',
           pathAcc: '–',
           auroc: '–',
-          flops: '498.6'
+          flops: '0.499'
         },
         {
           method: 'UNETR + TabCat',
@@ -59,7 +59,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.96',
           pathAcc: '0.71',
           auroc: '0.78',
-          flops: '512.3'
+          flops: '0.512'
         },
         {
           method: 'ConvNeXt + LGBM',
@@ -69,7 +69,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.93',
           pathAcc: '0.72',
           auroc: '0.74',
-          flops: '203.8'
+          flops: '0.204'
         },
         {
           method: 'Mamba-Seg (ablation)',
@@ -79,11 +79,11 @@ const BenchmarkTableSlide = () => {
           spec: '0.96',
           pathAcc: '–',
           auroc: '–',
-          flops: '89.5'
+          flops: '0.090'
         }
       ],
       note: '提示：高亮行为我们的方法。',
-      description: '这是测试结果。NeuroHydra 在所有指标上都是最好的。而且它能同时做三个任务，其他方法做不到。'
+      description: '这是详细的测试结果。NeuroHydra 在所有指标上都是最好的，而且能同时做三个任务。'
     },
     en: {
       title: 'Benchmark Results',
@@ -97,7 +97,7 @@ const BenchmarkTableSlide = () => {
         'Specificity ↑',
         'Pathology Acc. ↑',
         'ILAE-5 AUROC ↑',
-        'FLOPs (G) ↓'
+        'FLOPs (T) ↓'
       ],
       rows: [
         {
@@ -108,7 +108,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.97',
           pathAcc: '0.78',
           auroc: '0.85',
-          flops: '156.2',
+          flops: '0.156',
           highlight: true
         },
         {
@@ -119,7 +119,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.95',
           pathAcc: '–',
           auroc: '–',
-          flops: '287.4'
+          flops: '0.287'
         },
         {
           method: 'UNETR',
@@ -129,7 +129,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.95',
           pathAcc: '–',
           auroc: '–',
-          flops: '498.6'
+          flops: '0.499'
         },
         {
           method: 'UNETR + TabCat',
@@ -139,7 +139,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.96',
           pathAcc: '0.71',
           auroc: '0.78',
-          flops: '512.3'
+          flops: '0.512'
         },
         {
           method: 'ConvNeXt + LGBM',
@@ -149,7 +149,7 @@ const BenchmarkTableSlide = () => {
           spec: '0.93',
           pathAcc: '0.72',
           auroc: '0.74',
-          flops: '203.8'
+          flops: '0.204'
         },
         {
           method: 'Mamba-Seg (ablation)',
@@ -159,11 +159,11 @@ const BenchmarkTableSlide = () => {
           spec: '0.96',
           pathAcc: '–',
           auroc: '–',
-          flops: '89.5'
+          flops: '0.090'
         }
       ],
       note: 'Note: highlighted row is our method.',
-      description: 'These are the test results. NeuroHydra is the best on all numbers. It can also do three tasks at once. Other methods cannot do this.'
+      description: 'Here are the detailed results. NeuroHydra scores best on all metrics and does all three tasks at once.'
     }
   };
 

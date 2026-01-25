@@ -9,13 +9,13 @@ const TitleSlide = () => {
       mainTitle: 'NeuroHydra',
       subtitle: '基于 DINOv3–Mamba 的通用多模态生物医学 AI 框架',
       description: '整合多模态 MRI 和临床数据预测癫痫手术结果的概念验证',
-      narration: '欢迎来到 NeuroHydra 项目介绍。这是一个结合 DINOv3 和 Mamba 的多模态医疗 AI 框架。'
+      narration: '大家好！今天介绍 NeuroHydra，一个帮助医生分析医学影像的 AI 系统。'
     },
     en: {
       mainTitle: 'NeuroHydra',
       subtitle: 'A Generalizable DINOv3–Mamba Framework for Multimodal Biomedical AI',
       description: 'Proof-of-concept integrating multimodal MRI and clinical data to predict surgical outcomes in epilepsy',
-      narration: 'Welcome to NeuroHydra. This is a multimodal medical AI framework combining DINOv3 and Mamba.'
+      narration: 'Hello everyone! Today I\'ll introduce NeuroHydra, an AI system that helps doctors analyze medical images.'
     }
   };
 

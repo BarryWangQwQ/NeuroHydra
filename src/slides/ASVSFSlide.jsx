@@ -456,15 +456,60 @@ const ASVSFSlide = () => {
           animation: merged-appear 2.8s ease-in-out infinite;
         }
 
+        /* ===== TABULAR ENCODER 动画 ===== */
+        @keyframes table-row-pulse {
+          0%, 100% { opacity: 0.6; transform: scaleX(1); }
+          50% { opacity: 1; transform: scaleX(1.02); }
+        }
+
+        .table-wrapper {
+          width: 100px;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          justify-content: center;
+        }
+
+        .table-row {
+          height: 16px;
+          border-radius: 4px;
+          background: linear-gradient(90deg, #14b8a6, #0d9488);
+          box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);
+          animation: table-row-pulse 2s ease-in-out infinite;
+        }
+
+        .table-row:nth-child(2) { animation-delay: 0.2s; width: 85%; }
+        .table-row:nth-child(3) { animation-delay: 0.4s; width: 70%; }
+
+        @keyframes token-emerge {
+          0%, 30% { opacity: 0; transform: scale(0.8); }
+          50%, 100% { opacity: 1; transform: scale(1); }
+        }
+
+        .tabular-token {
+          width: 36px;
+          height: 36px;
+          border-radius: 8px;
+          background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+          box-shadow: 0 0 15px rgba(45, 212, 191, 0.5);
+          animation: token-emerge 2.5s ease-in-out infinite;
+        }
+
         /* ===== 流动连接器 ===== */
         .flow-connector {
           position: relative;
-          width: 60px;
+          width: 50px;
           height: 60px;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+        }
+
+        .flow-connector-vertical {
+          width: 60px;
+          height: 40px;
         }
 
         .flow-line {
@@ -533,194 +578,236 @@ const ASVSFSlide = () => {
           </p>
         </div>
 
-        {/* Main Flow */}
-        <div className="flex justify-center items-stretch gap-5 max-h-[340px]">
+        {/* Main Flow - 两个 Encoder 汇入 Fusion */}
+        <div className="flex justify-center items-center gap-4">
           
-          {/* Module 1: MRI Encoder */}
-          <div 
-            className="module-card reveal-component flex-1 max-w-[520px]"
-            style={{ animationDelay: '0.4s' }}
-          >
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-6 border-2 border-blue-100 shadow-xl h-full flex flex-col">
-              <h3 className="text-2xl font-bold text-slate-800 text-center mb-4">{t.mriEncoder}</h3>
-              
-              <div className="flex items-center justify-center gap-3 flex-1">
-                {/* 3D Cube */}
-                <div className="flex flex-col items-center">
-                  <div className="cube-wrapper" style={{ perspective: '400px' }}>
-                    <div className="cube-3d">
-                      <div className="cube-face front"></div>
-                      <div className="cube-face back"></div>
-                      <div className="cube-face left"></div>
-                      <div className="cube-face right"></div>
-                      <div className="cube-face top"></div>
-                      <div className="cube-face bottom"></div>
+          {/* Left: Two Encoders */}
+          <div className="flex flex-col gap-4">
+            
+            {/* Module 1: MRI Encoder */}
+            <div 
+              className="module-card reveal-component"
+              style={{ animationDelay: '0.4s' }}
+            >
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 border-2 border-blue-100 shadow-xl">
+                <h3 className="text-xl font-bold text-slate-800 text-center mb-3">{t.mriEncoder}</h3>
+                
+                <div className="flex items-center justify-center gap-2">
+                  {/* 3D Cube */}
+                  <div className="flex flex-col items-center">
+                    <div className="cube-wrapper" style={{ perspective: '400px', width: '70px', height: '70px' }}>
+                      <div className="cube-3d" style={{ width: '50px', height: '50px' }}>
+                        <div className="cube-face front" style={{ width: '50px', height: '50px', transform: 'translateZ(25px)' }}></div>
+                        <div className="cube-face back" style={{ width: '50px', height: '50px', transform: 'translateZ(-25px)' }}></div>
+                        <div className="cube-face left" style={{ width: '50px', height: '50px', transform: 'rotateY(-90deg) translateZ(25px)' }}></div>
+                        <div className="cube-face right" style={{ width: '50px', height: '50px', transform: 'rotateY(90deg) translateZ(25px)' }}></div>
+                        <div className="cube-face top" style={{ width: '50px', height: '50px', transform: 'rotateX(90deg) translateZ(25px)' }}></div>
+                        <div className="cube-face bottom" style={{ width: '50px', height: '50px', transform: 'rotateX(-90deg) translateZ(25px)' }}></div>
+                      </div>
                     </div>
+                    <span className="text-xs font-bold text-slate-500">3D MRI</span>
                   </div>
-                  <span className="text-sm font-bold text-slate-500 mt-2">3D MRI</span>
+
+                  <div className="text-slate-300 text-2xl font-light">→</div>
+
+                  {/* 切片 */}
+                  <div className="flex flex-col items-center">
+                    <div className="slice-wrapper" style={{ width: '80px', height: '70px' }}>
+                      <div className="slice-container" style={{ width: '70px', height: '60px' }}>
+                        <div className="slice slice-axial" style={{ width: '30px', height: '30px', marginLeft: '-15px' }}></div>
+                        <div className="slice slice-coronal" style={{ width: '30px', height: '30px', marginTop: '-15px' }}></div>
+                        <div className="slice slice-sagittal" style={{ width: '30px', height: '30px', marginTop: '-15px' }}></div>
+                      </div>
+                    </div>
+                    <span className="text-xs font-bold text-slate-500">Tri-Axis</span>
+                  </div>
+
+                  <div className="text-slate-300 text-2xl font-light">→</div>
+
+                  {/* Patches Grid */}
+                  <div className="flex flex-col items-center">
+                    <div className="patches-wrapper" style={{ width: '60px', height: '60px' }}>
+                      <div className="patches-grid" style={{ gridTemplateColumns: 'repeat(3, 16px)', gridTemplateRows: 'repeat(3, 16px)', gap: '2px' }}>
+                        {[...Array(9)].map((_, i) => (
+                          <div key={i} className="patch-item" style={{ width: '16px', height: '16px', animationDelay: `${i * 0.1}s` }}></div>
+                        ))}
+                      </div>
+                    </div>
+                    <span className="text-xs font-bold text-slate-500 mt-1">Patches</span>
+                  </div>
                 </div>
 
-                <div className="text-slate-300 text-3xl font-light">→</div>
-
-                {/* 切片 */}
-                <div className="flex flex-col items-center">
-                  <div className="slice-wrapper">
-                    <div className="slice-container">
-                      <div className="slice slice-axial"></div>
-                      <div className="slice slice-coronal"></div>
-                      <div className="slice slice-sagittal"></div>
-                    </div>
-                  </div>
-                  <span className="text-sm font-bold text-slate-500">Tri-Axis</span>
+                <div className="bg-blue-500 text-white rounded-lg px-4 py-2 mt-3 text-center shadow-lg">
+                  <p className="text-sm font-bold">DINOv3 Encoder</p>
                 </div>
-
-                <div className="text-slate-300 text-3xl font-light">→</div>
-
-                {/* Patches Grid */}
-                <div className="flex flex-col items-center">
-                  <div className="patches-wrapper">
-                    <div className="patches-grid">
-                      {[...Array(9)].map((_, i) => (
-                        <div key={i} className="patch-item" style={{ animationDelay: `${i * 0.1}s` }}></div>
-                      ))}
-                    </div>
-                  </div>
-                  <span className="text-sm font-bold text-slate-500 mt-2">Patches</span>
-                </div>
-              </div>
-
-              <div className="bg-blue-500 text-white rounded-xl px-5 py-3 mt-4 text-center shadow-lg">
-                <p className="text-base font-bold">DINOv3 Encoder</p>
               </div>
             </div>
+
+            {/* Module 2: Tabular Encoder */}
+            <div 
+              className="module-card reveal-component"
+              style={{ animationDelay: '0.5s' }}
+            >
+              <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-4 border-2 border-teal-100 shadow-xl">
+                <h3 className="text-xl font-bold text-slate-800 text-center mb-3">Tabular Encoder</h3>
+                
+                <div className="flex items-center justify-center gap-3">
+                  {/* Table rows */}
+                  <div className="flex flex-col items-center">
+                    <div className="table-wrapper">
+                      <div className="table-row"></div>
+                      <div className="table-row"></div>
+                      <div className="table-row"></div>
+                    </div>
+                    <span className="text-xs font-bold text-slate-500 mt-1">Clinical Data</span>
+                  </div>
+
+                  <div className="text-slate-300 text-2xl font-light">→</div>
+
+                  {/* Token output */}
+                  <div className="flex flex-col items-center">
+                    <div className="tabular-token"></div>
+                    <span className="text-xs font-bold text-slate-500 mt-2">Meta Token</span>
+                  </div>
+                </div>
+
+                <div className="bg-teal-500 text-white rounded-lg px-4 py-2 mt-3 text-center shadow-lg">
+                  <p className="text-sm font-bold">MLP Projection</p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Flow Connector 1 */}
+          {/* Flow Connector - Converging */}
           <div 
-            className="flow-connector reveal-component self-center"
-            style={{ animationDelay: '0.5s' }}
-          >
-            <div className="flow-line" />
-            <div className="flow-dot" style={{ '--dot-color': '#6366f1' }}></div>
-            <div className="flow-dot delay-1" style={{ '--dot-color': '#6366f1' }}></div>
-          </div>
-
-          {/* Module 2: Fusion */}
-          <div 
-            className="module-card reveal-component flex-1 max-w-[480px]"
+            className="flow-connector reveal-component"
             style={{ animationDelay: '0.6s' }}
           >
-            <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-3xl p-6 border-2 border-purple-100 shadow-xl h-full flex flex-col">
-              <h3 className="text-2xl font-bold text-slate-800 text-center mb-4">{t.fusion}</h3>
+            <div className="flow-line" />
+            <div className="flow-dot" style={{ '--dot-color': '#8b5cf6' }}></div>
+            <div className="flow-dot delay-1" style={{ '--dot-color': '#14b8a6' }}></div>
+          </div>
+
+          {/* Module 3: Fusion */}
+          <div 
+            className="module-card reveal-component max-w-[420px]"
+            style={{ animationDelay: '0.7s' }}
+          >
+            <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-2xl p-5 border-2 border-purple-100 shadow-xl">
+              <h3 className="text-xl font-bold text-slate-800 text-center mb-3">{t.fusion}</h3>
               
-              <div className="fusion-main-container flex-1">
+              <div className="fusion-main-container">
                 {/* 左侧：三轴各自 Patch + Position */}
                 <div className="fusion-left">
                   <div className="fusion-row">
-                    <span className="text-sm font-bold text-blue-600 w-8">Ax</span>
-                    <div className="fusion-patch-axial"></div>
-                    <span className="fusion-plus">+</span>
-                    <div className="fusion-pos-axial"></div>
-                    <span className="fusion-arrow-small">→</span>
-                    <div className="fusion-result-wrapper">
-                      <div className="fusion-result-axial"></div>
+                    <span className="text-xs font-bold text-blue-600 w-6">Ax</span>
+                    <div className="fusion-patch-axial" style={{ width: '24px', height: '24px' }}></div>
+                    <span className="fusion-plus text-sm">+</span>
+                    <div className="fusion-pos-axial" style={{ width: '14px', height: '24px' }}></div>
+                    <span className="fusion-arrow-small text-sm">→</span>
+                    <div className="fusion-result-wrapper" style={{ width: '34px', height: '24px' }}>
+                      <div className="fusion-result-axial" style={{ width: '34px', height: '24px' }}></div>
                     </div>
                   </div>
                   
                   <div className="fusion-row">
-                    <span className="text-sm font-bold text-emerald-600 w-8">Co</span>
-                    <div className="fusion-patch-coronal"></div>
-                    <span className="fusion-plus">+</span>
-                    <div className="fusion-pos-coronal"></div>
-                    <span className="fusion-arrow-small">→</span>
-                    <div className="fusion-result-wrapper">
-                      <div className="fusion-result-coronal"></div>
+                    <span className="text-xs font-bold text-emerald-600 w-6">Co</span>
+                    <div className="fusion-patch-coronal" style={{ width: '24px', height: '24px' }}></div>
+                    <span className="fusion-plus text-sm">+</span>
+                    <div className="fusion-pos-coronal" style={{ width: '14px', height: '24px' }}></div>
+                    <span className="fusion-arrow-small text-sm">→</span>
+                    <div className="fusion-result-wrapper" style={{ width: '34px', height: '24px' }}>
+                      <div className="fusion-result-coronal" style={{ width: '34px', height: '24px' }}></div>
                     </div>
                   </div>
                   
                   <div className="fusion-row">
-                    <span className="text-sm font-bold text-pink-600 w-8">Sa</span>
-                    <div className="fusion-patch-sagittal"></div>
-                    <span className="fusion-plus">+</span>
-                    <div className="fusion-pos-sagittal"></div>
-                    <span className="fusion-arrow-small">→</span>
-                    <div className="fusion-result-wrapper">
-                      <div className="fusion-result-sagittal"></div>
+                    <span className="text-xs font-bold text-pink-600 w-6">Sa</span>
+                    <div className="fusion-patch-sagittal" style={{ width: '24px', height: '24px' }}></div>
+                    <span className="fusion-plus text-sm">+</span>
+                    <div className="fusion-pos-sagittal" style={{ width: '14px', height: '24px' }}></div>
+                    <span className="fusion-arrow-small text-sm">→</span>
+                    <div className="fusion-result-wrapper" style={{ width: '34px', height: '24px' }}>
+                      <div className="fusion-result-sagittal" style={{ width: '34px', height: '24px' }}></div>
+                    </div>
+                  </div>
+
+                  {/* Tabular Token Row */}
+                  <div className="fusion-row mt-1">
+                    <span className="text-xs font-bold text-teal-600 w-6">Tab</span>
+                    <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'linear-gradient(135deg, #2dd4bf, #14b8a6)', boxShadow: '0 0 10px rgba(45, 212, 191, 0.5)' }}></div>
+                    <span className="fusion-plus text-sm">+</span>
+                    <div style={{ width: '14px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #5eead4, #2dd4bf)' }}></div>
+                    <span className="fusion-arrow-small text-sm">→</span>
+                    <div className="fusion-result-wrapper" style={{ width: '34px', height: '24px' }}>
+                      <div style={{ width: '34px', height: '24px', borderRadius: '6px', background: 'linear-gradient(90deg, #14b8a6 60%, #5eead4 60%)', boxShadow: '0 0 12px rgba(20, 184, 166, 0.6)', opacity: 0, animation: 'result-token-appear 3s ease-in-out infinite', animationDelay: '0.6s' }}></div>
                     </div>
                   </div>
                 </div>
 
                 <div className="fusion-center">
-                  <span className="fusion-big-arrow">⟹</span>
+                  <span className="fusion-big-arrow text-2xl">⟹</span>
                 </div>
 
                 <div className="fusion-right">
-                  <div className="merge-tokens-wrapper">
-                    <div className="merge-token-axial"></div>
-                    <div className="merge-token-coronal"></div>
-                    <div className="merge-token-sagittal"></div>
-                    <div className="final-1d-token"></div>
+                  <div className="merge-tokens-wrapper" style={{ width: '40px', height: '140px' }}>
+                    <div className="merge-token-axial" style={{ width: '34px', height: '24px', left: '3px' }}></div>
+                    <div className="merge-token-coronal" style={{ width: '34px', height: '24px', top: '32px', left: '3px' }}></div>
+                    <div className="merge-token-sagittal" style={{ width: '34px', height: '24px', top: '64px', left: '3px' }}></div>
+                    <div style={{ position: 'absolute', width: '34px', height: '24px', top: '96px', left: '3px', borderRadius: '6px', background: 'linear-gradient(90deg, #14b8a6 60%, #5eead4 60%)', animation: 'tokens-merge 3s ease-in-out infinite', animationDelay: '0.3s' }}></div>
+                    <div className="final-1d-token" style={{ width: '34px', height: '130px', background: 'linear-gradient(180deg, #3b82f6 0%, #3b82f6 22%, #10b981 25%, #10b981 47%, #ec4899 50%, #ec4899 72%, #14b8a6 75%, #14b8a6 100%)' }}></div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-3 text-sm font-bold text-center mt-4">
-                <div className="flex gap-1">
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg">Ax</span>
-                  <span className="bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg">Co</span>
-                  <span className="bg-pink-100 text-pink-700 px-3 py-1.5 rounded-lg">Sa</span>
-                </div>
-                <span className="text-slate-400 text-2xl">→</span>
-                <span className="bg-purple-200 text-purple-800 px-4 py-1.5 rounded-lg font-black">1D Token</span>
-              </div>
-
-              <div className="bg-purple-500 text-white rounded-xl px-5 py-3 mt-3 text-center shadow-lg">
-                <p className="text-base font-bold">Patch + Position → Concat</p>
+              <div className="bg-purple-500 text-white rounded-lg px-4 py-2 mt-3 text-center shadow-lg">
+                <p className="text-sm font-bold">MRI + Tabular → Fused Token</p>
               </div>
             </div>
           </div>
 
           {/* Flow Connector 2 */}
           <div 
-            className="flow-connector reveal-component self-center"
-            style={{ animationDelay: '0.7s' }}
+            className="flow-connector reveal-component"
+            style={{ animationDelay: '0.8s' }}
           >
             <div className="flow-line" />
             <div className="flow-dot" style={{ '--dot-color': '#a855f7' }}></div>
             <div className="flow-dot delay-1" style={{ '--dot-color': '#a855f7' }}></div>
           </div>
 
-          {/* Module 3: Merging */}
+          {/* Module 4: Merging */}
           <div 
-            className="module-card reveal-component flex-1 max-w-[340px]"
-            style={{ animationDelay: '0.8s' }}
+            className="module-card reveal-component max-w-[280px]"
+            style={{ animationDelay: '0.9s' }}
           >
-            <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-6 border-2 border-pink-100 shadow-xl h-full flex flex-col">
-              <div className="text-center mb-4">
-                <h3 className="text-2xl font-bold text-slate-800">{t.merging}</h3>
-                <span className="inline-block mt-2 px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full border border-amber-200">
+            <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-5 border-2 border-pink-100 shadow-xl">
+              <div className="text-center mb-3">
+                <h3 className="text-xl font-bold text-slate-800">{t.merging}</h3>
+                <span className="inline-block mt-1 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-bold rounded-full border border-amber-200">
                   ⚡ Learnable
                 </span>
               </div>
               
-              <div className="flex justify-center items-center flex-1">
-                <div className="merge-anim-wrapper">
-                  <div className="merge-input"></div>
-                  <div className="merge-input"></div>
-                  <div className="merge-input"></div>
-                  <div className="merge-input"></div>
-                  <div className="merge-output"></div>
+              <div className="flex justify-center items-center">
+                <div className="merge-anim-wrapper" style={{ width: '140px', height: '80px' }}>
+                  <div className="merge-input" style={{ width: '22px', height: '22px', marginTop: '-11px' }}></div>
+                  <div className="merge-input" style={{ width: '22px', height: '22px', marginTop: '-11px', left: '28px' }}></div>
+                  <div className="merge-input" style={{ width: '22px', height: '22px', marginTop: '-11px', left: '56px' }}></div>
+                  <div className="merge-input" style={{ width: '22px', height: '22px', marginTop: '-11px', left: '84px' }}></div>
+                  <div className="merge-output" style={{ width: '32px', height: '32px', marginTop: '-16px' }}></div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-4 text-lg font-bold text-center mt-4">
-                <div className="bg-rose-100 rounded-xl px-4 py-2 text-rose-700">N Tokens</div>
-                <div className="text-slate-400 text-2xl">→</div>
-                <div className="bg-rose-200 rounded-xl px-4 py-2 text-rose-800">N/k</div>
+              <div className="flex items-center justify-center gap-2 text-sm font-bold text-center mt-3">
+                <div className="bg-rose-100 rounded-lg px-3 py-1.5 text-rose-700">N Tokens</div>
+                <div className="text-slate-400 text-xl">→</div>
+                <div className="bg-rose-200 rounded-lg px-3 py-1.5 text-rose-800">N/k</div>
               </div>
 
-              <div className="bg-rose-500 text-white rounded-xl px-5 py-3 mt-3 text-center shadow-lg">
-                <p className="text-base font-bold">Co-Axial Merge</p>
+              <div className="bg-rose-500 text-white rounded-lg px-4 py-2 mt-3 text-center shadow-lg">
+                <p className="text-sm font-bold">Merge</p>
               </div>
             </div>
           </div>

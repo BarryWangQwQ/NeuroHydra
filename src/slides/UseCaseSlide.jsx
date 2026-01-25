@@ -24,7 +24,7 @@ const UseCaseSlide = () => {
           descriptionLine2: '关键上下文常被影像淹没。'
         }
       ],
-      narration: '医疗数据有两种：MRI 图像数据量很大，临床记录数据量很小但很重要。我们需要同时用好这两种数据。'
+      narration: '医院的数据有两种：MRI 图像数据量很大，病人信息表数据量小但很关键。'
     },
     en: {
       title: 'Use Case',
@@ -44,7 +44,7 @@ const UseCaseSlide = () => {
           descriptionLine2: 'Critical context often drowned by imaging.'
         }
       ],
-      narration: 'Medical data has two types: MRI images are very large, clinical records are small but important. We need to use both well.'
+      narration: 'Hospital data comes in two types: MRI images are large, patient records are small but crucial.'
     }
   };
 

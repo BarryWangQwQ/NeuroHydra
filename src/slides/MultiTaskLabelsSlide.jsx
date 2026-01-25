@@ -25,7 +25,7 @@ const MultiTaskLabelsSlide = () => {
           subtitle: '(Seizure Freedom Score - 癫痫自由度评分)'
         }
       ],
-      narration: '模型同时学习三个任务：找到病灶在哪里，判断是什么病，预测手术效果。这就像医生的思考过程。'
+      narration: '我们训练模型同时做三件事：找到病灶位置、判断病因、预测手术效果。'
     },
     en: {
       title: 'Multi-Task Labels',
@@ -46,7 +46,7 @@ const MultiTaskLabelsSlide = () => {
           subtitle: '(Seizure Freedom Score)'
         }
       ],
-      narration: 'The model learns three tasks at once: find where the lesion is, tell what disease it is, and predict surgery results. This is how doctors think too.'
+      narration: 'We train the model to do three things at once: find the lesion, identify the cause, and predict surgery results.'
     }
   };
 

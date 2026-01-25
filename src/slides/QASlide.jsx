@@ -7,11 +7,11 @@ const QASlide = () => {
   const content = {
     zh: {
       title: 'Q&A',
-      narration: '感谢聆听。现在欢迎提问。'
+      narration: '感谢大家！欢迎提问。'
     },
     en: {
       title: 'Q&A',
-      narration: 'Thank you. Questions are welcome.'
+      narration: 'Thank you all! Questions are welcome.'
     }
   };
 

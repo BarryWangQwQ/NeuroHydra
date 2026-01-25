@@ -4,6 +4,7 @@ console.log("pagesConfig loaded ✅", import.meta.url);
 
 import React from 'react';
 import TitleSlide from './slides/TitleSlide.jsx'
+import SignificanceSlide from './slides/SignificanceSlide.jsx'
 import ComponentsSlide from './slides/ComponentsSlide.jsx'
 import UseCaseSlide from './slides/UseCaseSlide.jsx'
 import FullScreenImageSlide from './slides/FullScreenImageSlide.jsx'
@@ -28,17 +29,18 @@ const FullScreenImageSlideWrapper = (props) =>
 // Each page needs: id (unique), component (component), key (unique identifier)
 export const pages = [
   { id: 0, component: TitleSlide, key: 'title' },
-  { id: 1, component: ComponentsSlide, key: 'components' },
-  { id: 2, component: UseCaseSlide, key: 'usecase' },
-  { id: 3, component: FullScreenImageSlideWrapper, key: 'fullscreen-image' },
-  { id: 4, component: MultiTaskLabelsSlide, key: 'multi-task-labels' },
-  { id: 5, component: ModelPipeline, key: 'model' },
-  { id: 6, component: ASVSFSlide, key: 'asvf' },
-  { id: 7, component: SimulationSlide, key: 'simulation' },
-  { id: 8, component: QuadrantSlide, key: 'quadrant' },
-  { id: 9, component: BenchmarkTableSlide, key: 'benchmark-table' },
-  { id: 10, component: MultimodalPipeline, key: 'multi' },
-  { id: 11, component: QASlide, key: 'qa' }
+  { id: 1, component: SignificanceSlide, key: 'significance' },
+  { id: 2, component: ComponentsSlide, key: 'components' },
+  { id: 3, component: UseCaseSlide, key: 'usecase' },
+  { id: 4, component: FullScreenImageSlideWrapper, key: 'fullscreen-image' },
+  { id: 5, component: MultiTaskLabelsSlide, key: 'multi-task-labels' },
+  { id: 6, component: ModelPipeline, key: 'model' },
+  { id: 7, component: ASVSFSlide, key: 'asvf' },
+  { id: 8, component: SimulationSlide, key: 'simulation' },
+  { id: 9, component: QuadrantSlide, key: 'quadrant' },
+  { id: 10, component: BenchmarkTableSlide, key: 'benchmark-table' },
+  { id: 11, component: MultimodalPipeline, key: 'multi' },
+  { id: 12, component: QASlide, key: 'qa' }
 ]
 
 // 导出总页数 / Export total pages count
