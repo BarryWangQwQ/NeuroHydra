@@ -9,33 +9,35 @@ const ComponentsSlide = () => {
       items: [
         {
           title: 'DINOv3',
-          description: '2D Medical Image Foundation Backbone'
+          description: 'Self-Distillation with No Labels · 2D 医学图像基础骨干网络'
         },
         {
           title: 'AS-VSF',
-          description: 'Fusing Dense and Sparse Information'
+          description: 'Axis-Slice Visual-Sparse Fusion · 融合密集和稀疏信息'
         },
         {
           title: 'MAMBA',
-          description: 'Sequential Modeling, learnable memory'
+          description: 'State Space Model · 序列建模，可学习记忆'
         }
-      ]
+      ],
+      narration: 'NeuroHydra 有三个主要部分：DINOv3 读取图像，AS-VSF 融合不同类型的数据，Mamba 处理长序列。'
     },
     en: {
       items: [
         {
           title: 'DINOv3',
-          description: '2D Medical Image Foundation Backbone'
+          description: 'Self-Distillation with No Labels · 2D Medical Image Foundation Backbone'
         },
         {
           title: 'AS-VSF',
-          description: 'Fusing Dense and Sparse Information'
+          description: 'Axis-Slice Visual-Sparse Fusion · Fusing Dense and Sparse Information'
         },
         {
           title: 'MAMBA',
-          description: 'Sequential Modeling, learnable memory'
+          description: 'State Space Model · Sequential Modeling, Learnable Memory'
         }
-      ]
+      ],
+      narration: 'NeuroHydra has three main parts: DINOv3 reads images, AS-VSF combines different data types, and Mamba handles long sequences.'
     }
   };
 
@@ -75,6 +77,14 @@ const ComponentsSlide = () => {
           -webkit-text-fill-color: transparent;
           animation: gradient-shift 3s ease;
         }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
       `}</style>
 
       {/* Background gradients matching other slides */}
@@ -112,6 +122,16 @@ const ComponentsSlide = () => {
             </div>
           );
         })}
+      </div>
+
+      {/* Bottom Description Bar - 悬浮旁白区域 */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
+        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent"></div>
+          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+            {t.narration}
+          </p>
+        </div>
       </div>
     </div>
   );

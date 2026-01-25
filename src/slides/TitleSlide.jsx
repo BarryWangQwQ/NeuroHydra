@@ -8,12 +8,14 @@ const TitleSlide = () => {
     zh: {
       mainTitle: 'NeuroHydra',
       subtitle: '基于 DINOv3–Mamba 的通用多模态生物医学 AI 框架',
-      description: '整合多模态 MRI 和临床数据预测癫痫手术结果的概念验证'
+      description: '整合多模态 MRI 和临床数据预测癫痫手术结果的概念验证',
+      narration: '欢迎来到 NeuroHydra 项目介绍。这是一个结合 DINOv3 和 Mamba 的多模态医疗 AI 框架。'
     },
     en: {
       mainTitle: 'NeuroHydra',
       subtitle: 'A Generalizable DINOv3–Mamba Framework for Multimodal Biomedical AI',
-      description: 'Proof-of-concept integrating multimodal MRI and clinical data to predict surgical outcomes in epilepsy'
+      description: 'Proof-of-concept integrating multimodal MRI and clinical data to predict surgical outcomes in epilepsy',
+      narration: 'Welcome to NeuroHydra. This is a multimodal medical AI framework combining DINOv3 and Mamba.'
     }
   };
 
@@ -77,6 +79,14 @@ const TitleSlide = () => {
         .title-gradient-layer {
           position: relative;
           z-index: 1;
+        }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
         }
       `}</style>
 

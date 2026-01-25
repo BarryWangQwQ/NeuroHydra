@@ -8,12 +8,13 @@ import ComponentsSlide from './slides/ComponentsSlide.jsx'
 import UseCaseSlide from './slides/UseCaseSlide.jsx'
 import FullScreenImageSlide from './slides/FullScreenImageSlide.jsx'
 import MultiTaskLabelsSlide from './slides/MultiTaskLabelsSlide.jsx'
-import CanYourDataSlide from './slides/CanYourDataSlide.jsx'
 import MultimodalPipeline from './slides/MultimodalPipeline.jsx'
 import ModelPipeline from './slides/ModelPipeline.jsx'
+import ASVSFSlide from './slides/ASVSFSlide.jsx'
 import SimulationSlide from './slides/SimulationSlide.jsx'
 import QuadrantSlide from './slides/QuadrantSlide.jsx'
-import ExampleSlide from './slides/ExampleSlide.jsx'
+import BenchmarkTableSlide from './slides/BenchmarkTableSlide.jsx'
+import QASlide from './slides/QASlide.jsx'
 
 // Wrapper component for FullScreenImageSlide with image path
 const FullScreenImageSlideWrapper = (props) =>
@@ -31,12 +32,13 @@ export const pages = [
   { id: 2, component: UseCaseSlide, key: 'usecase' },
   { id: 3, component: FullScreenImageSlideWrapper, key: 'fullscreen-image' },
   { id: 4, component: MultiTaskLabelsSlide, key: 'multi-task-labels' },
-  { id: 5, component: CanYourDataSlide, key: 'can-your-data' },
-  { id: 6, component: MultimodalPipeline, key: 'multi' },
-  { id: 7, component: ModelPipeline, key: 'model' },
-  { id: 8, component: SimulationSlide, key: 'simulation' },
-  { id: 9, component: QuadrantSlide, key: 'quadrant' },
-  { id: 10, component: ExampleSlide, key: 'example' }
+  { id: 5, component: ModelPipeline, key: 'model' },
+  { id: 6, component: ASVSFSlide, key: 'asvf' },
+  { id: 7, component: SimulationSlide, key: 'simulation' },
+  { id: 8, component: QuadrantSlide, key: 'quadrant' },
+  { id: 9, component: BenchmarkTableSlide, key: 'benchmark-table' },
+  { id: 10, component: MultimodalPipeline, key: 'multi' },
+  { id: 11, component: QASlide, key: 'qa' }
 ]
 
 // 导出总页数 / Export total pages count

@@ -70,6 +70,14 @@ const QuadrantSlide = () => {
         .animate-pulse-glow {
           animation: pulse-glow 2s ease-in-out infinite;
         }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
       `}</style>
 
       {/* Background Gradient Blurs - Natural Colors */}
@@ -115,8 +123,8 @@ const QuadrantSlide = () => {
         <p className="text-slate-600 text-xl font-medium">{t.subtitle}</p>
       </div>
 
-      {/* 四象限图容器 */}
-      <div className="relative w-full max-w-6xl h-[820px] bg-white rounded-3xl shadow-lg border border-slate-200 z-10">
+      {/* 四象限图容器 - 调整高度给旁白留空间 */}
+      <div className="relative w-full max-w-7xl h-[750px] bg-white rounded-3xl shadow-lg border border-slate-200 z-10 mb-20">
         
         {/* Y轴标签（左侧） */}
         <div className="absolute left-6 top-16 bottom-20 flex flex-col justify-between items-center">
@@ -216,6 +224,18 @@ const QuadrantSlide = () => {
           })}
         </div>
 
+      </div>
+
+      {/* Bottom Description Bar - 悬浮旁白区域 */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
+        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+          {/* 装饰光效 */}
+          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-rose-400/60 to-transparent"></div>
+          
+          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+            {t.description}
+          </p>
+        </div>
       </div>
     </div>
   );

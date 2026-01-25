@@ -31,6 +31,12 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const animationRef = useRef(null);
 
   const stages = ['input', 'encoder', 'fusion', 'merging', 'decoder', 'heads'];
+  
+  // 获取当前阶段的描述文本
+  const getCurrentDescription = () => {
+    const stageKey = stages[activeStage];
+    return t.stageDescriptions?.[stageKey] || '';
+  };
 
   useEffect(() => {
     setIsPlaying(autoPlay);
@@ -311,6 +317,14 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
         }
         .animate-dash-flow {
           animation: dash-flow 3s linear infinite;
+        }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
         }
         
         /* 隐藏滚动条 */
@@ -671,6 +685,21 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
 
           </div>
 
+        </div>
+      </div>
+
+      {/* Bottom Description Bar - 悬浮旁白区域 */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
+        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+          {/* 装饰光效 */}
+          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-indigo-400/60 to-transparent"></div>
+          
+          <p 
+            key={activeStage}
+            className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in"
+          >
+            {getCurrentDescription()}
+          </p>
         </div>
       </div>
     </div>

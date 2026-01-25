@@ -363,6 +363,14 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
         .flat-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(148, 163, 184, 0.6);
         }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
       `}</style>
 
       {/* Background Gradient Blurs - Natural Colors */}
@@ -425,6 +433,18 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
               </LayoutGroup>
           </div>
 
+      </div>
+
+      {/* Bottom Description Bar - 悬浮旁白区域 */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
+        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+          {/* 装饰光效 */}
+          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent"></div>
+          
+          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+            {t.description}
+          </p>
+        </div>
       </div>
     </div>
   );

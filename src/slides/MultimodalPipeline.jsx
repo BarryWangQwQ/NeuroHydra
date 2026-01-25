@@ -51,36 +51,44 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
 
   const stages = ['input', 'encoder', 'processing', 'heads'];
 
+  // 获取当前阶段的描述文本
+  const getCurrentDescription = () => {
+    const stageKey = stages[activeStage];
+    return t.stageDescriptions?.[stageKey] || '';
+  };
+
   // 医疗相关的 Encoder 类型
+  // tested: true 表示已在本研究中评估过, false 表示尚未评估（将显示为灰色）
   const encoders = [
-    { icon: Brain, name: t.brainMRI, theme: 'indigo' },
-    { icon: Scan, name: t.chestCT, theme: 'blue' },
-    { icon: Microscope, name: t.pathologyWSI, theme: 'rose' },   
-    { icon: FileText, name: t.clinicalNotes, theme: 'teal' }, 
-    { icon: Dna, name: t.genomics, theme: 'green' },    
-    { icon: Activity, name: t.leadECG, theme: 'red' }, 
-    { icon: Search, name: t.dermoscopy, theme: 'orange' }, 
-    { icon: Eye, name: t.fundusImage, theme: 'cyan' },
-    { icon: Waves, name: t.ultrasound, theme: 'blue' },
-    { icon: Camera, name: t.endoscopyVid, theme: 'purple' },
-    { icon: Zap, name: t.eegSignal, theme: 'amber' },
-    { icon: ScanLine, name: t.xRayImaging, theme: 'indigo' },
+    { icon: Brain, name: t.brainMRI, theme: 'indigo', tested: true },
+    { icon: Scan, name: t.chestCT, theme: 'blue', tested: false },
+    { icon: Microscope, name: t.pathologyWSI, theme: 'rose', tested: false },   
+    { icon: FileText, name: t.clinicalNotes, theme: 'teal', tested: true }, 
+    { icon: Dna, name: t.genomics, theme: 'green', tested: false },    
+    { icon: Activity, name: t.leadECG, theme: 'red', tested: false }, 
+    { icon: Search, name: t.dermoscopy, theme: 'orange', tested: false }, 
+    { icon: Eye, name: t.fundusImage, theme: 'cyan', tested: false },
+    { icon: Waves, name: t.ultrasound, theme: 'blue', tested: false },
+    { icon: Camera, name: t.endoscopyVid, theme: 'purple', tested: false },
+    { icon: Zap, name: t.eegSignal, theme: 'amber', tested: false },
+    { icon: ScanLine, name: t.xRayImaging, theme: 'indigo', tested: false },
   ];
 
   // 医疗相关的 Task Header 类型
+  // tested: true 表示已在本研究中评估过, false 表示尚未评估（将显示为灰色）
   const taskHeaders = [
-    { icon: Target, name: t.tumorSegmentation, subtitle: t.lesionMasking, theme: 'blue' },
-    { icon: GitBranch, name: t.diseaseSubtyping, subtitle: t.molecularClass, theme: 'purple' },
-    { icon: Stethoscope, name: t.diffDiagnosis, subtitle: t.topKCandidates, theme: 'rose' },
-    { icon: Hourglass, name: t.survivalAnalysis, subtitle: t.timeToEvent, theme: 'amber' },
-    { icon: RotateCcw, name: t.readmission, subtitle: t.dayRisk, theme: 'orange' },
-    { icon: Pill, name: t.drugResponse, subtitle: t.sensitivity, theme: 'cyan' },
-    { icon: ScrollText, name: t.reportGen, subtitle: t.autoFindings, theme: 'indigo' },
-    { icon: MessageCircleQuestion, name: t.visualQA, subtitle: t.clinicalQA, theme: 'green' },
-    { icon: PenTool, name: t.surgicalPlan, subtitle: t.reconstruction3D, theme: 'teal' },
-    { icon: ImagePlus, name: t.imageRetrieval, subtitle: t.similarCaseSearch, theme: 'blue' },
-    { icon: Sparkles, name: t.dataSynthesis, subtitle: t.privacyGen, theme: 'purple' },
-    { icon: ShieldCheck, name: t.federatedLearn, subtitle: t.privacyPreserving, theme: 'green' },
+    { icon: Target, name: t.tumorSegmentation, subtitle: t.lesionMasking, theme: 'blue', tested: true },
+    { icon: GitBranch, name: t.diseaseSubtyping, subtitle: t.molecularClass, theme: 'purple', tested: true },
+    { icon: Stethoscope, name: t.diffDiagnosis, subtitle: t.topKCandidates, theme: 'rose', tested: false },
+    { icon: Hourglass, name: t.survivalAnalysis, subtitle: t.timeToEvent, theme: 'amber', tested: true },
+    { icon: RotateCcw, name: t.readmission, subtitle: t.dayRisk, theme: 'orange', tested: false },
+    { icon: Pill, name: t.drugResponse, subtitle: t.sensitivity, theme: 'cyan', tested: false },
+    { icon: ScrollText, name: t.reportGen, subtitle: t.autoFindings, theme: 'indigo', tested: false },
+    { icon: MessageCircleQuestion, name: t.visualQA, subtitle: t.clinicalQA, theme: 'green', tested: false },
+    { icon: PenTool, name: t.surgicalPlan, subtitle: t.reconstruction3D, theme: 'teal', tested: false },
+    { icon: ImagePlus, name: t.imageRetrieval, subtitle: t.similarCaseSearch, theme: 'blue', tested: false },
+    { icon: Sparkles, name: t.dataSynthesis, subtitle: t.privacyGen, theme: 'purple', tested: false },
+    { icon: ShieldCheck, name: t.federatedLearn, subtitle: t.privacyPreserving, theme: 'green', tested: false },
   ];
 
   // 计算卡片的波浪索引（对角线位置）
@@ -262,7 +270,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const isStageActive = (index) => activeStage === index;
   
   // 核心样式逻辑
-  const getCardStyle = (stageIndex, themeColor, itemIndex = -1) => {
+  const getCardStyle = (stageIndex, themeColor, itemIndex = -1, isTested = true) => {
     const stageActive = isStageActive(stageIndex);
     const isPast = activeStage > stageIndex;
     
@@ -299,6 +307,12 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       isPending = true;
     }
 
+    // 如果项目未测试，使用灰色虚线样式（除非它是 RawData 或 NeuroHydra）
+    if (!isTested && stageIndex !== 0 && stageIndex !== 2) {
+      base += "scale-95 opacity-50 bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-dashed border-slate-400 z-0 ";
+      return base;
+    }
+
     if (isFocused) {
       base += "scale-105 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)] z-20 ring-2 ring-white/40 border-transparent ";
     } else if (isDone) {
@@ -307,7 +321,8 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       base += "scale-95 opacity-50 bg-slate-100 border-slate-200 z-0 grayscale-[0.3] ";
       return base; 
     } else {
-      base += "scale-95 opacity-30 bg-slate-50 border-slate-200 border-dashed z-0 grayscale-[0.8] ";
+      // Pending 状态 - 已评估的项目：保持更高的可见度，使用淡色渐变
+      base += "scale-95 opacity-60 border-slate-300 border-2 z-0 ";
       return base;
     }
 
@@ -324,6 +339,24 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       cyan: "bg-gradient-to-br from-cyan-500 via-blue-600 to-cyan-700 text-white animate-gradient-xy bg-[length:200%_200%]",
     };
 
+    // Pending状态下，使用淡化的彩色背景，让它比灰色的未测试项目更明显
+    if (isPending) {
+      const pendingColors = {
+        blue: "bg-gradient-to-br from-blue-100 via-indigo-100 to-indigo-200 text-slate-700",
+        green: "bg-gradient-to-br from-emerald-100 via-teal-100 to-teal-200 text-slate-700",
+        indigo: "bg-gradient-to-br from-indigo-100 via-violet-100 to-indigo-200 text-slate-700",
+        teal: "bg-gradient-to-br from-cyan-100 via-teal-100 to-teal-200 text-slate-700",
+        purple: "bg-gradient-to-br from-fuchsia-100 via-purple-100 to-violet-200 text-slate-700",
+        amber: "bg-gradient-to-br from-amber-100 via-orange-100 to-red-200 text-slate-700",
+        rose: "bg-gradient-to-br from-rose-100 via-pink-100 to-pink-200 text-slate-700",
+        red: "bg-gradient-to-br from-red-100 via-rose-100 to-red-200 text-slate-700",
+        orange: "bg-gradient-to-br from-orange-100 via-amber-100 to-orange-200 text-slate-700",
+        cyan: "bg-gradient-to-br from-cyan-100 via-blue-100 to-cyan-200 text-slate-700",
+      };
+      const pendingClass = pendingColors[themeColor] || pendingColors.blue;
+      return base + pendingClass;
+    }
+
     const themeClass = colors[themeColor] || colors.blue;
     return base + themeClass;
   };
@@ -333,14 +366,33 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
     return "text-slate-400";
   };
 
-  const IconBox = ({ children, active, done, themeColor = 'blue' }) => {
+  const IconBox = ({ children, active, done, themeColor = 'blue', untested = false, pending = false }) => {
     let bgClass = "bg-white border border-slate-100 shadow-sm";
     let colorClass = "text-slate-400";
     
-    if (active || done) {
+    if (untested) {
+      bgClass = "bg-slate-50 border-2 border-slate-300 shadow-sm";
+      colorClass = "text-slate-500";
+    } else if (active || done) {
       bgClass = "bg-white/20 text-white backdrop-blur-md border border-white/20";
       colorClass = "text-white";
-    } 
+    } else if (pending) {
+      // Pending状态：使用白色背景和主题色图标，更清晰
+      const iconColors = {
+        blue: "text-blue-600",
+        green: "text-emerald-600",
+        indigo: "text-indigo-600",
+        teal: "text-teal-600",
+        purple: "text-purple-600",
+        amber: "text-amber-600",
+        rose: "text-rose-600",
+        red: "text-red-600",
+        orange: "text-orange-600",
+        cyan: "text-cyan-600",
+      };
+      bgClass = "bg-white border-2 border-slate-200 shadow";
+      colorClass = iconColors[themeColor] || iconColors.blue;
+    }
 
     return (
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 ${bgClass} ${colorClass}`}>
@@ -410,6 +462,21 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   return (
     <div className="h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
+      {/* Legend - 固定在左下角，低调设计不抢主要内容 */}
+      <div className="absolute bottom-6 left-6 z-50 bg-white/70 backdrop-blur-sm border border-slate-200 rounded-lg px-3 py-2 shadow-md">
+        <div className="text-[9px] font-medium text-slate-500 mb-1.5 uppercase tracking-wide">Legend</div>
+        <div className="flex flex-col gap-1.5 text-[11px]">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-4 rounded bg-gradient-to-br from-blue-100 via-indigo-100 to-indigo-200 border border-slate-200"></div>
+            <span className="font-medium text-slate-600">{t.testedLabel}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-4 rounded bg-gradient-to-br from-slate-100 to-slate-200 border border-dashed border-slate-300"></div>
+            <span className="font-medium text-slate-500">{t.untestedLabel}</span>
+          </div>
+        </div>
+      </div>
+      
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -472,6 +539,14 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           scrollbar-width: none;
           -ms-overflow-style: none;
         }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
       `}</style>
 
       {/* Background Gradient Blurs - Natural Colors */}
@@ -528,7 +603,12 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
             >
                 <div className={`w-40 h-28 ${getCardStyle(0, 'blue')}`}>
                 <div className="w-full h-full p-3 flex flex-col items-center justify-center">
-                    <IconBox active={isStageActive(0)} done={activeStage > 0} themeColor="blue">
+                    <IconBox 
+                      active={isStageActive(0)} 
+                      done={activeStage > 0} 
+                      pending={!isStageActive(0) && activeStage === 0}
+                      themeColor="blue"
+                    >
                     <Database size={18} strokeWidth={2.5} />
                     </IconBox>
                     <div className="text-center mt-3">
@@ -562,18 +642,27 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                 const itemWave = getWaveIndex(index);
                 const isFocused = !isAnimationComplete && stageActive && itemWave === scanWave;
                 const isDone = (!isAnimationComplete && stageActive && itemWave < scanWave) || isAnimationComplete;
+                const isPending = !isFocused && !isDone && encoder.tested;
 
                 return (
                     <div 
                       key={index} 
-                      className={`w-full h-22 ${getCardStyle(1, encoder.theme, index)}`}
+                      className={`w-full h-22 ${getCardStyle(1, encoder.theme, index, encoder.tested)} relative`}
                     >
                     <div className="w-full h-full p-3 pl-4 flex items-center gap-3">
-                        <IconBox active={isFocused} done={isDone} themeColor={encoder.theme}>
+                        <IconBox 
+                          active={isFocused && encoder.tested} 
+                          done={isDone && encoder.tested} 
+                          pending={isPending}
+                          themeColor={encoder.theme} 
+                          untested={!encoder.tested}
+                        >
                         <IconComponent size={18} strokeWidth={2.5} />
                         </IconBox>
                         <div className="flex-1 min-w-0 flex flex-col justify-center">
-                        <div className="text-[13px] font-bold tracking-tight leading-tight break-words">{encoder.name}</div>
+                        <div className={`text-[13px] font-bold tracking-tight leading-tight break-words ${!encoder.tested ? 'text-slate-600' : isPending ? 'text-slate-700' : ''}`}>
+                          {encoder.name}
+                        </div>
                         </div>
                     </div>
                     </div>
@@ -597,12 +686,17 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                 className={`w-56 h-48 ${getCardStyle(2, 'purple')}`} 
             >
                 <div className="w-full h-full p-5 flex flex-col items-center justify-center text-center">
-                    <IconBox active={isMambaActive} done={false} themeColor="purple">
+                    <IconBox 
+                      active={isMambaActive} 
+                      done={false} 
+                      pending={!isMambaActive && activeStage < 2}
+                      themeColor="purple"
+                    >
                     <Cpu size={22} strokeWidth={2.5} />
                     </IconBox>
                     <div className="mt-4">
-                    <div className={`font-extrabold text-lg block tracking-tight mb-1 ${isMambaActive || activeStage > 2 ? 'text-white' : 'text-slate-800'}`}>{t.neuroHydra}</div>
-                    <div className={`text-[10px] uppercase tracking-widest font-bold leading-tight ${isMambaActive || activeStage > 2 ? 'text-purple-100' : 'text-slate-400'}`}>{t.multimodalFusion}</div>
+                    <div className={`font-extrabold text-lg block tracking-tight mb-1 ${isMambaActive || activeStage > 2 ? 'text-white' : 'text-slate-700'}`}>{t.neuroHydra}</div>
+                    <div className={`text-[10px] uppercase tracking-widest font-bold leading-tight ${isMambaActive || activeStage > 2 ? 'text-purple-100' : 'text-slate-600'}`}>{t.multimodalFusion}</div>
                     </div>
                 </div>
             </div>
@@ -631,21 +725,30 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                 const itemWave = getWaveIndex(index);
                 const isFocused = !isAnimationComplete && stageActive && itemWave === scanWave;
                 const isDone = (!isAnimationComplete && stageActive && itemWave < scanWave) || isAnimationComplete;
+                const isPending = !isFocused && !isDone && task.tested;
 
                 return (
                     <div 
                       key={index} 
-                      className={`w-full h-22 ${getCardStyle(3, task.theme, index)}`}
+                      className={`w-full h-22 ${getCardStyle(3, task.theme, index, task.tested)} relative`}
                     >
                     <div className="w-full h-full p-3 pl-4 flex items-center gap-3">
                         <div className="flex-shrink-0">
-                        <IconBox active={isFocused} done={isDone} themeColor={task.theme}>
+                        <IconBox 
+                          active={isFocused && task.tested} 
+                          done={isDone && task.tested} 
+                          pending={isPending}
+                          themeColor={task.theme} 
+                          untested={!task.tested}
+                        >
                             <IconComponent size={18} strokeWidth={2.5} />
                         </IconBox>
                         </div>
                         <div className="flex-1 min-w-0 flex flex-col justify-center">
-                        <div className="text-[13px] font-bold tracking-tight leading-tight mb-0.5">{task.name}</div>
-                        <div className={`text-[11px] font-medium leading-tight truncate ${getSubtitleColor(task.theme, isFocused, isDone)}`}>
+                        <div className={`text-[13px] font-bold tracking-tight leading-tight mb-0.5 ${!task.tested ? 'text-slate-600' : isPending ? 'text-slate-700' : ''}`}>
+                          {task.name}
+                        </div>
+                        <div className={`text-[11px] font-medium leading-tight truncate ${!task.tested ? 'text-slate-500' : isPending ? 'text-slate-600' : getSubtitleColor(task.theme, isFocused, isDone)}`}>
                             {task.subtitle}
                         </div>
                         </div>
@@ -656,6 +759,21 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
             </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* Bottom Description Bar - 悬浮旁白区域 */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
+        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+          {/* 装饰光效 */}
+          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-purple-400/60 to-transparent"></div>
+          
+          <p 
+            key={activeStage}
+            className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in"
+          >
+            {getCurrentDescription()}
+          </p>
         </div>
       </div>
     </div>

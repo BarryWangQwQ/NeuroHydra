@@ -12,19 +12,20 @@ const MultiTaskLabelsSlide = () => {
         {
           icon: Brain,
           title: 'Lesion Segmentation',
-          subtitle: '(resection mask)'
+          subtitle: '(resection mask - 切除掩膜)'
         },
         {
           icon: Microscope,
           title: 'Pathology Classification',
-          subtitle: '(FCD/HS etc.)'
+          subtitle: '(FCD: 局灶性皮质发育不良 / HS: 海马硬化 等)'
         },
         {
           icon: TrendingUp,
           title: 'Surgical Outcome',
-          subtitle: '(Seizure Freedom Score)'
+          subtitle: '(Seizure Freedom Score - 癫痫自由度评分)'
         }
-      ]
+      ],
+      narration: '模型同时学习三个任务：找到病灶在哪里，判断是什么病，预测手术效果。这就像医生的思考过程。'
     },
     en: {
       title: 'Multi-Task Labels',
@@ -37,14 +38,15 @@ const MultiTaskLabelsSlide = () => {
         {
           icon: Microscope,
           title: 'Pathology Classification',
-          subtitle: '(FCD/HS etc.)'
+          subtitle: '(FCD: Focal Cortical Dysplasia / HS: Hippocampal Sclerosis, etc.)'
         },
         {
           icon: TrendingUp,
           title: 'Surgical Outcome',
           subtitle: '(Seizure Freedom Score)'
         }
-      ]
+      ],
+      narration: 'The model learns three tasks at once: find where the lesion is, tell what disease it is, and predict surgery results. This is how doctors think too.'
     }
   };
 
@@ -96,6 +98,14 @@ const MultiTaskLabelsSlide = () => {
           background-size: 200% 200%;
           animation: aurora-shift 4s ease infinite, breathe 3s ease-in-out infinite, aurora-glow 3s ease-in-out infinite;
         }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
       `}</style>
 
       {/* Background gradients matching UseCaseSlide */}
@@ -140,6 +150,16 @@ const MultiTaskLabelsSlide = () => {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Bottom Description Bar - 悬浮旁白区域 */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
+        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-indigo-400/60 to-transparent"></div>
+          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+            {t.narration}
+          </p>
         </div>
       </div>
     </div>
