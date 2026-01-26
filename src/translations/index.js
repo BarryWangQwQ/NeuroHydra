@@ -101,10 +101,10 @@ export const translations = {
       privacyPreserving: '隐私保护',
       // 阶段描述（旁白）
       stageDescriptions: {
-        input: '现在来看看模型能处理哪些数据。',
-        encoder: '左边是各种医学数据类型。彩色的是我们已测试的，灰色的是将来可以扩展的。',
-        processing: 'NeuroHydra 在中间，把所有数据融合起来。它的设计对任何医学数据都适用。',
-        heads: '右边是模型能完成的任务：分割、分类、预测等。一个模型，多种任务。这就是我们的目标：通用的医疗 AI 框架。谢谢！',
+        input: '接下来，让我们看看 NeuroHydra 能处理哪些类型的数据。',
+        encoder: '左边展示了各种医学数据模态。彩色的是我们已经验证过的，灰色的是我们计划在未来研究中继续探索的方向。',
+        processing: 'NeuroHydra 位于中心，负责将所有模态的数据融合在一起。',
+        heads: '右边是模型可以完成的任务：分割、分类、预测等等。一个模型，多种任务——这正是我们的目标：打造一个通用的医疗 AI 框架。感谢大家！',
       },
     },
     // SimulationSlide 翻译
@@ -271,10 +271,10 @@ export const translations = {
       privacyPreserving: 'Privacy Preserving',
       // Stage descriptions (narration)
       stageDescriptions: {
-        input: 'Now let\'s see what kinds of data the model can use.',
-        encoder: 'Left side shows different medical data types. Colored ones we tested. Gray ones can be added later.',
-        processing: 'NeuroHydra sits in the center and fuses all the data. Its design works for any medical data.',
-        heads: 'Right side shows tasks the model can do: segmentation, classification, prediction, and more. One model, many tasks. That\'s our goal: a general medical AI framework. Thank you!',
+        input: 'Next, let\'s explore what types of data NeuroHydra can handle.',
+        encoder: 'On the left, we show various medical data modalities. The colored ones are what we\'ve validated, while the gray ones represent directions we plan to explore in future research.',
+        processing: 'NeuroHydra sits at the center, fusing all the modalities together.',
+        heads: 'On the right are the tasks the model can perform: segmentation, classification, prediction, and more. One model, many tasks—that\'s our goal: building a general-purpose medical AI framework. Thank you!',
       },
     },
     // SimulationSlide translations

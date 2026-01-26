@@ -83,7 +83,7 @@ const BenchmarkTableSlide = () => {
         }
       ],
       note: '提示：高亮行为我们的方法。',
-      description: '这是详细的测试结果。NeuroHydra 在所有指标上都是最好的，而且能同时做三个任务。'
+      description: '接下来看看测试结果。简单来说，表格里数字越蓝越好。可以看到我们的方法不仅更准，还能一次完成三个任务，而且跑得更快。'
     },
     en: {
       title: 'Benchmark Results',
@@ -163,7 +163,7 @@ const BenchmarkTableSlide = () => {
         }
       ],
       note: 'Note: highlighted row is our method.',
-      description: 'Here are the detailed results. NeuroHydra scores best on all metrics and does all three tasks at once.'
+      description: "Now let's look at the results. Simply put, the bluer the numbers, the better. As you can see, our method is not only more accurate, but also does three tasks at once—and runs faster too."
     }
   };
 
