@@ -70,10 +70,10 @@ const QASlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-purple-400/60 to-transparent"></div>
-          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent"></div>
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
             {t.narration}
           </p>
         </div>

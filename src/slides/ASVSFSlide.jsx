@@ -567,9 +567,9 @@ const ASVSFSlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1800px] mx-auto flex-1 flex flex-col justify-center">
+      <div className="relative z-10 w-full max-w-[1800px] mx-auto flex-1 flex flex-col justify-center pb-24">
         {/* Title Section */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <h1 className="text-[84px] font-black leading-none tracking-[-0.02em] reveal-title">
             <span className="gradient-text">AS-VSF</span>
           </h1>
@@ -733,15 +733,15 @@ const ASVSFSlide = () => {
                     </div>
                   </div>
 
-                  {/* Tabular Token Row */}
+                  {/* Tabular Token Row - No position encoding, token to token */}
                   <div className="fusion-row mt-1">
                     <span className="text-xs font-bold text-teal-600 w-6">Tab</span>
                     <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'linear-gradient(135deg, #2dd4bf, #14b8a6)', boxShadow: '0 0 10px rgba(45, 212, 191, 0.5)' }}></div>
-                    <span className="fusion-plus text-sm">+</span>
-                    <div style={{ width: '14px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #5eead4, #2dd4bf)' }}></div>
+                    <span className="text-slate-300 text-sm mx-0.5">—</span>
+                    <div style={{ width: '14px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #2dd4bf, #14b8a6)', boxShadow: '0 0 8px rgba(45, 212, 191, 0.4)' }}></div>
                     <span className="fusion-arrow-small text-sm">→</span>
                     <div className="fusion-result-wrapper" style={{ width: '34px', height: '24px' }}>
-                      <div style={{ width: '34px', height: '24px', borderRadius: '6px', background: 'linear-gradient(90deg, #14b8a6 60%, #5eead4 60%)', boxShadow: '0 0 12px rgba(20, 184, 166, 0.6)', opacity: 0, animation: 'result-token-appear 3s ease-in-out infinite', animationDelay: '0.6s' }}></div>
+                      <div style={{ width: '34px', height: '24px', borderRadius: '6px', background: '#14b8a6', boxShadow: '0 0 12px rgba(20, 184, 166, 0.6)', opacity: 0, animation: 'result-token-appear 3s ease-in-out infinite', animationDelay: '0.6s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -755,7 +755,7 @@ const ASVSFSlide = () => {
                     <div className="merge-token-axial" style={{ width: '34px', height: '24px', left: '3px' }}></div>
                     <div className="merge-token-coronal" style={{ width: '34px', height: '24px', top: '32px', left: '3px' }}></div>
                     <div className="merge-token-sagittal" style={{ width: '34px', height: '24px', top: '64px', left: '3px' }}></div>
-                    <div style={{ position: 'absolute', width: '34px', height: '24px', top: '96px', left: '3px', borderRadius: '6px', background: 'linear-gradient(90deg, #14b8a6 60%, #5eead4 60%)', animation: 'tokens-merge 3s ease-in-out infinite', animationDelay: '0.3s' }}></div>
+                    <div style={{ position: 'absolute', width: '34px', height: '24px', top: '96px', left: '3px', borderRadius: '6px', background: '#14b8a6', animation: 'tokens-merge 3s ease-in-out infinite', animationDelay: '0.3s' }}></div>
                     <div className="final-1d-token" style={{ width: '34px', height: '130px', background: 'linear-gradient(180deg, #3b82f6 0%, #3b82f6 22%, #10b981 25%, #10b981 47%, #ec4899 50%, #ec4899 72%, #14b8a6 75%, #14b8a6 100%)' }}></div>
                   </div>
                 </div>
@@ -816,12 +816,12 @@ const ASVSFSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-fuchsia-400/60 to-transparent"></div>
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-fuchsia-400/50 to-transparent"></div>
           
-          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide">
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide">
             {t.insightDetail}
           </p>
         </div>

@@ -1,6 +1,20 @@
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const FullScreenImageSlide = ({ imagePath = '/images/slide-image.png' }) => {
+  const { language } = useLanguage();
+
+  const content = {
+    zh: {
+      narration: '这是癫痫手术计划的典型流程图，展示了从影像采集到手术结果预测的完整过程。'
+    },
+    en: {
+      narration: 'This is a typical workflow for epilepsy surgery planning, showing the complete process from imaging to outcome prediction.'
+    }
+  };
+
+  const t = content[language] ?? content.en;
+
   return (
     <div 
       className="min-h-screen w-full bg-white flex items-center justify-center relative overflow-hidden"
@@ -15,6 +29,14 @@ const FullScreenImageSlide = ({ imagePath = '/images/slide-image.png' }) => {
           object-fit: contain;
           object-position: center;
           display: block;
+        }
+
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(8px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
         }
       `}</style>
       

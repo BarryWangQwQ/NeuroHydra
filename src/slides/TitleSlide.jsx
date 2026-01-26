@@ -7,14 +7,20 @@ const TitleSlide = () => {
   const content = {
     zh: {
       mainTitle: 'NeuroHydra',
-      subtitle: '基于 DINOv3–Mamba 的通用多模态生物医学 AI 框架',
-      description: '整合多模态 MRI 和临床数据预测癫痫手术结果的概念验证',
+      subtitle: '通用多模态生物医学 AI 框架',
+      description: '整合多模态 MRI 和临床数据预测癫痫手术结果',
+      event: 'AAAI 2026: SPARTA Workshop',
+      date: 'January 26, 2026',
+      speaker: 'Yuhan Wang, Bo Wang',
       narration: '大家好！今天介绍 NeuroHydra，一个帮助医生分析医学影像的 AI 系统。'
     },
     en: {
       mainTitle: 'NeuroHydra',
-      subtitle: 'A Generalizable DINOv3–Mamba Framework for Multimodal Biomedical AI',
-      description: 'Proof-of-concept integrating multimodal MRI and clinical data to predict surgical outcomes in epilepsy',
+      subtitle: 'A Generalizable Multimodal Biomedical AI Framework',
+      description: 'Integrating multimodal MRI and clinical data to predict surgical outcomes in epilepsy',
+      event: 'AAAI 2026: SPARTA Workshop',
+      date: 'January 26, 2026',
+      speaker: 'Yuhan Wang, Bo Wang',
       narration: 'Hello everyone! Today I\'ll introduce NeuroHydra, an AI system that helps doctors analyze medical images.'
     }
   };
@@ -22,7 +28,7 @@ const TitleSlide = () => {
   const t = content[language];
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-start px-20 py-20 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="min-h-screen bg-white flex items-center justify-start px-20 py-20 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -155,7 +161,7 @@ const TitleSlide = () => {
       <div className="max-w-6xl w-full relative z-10">
         
         {/* 主标题  */}
-        <h1 className="text-[130px] font-black leading-[1.25] tracking-[-0.01em] mb-16 title-with-stroke relative">
+        <h1 className="text-[130px] font-black leading-[1.25] tracking-[-0.01em] mb-16 title-with-stroke relative break-words" style={{ fontSize: 'clamp(48px, 10vw, 130px)' }}>
           <span className="title-stroke-layer">{t.mainTitle}</span>
           <span className="title-gradient-layer bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent animate-gradient-shift">
             {t.mainTitle}
@@ -163,14 +169,29 @@ const TitleSlide = () => {
         </h1>
 
         {/* 副标题 - 大字号中等粗细 */}
-        <h2 className="text-[40px] font-semibold text-slate-700 leading-[1.3] tracking-[-0.015em] mb-10 max-w-5xl">
+        <h2 className="text-[40px] font-semibold text-slate-700 leading-[1.2] tracking-[-0.015em] mb-4 break-words">
           {t.subtitle}
         </h2>
 
         {/* 描述 - 正常字号 */}
-        <p className="text-[22px] font-normal text-slate-500 leading-[1.6] tracking-[-0.005em] max-w-4xl">
+        <p className="text-[22px] font-normal text-slate-500 leading-[1.4] tracking-[-0.005em] mb-16 break-words">
           {t.description}
         </p>
+
+        {/* Event Information */}
+        <div className="flex flex-row items-center gap-3 flex-wrap">
+          <p className="text-[16px] font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent break-words">
+            <span className="font-semibold">Event:</span> {t.event}
+          </p>
+          <span className="text-slate-400">|</span>
+          <p className="text-[16px] font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent break-words">
+            <span className="font-semibold">Date:</span> {t.date}
+          </p>
+          <span className="text-slate-400">|</span>
+          <p className="text-[16px] font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent break-words">
+            <span className="font-semibold">Speaker:</span> {t.speaker}
+          </p>
+        </div>
 
       </div>
     </div>

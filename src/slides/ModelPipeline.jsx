@@ -212,15 +212,93 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
     );
   };
 
-  const HConnector = ({ active, width = "w-16" }) => (
+  // Token形状组件 - 根据数据类型显示不同形状
+  const TokenShape = ({ type, color, size = 8, delay = 0 }) => {
+    const baseStyle = {
+      animationDelay: `${delay}s`,
+      filter: `drop-shadow(0 0 3px ${color})`,
+    };
+    
+    if (type === 'square') {
+      // MRI数据 - 方形 (image patches)
+      return (
+        <div 
+          className="absolute animate-token-flow"
+          style={{
+            ...baseStyle,
+            width: size,
+            height: size,
+            background: color,
+            borderRadius: 2,
+          }}
+        />
+      );
+    } else if (type === 'circle') {
+      // Tabular数据 - 圆形 (discrete variables)
+      return (
+        <div 
+          className="absolute animate-token-flow rounded-full"
+          style={{
+            ...baseStyle,
+            width: size,
+            height: size,
+            background: color,
+          }}
+        />
+      );
+    } else if (type === 'hexagon') {
+      // 融合数据 - 六边形
+      return (
+        <div 
+          className="absolute animate-token-flow"
+          style={{
+            ...baseStyle,
+            width: size,
+            height: size * 0.866,
+            background: color,
+            clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+          }}
+        />
+      );
+    } else if (type === 'diamond') {
+      // 分类输出 - 菱形
+      return (
+        <div 
+          className="absolute animate-token-flow"
+          style={{
+            ...baseStyle,
+            width: size,
+            height: size,
+            background: color,
+            transform: 'rotate(45deg)',
+            borderRadius: 2,
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
+  const HConnector = ({ active, width = "w-16", tokenType = "square", tokenColor = "#60A5FA" }) => (
     <div className={`flex items-center ${width} h-full relative overflow-hidden flex-shrink-0 justify-center group`}>
+      {/* 管道背景 */}
       <div className="h-[3px] w-full bg-slate-100 rounded-full relative overflow-hidden">
          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 to-transparent w-[50%] animate-shimmer-subtle opacity-50"></div>
       </div>
       
+      {/* 激活状态的管道高亮 */}
       {active && (
-        <div className="absolute inset-0 flex items-center">
-          <div className="h-[4px] w-full bg-gradient-to-r from-transparent via-blue-400 to-transparent absolute animate-flow-beam rounded-full z-10 blur-[0.5px]"></div>
+        <div className="absolute inset-0 flex items-center pointer-events-none">
+          <div className="h-[3px] w-full bg-gradient-to-r from-blue-400/30 via-purple-400/40 to-blue-400/30 rounded-full"></div>
+        </div>
+      )}
+      
+      {/* 持续流动的token粒子 - 使用符合数据类型的形状 */}
+      {active && (
+        <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden">
+          {[0, 1, 2].map((i) => (
+            <TokenShape key={i} type={tokenType} color={tokenColor} size={8} delay={i * 0.6} />
+          ))}
         </div>
       )}
     </div>
@@ -249,6 +327,56 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
         }
         .animate-flow-beam {
           animation: flow-beam 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        
+        /* Token流动动画 - 物理加速效果 */
+        @keyframes token-flow {
+          0% { 
+            left: -8px; 
+            opacity: 0;
+            transform: scale(0.5);
+          }
+          10% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          90% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          100% { 
+            left: calc(100% + 8px); 
+            opacity: 0;
+            transform: scale(0.5);
+          }
+        }
+        .animate-token-flow {
+          animation: token-flow 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        
+        /* SVG路径上的token流动 */
+        @keyframes svg-token-flow {
+          0% { 
+            offset-distance: 0%;
+            opacity: 0;
+            transform: scale(0.3);
+          }
+          5% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          95% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          100% { 
+            offset-distance: 100%;
+            opacity: 0;
+            transform: scale(0.3);
+          }
         }
 
         @keyframes shimmer-subtle {
@@ -417,13 +545,13 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
 
           </div>
 
-          {/* Connectors */}
+          {/* Connectors - MRI用方形，Tabular用圆形 */}
           <div className="flex flex-col gap-12 h-full justify-center px-8">
              <div className="h-56 flex items-center justify-center">
-                <HConnector active={activeStage >= 1} />
+                <HConnector active={activeStage >= 1} tokenType="square" tokenColor="#3B82F6" />
              </div>
              <div className="h-56 flex items-center justify-center">
-                <HConnector active={activeStage >= 1} />
+                <HConnector active={activeStage >= 1} tokenType="circle" tokenColor="#10B981" />
              </div>
           </div>
 
@@ -483,30 +611,83 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           <div className="w-32 h-[360px] relative flex-shrink-0 mx-4">
              <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
                <defs>
-                 <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                   <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                   <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                 {/* 蓝色发光效果 - 用于MRI路径 */}
+                 <filter id="glowBlue" x="-100%" y="-100%" width="300%" height="300%" colorInterpolationFilters="sRGB">
+                   <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                   <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.231  0 0 0 0 0.51  0 0 0 0 0.965  0 0 0 1 0" result="coloredBlur"/>
+                   <feMerge>
+                     <feMergeNode in="coloredBlur"/>
+                     <feMergeNode in="SourceGraphic"/>
+                   </feMerge>
                  </filter>
+                 {/* 绿色发光效果 - 用于Tabular路径 */}
+                 <filter id="glowGreen" x="-100%" y="-100%" width="300%" height="300%" colorInterpolationFilters="sRGB">
+                   <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                   <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.063  0 0 0 0 0.725  0 0 0 0 0.506  0 0 0 1 0" result="coloredBlur"/>
+                   <feMerge>
+                     <feMergeNode in="coloredBlur"/>
+                     <feMergeNode in="SourceGraphic"/>
+                   </feMerge>
+                 </filter>
+                 <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                   <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3"/>
+                   <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.6"/>
+                   <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.3"/>
+                 </linearGradient>
+                 <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                   <stop offset="0%" stopColor="#10B981" stopOpacity="0.3"/>
+                   <stop offset="50%" stopColor="#34D399" stopOpacity="0.6"/>
+                   <stop offset="100%" stopColor="#10B981" stopOpacity="0.3"/>
+                 </linearGradient>
                </defs>
                
+               {/* 背景虚线管道 */}
                <path d="M 0 60 C 64 60, 64 180, 128 180" fill="none" stroke="#E2E8F0" strokeWidth="3" strokeDasharray="6 6" className="animate-dash-flow opacity-50" />
                <path d="M 0 300 C 64 300, 64 180, 128 180" fill="none" stroke="#E2E8F0" strokeWidth="3" strokeDasharray="6 6" className="animate-dash-flow opacity-50" />
                
-               <path d="M 0 60 C 64 60, 64 180, 128 180" fill="none" stroke={activeStage >= 2 ? "#60A5FA" : "transparent"} strokeWidth="4" className="transition-all duration-700" />
-               <path d="M 0 300 C 64 300, 64 180, 128 180" fill="none" stroke={activeStage >= 2 ? "#34D399" : "transparent"} strokeWidth="4" className="transition-all duration-700" />
+               {/* 激活后的管道 */}
+               <path d="M 0 60 C 64 60, 64 180, 128 180" fill="none" stroke={activeStage >= 2 ? "url(#blueGrad)" : "transparent"} strokeWidth="5" className="transition-all duration-700" />
+               <path d="M 0 300 C 64 300, 64 180, 128 180" fill="none" stroke={activeStage >= 2 ? "url(#greenGrad)" : "transparent"} strokeWidth="5" className="transition-all duration-700" />
 
-               {activeStage === 1 && (
+               {/* 持续流动的token粒子 - 上路径(蓝色方形) - MRI visual patches */}
+               {activeStage >= 1 && (
                  <>
-                   <g filter="url(#glow)">
-                     <circle r="5" fill="#3B82F6" cx="-100" cy="-100">
-                       <animateMotion dur="1s" repeatCount="1" path="M 0 60 C 64 60, 64 180, 128 180" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.55 1"/>
-                     </circle>
-                   </g>
-                   <g filter="url(#glow)">
-                     <circle r="5" fill="#10B981" cx="-100" cy="-100">
-                       <animateMotion dur="1s" repeatCount="1" path="M 0 300 C 64 300, 64 180, 128 180" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.55 1"/>
-                     </circle>
-                   </g>
+                   {[0, 1, 2].map((i) => (
+                     <g key={`top-${i}`} filter="url(#glowBlue)">
+                       <rect x="-5" y="-5" width="10" height="10" rx="2" fill="#3B82F6">
+                         <animateMotion 
+                           dur="2s" 
+                           repeatCount="indefinite" 
+                           path="M 0 60 C 64 60, 64 180, 128 180"
+                           begin={`${i * 0.7}s`}
+                           calcMode="spline" 
+                           keySplines="0.4 0 0.2 1"
+                           keyTimes="0;1"
+                           rotate="auto"
+                         />
+                         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2s" repeatCount="indefinite" begin={`${i * 0.7}s`}/>
+                       </rect>
+                     </g>
+                   ))}
+                   
+                   {/* 持续流动的token粒子 - 下路径(绿色圆形) - Tabular discrete variables */}
+                   {[0, 1, 2].map((i) => (
+                     <g key={`bottom-${i}`} filter="url(#glowGreen)">
+                       <circle r="5" fill="#10B981">
+                         <animateMotion 
+                           dur="2s" 
+                           repeatCount="indefinite" 
+                           path="M 0 300 C 64 300, 64 180, 128 180"
+                           begin={`${i * 0.7}s`}
+                           calcMode="spline" 
+                           keySplines="0.4 0 0.2 1"
+                           keyTimes="0;1"
+                         />
+                         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2s" repeatCount="indefinite" begin={`${i * 0.7}s`}/>
+                         <animate attributeName="r" values="3;5;5;3" keyTimes="0;0.1;0.9;1" dur="2s" repeatCount="indefinite" begin={`${i * 0.7}s`}/>
+                       </circle>
+                     </g>
+                   ))}
                  </>
                )}
              </svg>
@@ -544,7 +725,24 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                    </div>
                 </div>
 
-                <HConnector active={activeStage >= 3} width="w-12" />
+                {/* AS-VSF内部连接器 - 六边形token表示融合数据 */}
+                <div className="flex items-center w-12 h-full relative overflow-hidden flex-shrink-0 justify-center">
+                  <div className="h-[3px] w-full bg-slate-100 rounded-full relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 to-transparent w-[50%] animate-shimmer-subtle opacity-50"></div>
+                  </div>
+                  {activeStage >= 2 && (
+                    <div className="absolute inset-0 flex items-center pointer-events-none">
+                      <div className="h-[3px] w-full bg-gradient-to-r from-purple-400/30 via-amber-400/40 to-purple-400/30 rounded-full"></div>
+                    </div>
+                  )}
+                  {activeStage >= 2 && (
+                    <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden">
+                      {[0, 1].map((i) => (
+                        <TokenShape key={i} type="hexagon" color="#A855F7" size={10} delay={i * 0.9} />
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 {/* Merging Block */}
                 <div 
@@ -565,7 +763,24 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
               
             </div>
 
-            <HConnector active={activeStage >= 4} width="w-12" />
+            {/* AS-VSF到Mamba的连接器 - 六边形token流入序列模型 */}
+            <div className="flex items-center w-12 h-full relative overflow-hidden flex-shrink-0 justify-center">
+              <div className="h-[3px] w-full bg-slate-100 rounded-full relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 to-transparent w-[50%] animate-shimmer-subtle opacity-50"></div>
+              </div>
+              {activeStage >= 3 && (
+                <div className="absolute inset-0 flex items-center pointer-events-none">
+                  <div className="h-[3px] w-full bg-gradient-to-r from-amber-400/30 via-slate-500/40 to-amber-400/30 rounded-full"></div>
+                </div>
+              )}
+              {activeStage >= 3 && (
+                <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden">
+                  {[0, 1, 2].map((i) => (
+                    <TokenShape key={i} type="hexagon" color="#F59E0B" size={10} delay={i * 0.6} />
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Mamba Decoder Block */}
             <div 
@@ -601,38 +816,118 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           <div className="w-32 h-[360px] relative flex-shrink-0 ml-10 mr-4">
              <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
                <defs>
-                  <filter id="glow-purple" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                    <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  {/* 蓝色发光 - Segmentation */}
+                  <filter id="glowBlueDiv" x="-100%" y="-100%" width="300%" height="300%" colorInterpolationFilters="sRGB">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                    <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.376  0 0 0 0 0.647  0 0 0 0 0.98  0 0 0 1 0" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
                   </filter>
+                  {/* 紫色发光 - ILAE */}
+                  <filter id="glowPurple" x="-100%" y="-100%" width="300%" height="300%" colorInterpolationFilters="sRGB">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                    <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.753  0 0 0 0 0.518  0 0 0 0 0.988  0 0 0 1 0" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                  {/* 红色发光 - Pathology */}
+                  <filter id="glowRed" x="-100%" y="-100%" width="300%" height="300%" colorInterpolationFilters="sRGB">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                    <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.973  0 0 0 0 0.443  0 0 0 0 0.443  0 0 0 1 0" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="blueGradDiv" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3"/>
+                    <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.6"/>
+                    <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.3"/>
+                  </linearGradient>
+                  <linearGradient id="purpleGradDiv" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#9333EA" stopOpacity="0.3"/>
+                    <stop offset="50%" stopColor="#C084FC" stopOpacity="0.6"/>
+                    <stop offset="100%" stopColor="#9333EA" stopOpacity="0.3"/>
+                  </linearGradient>
+                  <linearGradient id="redGradDiv" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#EF4444" stopOpacity="0.3"/>
+                    <stop offset="50%" stopColor="#F87171" stopOpacity="0.6"/>
+                    <stop offset="100%" stopColor="#EF4444" stopOpacity="0.3"/>
+                  </linearGradient>
                </defs>
                
+               {/* 背景虚线管道 */}
                <path d="M 6 180 C 67 180, 67 55, 128 55" fill="none" stroke="#E2E8F0" strokeWidth="3" strokeDasharray="6 6" className="animate-dash-flow opacity-50" />
                <path d="M 6 180 L 128 180" fill="none" stroke="#E2E8F0" strokeWidth="3" strokeDasharray="6 6" className="animate-dash-flow opacity-50" />
                <path d="M 6 180 C 67 180, 67 305, 128 305" fill="none" stroke="#E2E8F0" strokeWidth="3" strokeDasharray="6 6" className="animate-dash-flow opacity-50" />
                
-               {/* Active Paths */}
-               <path d="M 6 180 C 67 180, 67 55, 128 55" fill="none" stroke={activeStage >= 5 ? "#60A5FA" : "transparent"} strokeWidth="4" className="transition-all duration-700" />
-               <path d="M 6 180 L 128 180" fill="none" stroke={activeStage >= 5 ? "#C084FC" : "transparent"} strokeWidth="4" className="transition-all duration-700" />
-               <path d="M 6 180 C 67 180, 67 305, 128 305" fill="none" stroke={activeStage >= 5 ? "#F87171" : "transparent"} strokeWidth="4" className="transition-all duration-700" />
+               {/* 激活后的管道 */}
+               <path d="M 6 180 C 67 180, 67 55, 128 55" fill="none" stroke={activeStage >= 5 ? "url(#blueGradDiv)" : "transparent"} strokeWidth="5" className="transition-all duration-700" />
+               <path d="M 6 180 L 128 180" fill="none" stroke={activeStage >= 5 ? "url(#purpleGradDiv)" : "transparent"} strokeWidth="5" className="transition-all duration-700" />
+               <path d="M 6 180 C 67 180, 67 305, 128 305" fill="none" stroke={activeStage >= 5 ? "url(#redGradDiv)" : "transparent"} strokeWidth="5" className="transition-all duration-700" />
                
-               {activeStage === 5 && (
+               {/* 持续流动的token粒子 - 不同形状对应不同输出任务 */}
+               {activeStage >= 4 && (
                  <>
-                   <g filter="url(#glow)">
-                    <circle r="5" fill="#60A5FA" cx="-100" cy="-100">
-                      <animateMotion dur="1s" repeatCount="1" path="M 6 180 C 67 180, 67 55, 128 55" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-                    </circle>
-                   </g>
-                   <g filter="url(#glow-purple)">
-                    <circle r="5" fill="#C084FC" cx="-100" cy="-100">
-                      <animateMotion dur="1s" repeatCount="1" path="M 6 180 L 128 180" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-                    </circle>
-                   </g>
-                   <g>
-                    <circle r="5" fill="#F87171" cx="-100" cy="-100">
-                      <animateMotion dur="1s" repeatCount="1" path="M 6 180 C 67 180, 67 305, 128 305" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-                    </circle>
-                   </g>
+                   {/* 上路径 - 方形 (Segmentation - 像素级分割输出) */}
+                   {[0, 1, 2].map((i) => (
+                     <g key={`div-top-${i}`} filter="url(#glowBlueDiv)">
+                       <rect x="-5" y="-5" width="10" height="10" rx="2" fill="#60A5FA">
+                         <animateMotion 
+                           dur="2.2s" 
+                           repeatCount="indefinite" 
+                           path="M 6 180 C 67 180, 67 55, 128 55"
+                           begin={`${i * 0.7}s`}
+                           calcMode="spline" 
+                           keySplines="0.4 0 0.2 1"
+                           keyTimes="0;1"
+                           rotate="auto"
+                         />
+                         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.2s" repeatCount="indefinite" begin={`${i * 0.7}s`}/>
+                       </rect>
+                     </g>
+                   ))}
+                   
+                   {/* 中路径 - 菱形 (ILAE - 分类决策) */}
+                   {[0, 1, 2].map((i) => (
+                     <g key={`div-mid-${i}`} filter="url(#glowPurple)">
+                       <rect x="-4" y="-4" width="8" height="8" rx="1" fill="#C084FC" transform="rotate(45)">
+                         <animateMotion 
+                           dur="1.8s" 
+                           repeatCount="indefinite" 
+                           path="M 6 180 L 128 180"
+                           begin={`${i * 0.6}s`}
+                           calcMode="spline" 
+                           keySplines="0.4 0 0.2 1"
+                           keyTimes="0;1"
+                         />
+                         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="1.8s" repeatCount="indefinite" begin={`${i * 0.6}s`}/>
+                       </rect>
+                     </g>
+                   ))}
+                   
+                   {/* 下路径 - 圆形 (Pathology - 多标签概率) */}
+                   {[0, 1, 2].map((i) => (
+                     <g key={`div-bot-${i}`} filter="url(#glowRed)">
+                       <circle r="5" fill="#F87171">
+                         <animateMotion 
+                           dur="2.2s" 
+                           repeatCount="indefinite" 
+                           path="M 6 180 C 67 180, 67 305, 128 305"
+                           begin={`${i * 0.7}s`}
+                           calcMode="spline" 
+                           keySplines="0.4 0 0.2 1"
+                           keyTimes="0;1"
+                         />
+                         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.2s" repeatCount="indefinite" begin={`${i * 0.7}s`}/>
+                         <animate attributeName="r" values="3;5;5;3" keyTimes="0;0.1;0.9;1" dur="2.2s" repeatCount="indefinite" begin={`${i * 0.7}s`}/>
+                       </circle>
+                     </g>
+                   ))}
                  </>
                )}
              </svg>
@@ -689,14 +984,14 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-indigo-400/60 to-transparent"></div>
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent"></div>
           
           <p 
             key={activeStage}
-            className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in"
+            className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in"
           >
             {getCurrentDescription()}
           </p>

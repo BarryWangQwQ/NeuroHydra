@@ -171,7 +171,7 @@ const BenchmarkTableSlide = () => {
 
   return (
     <div
-      className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="h-screen bg-white flex items-center justify-center px-12 py-8 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`
@@ -213,33 +213,33 @@ const BenchmarkTableSlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl">
-        <div className="mb-10">
-          <h1 className="text-[96px] font-black leading-[1.05] tracking-[-0.02em]">
+      <div className="relative z-10 w-full max-w-7xl pb-16">
+        <div className="mb-4">
+          <h1 className="text-[48px] font-black leading-[1.1] tracking-[-0.02em]">
             <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient-shift">
               {t.title}
             </span>
           </h1>
-          <p className="mt-4 text-[18px] text-slate-500 leading-relaxed max-w-6xl">
+          <p className="mt-2 text-[14px] text-slate-500 leading-relaxed max-w-6xl">
             {t.subtitle}
           </p>
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur-sm shadow-[0_20px_60px_rgba(15,23,42,0.08)] overflow-hidden">
-          <div className="px-8 py-6 border-b border-slate-200 flex items-center justify-between gap-6">
-            <div className="text-[16px] font-semibold text-slate-700">{t.caption}</div>
-            <div className="text-[14px] text-slate-500">{t.note}</div>
+        <div className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-sm shadow-[0_10px_40px_rgba(15,23,42,0.06)] overflow-hidden">
+          <div className="px-6 py-3 border-b border-slate-200 flex items-center justify-between gap-4">
+            <div className="text-[13px] font-semibold text-slate-700">{t.caption}</div>
+            <div className="text-[12px] text-slate-500">{t.note}</div>
           </div>
 
-          <div className="px-10 py-10">
+          <div className="px-6 py-4">
             <div className="overflow-x-auto">
-              <table className="min-w-[1100px] w-full border-separate border-spacing-0">
+              <table className="min-w-[900px] w-full border-separate border-spacing-0">
                 <thead>
                   <tr>
                     {t.columns.map((col) => (
                       <th
                         key={col}
-                        className="text-left text-[15px] font-semibold text-slate-500 uppercase tracking-wide pb-5 border-b border-slate-200"
+                        className="text-left text-[12px] font-semibold text-slate-500 uppercase tracking-wide pb-3 border-b border-slate-200"
                       >
                         {col}
                       </th>
@@ -256,16 +256,16 @@ const BenchmarkTableSlide = () => {
                           : 'hover:bg-slate-50/70 transition-colors'
                       }
                     >
-                      <td className="py-5 pr-8 text-[18px] font-semibold text-slate-900 border-b border-slate-100">
+                      <td className="py-3 pr-6 text-[14px] font-semibold text-slate-900 border-b border-slate-100">
                         {r.method}
                       </td>
-                      <td className={`py-5 pr-8 text-[18px] border-b border-slate-100 ${r.highlight ? 'font-bold text-blue-600' : 'text-slate-700'}`}>{r.dice}</td>
-                      <td className="py-5 pr-8 text-[18px] text-slate-700 border-b border-slate-100">{r.hd95}</td>
-                      <td className={`py-5 pr-8 text-[18px] border-b border-slate-100 ${r.highlight ? 'font-bold text-blue-600' : 'text-slate-700'}`}>{r.sens}</td>
-                      <td className="py-5 pr-8 text-[18px] text-slate-700 border-b border-slate-100">{r.spec}</td>
-                      <td className="py-5 pr-8 text-[18px] text-slate-700 border-b border-slate-100">{r.pathAcc}</td>
-                      <td className="py-5 pr-8 text-[18px] text-slate-700 border-b border-slate-100">{r.auroc}</td>
-                      <td className={`py-5 text-[18px] border-b border-slate-100 ${r.highlight ? 'font-bold text-green-600' : 'text-slate-700'}`}>{r.flops}</td>
+                      <td className={`py-3 pr-6 text-[14px] border-b border-slate-100 ${r.highlight ? 'font-bold text-blue-600' : 'text-slate-700'}`}>{r.dice}</td>
+                      <td className="py-3 pr-6 text-[14px] text-slate-700 border-b border-slate-100">{r.hd95}</td>
+                      <td className={`py-3 pr-6 text-[14px] border-b border-slate-100 ${r.highlight ? 'font-bold text-blue-600' : 'text-slate-700'}`}>{r.sens}</td>
+                      <td className="py-3 pr-6 text-[14px] text-slate-700 border-b border-slate-100">{r.spec}</td>
+                      <td className="py-3 pr-6 text-[14px] text-slate-700 border-b border-slate-100">{r.pathAcc}</td>
+                      <td className="py-3 pr-6 text-[14px] text-slate-700 border-b border-slate-100">{r.auroc}</td>
+                      <td className={`py-3 text-[14px] border-b border-slate-100 ${r.highlight ? 'font-bold text-green-600' : 'text-slate-700'}`}>{r.flops}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -276,12 +276,12 @@ const BenchmarkTableSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent"></div>
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent"></div>
           
-          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
             {t.description}
           </p>
         </div>

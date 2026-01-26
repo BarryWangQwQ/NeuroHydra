@@ -409,23 +409,23 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
       </div>
       
       {/* Main Container */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col h-screen justify-center px-16 py-12 relative z-10">
+      <div className="w-full max-w-6xl mx-auto flex flex-col h-screen justify-center px-12 py-6 pb-20 relative z-10">
           
           {/* Title Section */}
-          <div className="mb-12">
-              <h1 className="text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
+          <div className="mb-6">
+              <h1 className="text-4xl font-black tracking-tight mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
                 {t.title}
               </h1>
-              <p className="text-xl text-slate-600 font-semibold">
+              <p className="text-base text-slate-600 font-semibold">
                 {t.scenario}
               </p>
           </div>
 
           {/* Race Area */}
-          <div className="flex-1 flex flex-col justify-center max-h-[800px]">
+          <div className="flex-1 flex flex-col justify-center max-h-[600px]">
               
               <LayoutGroup>
-                <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-4">
                     {sortedModels.map((modelId) => (
                       <ModelRow key={modelId} id={modelId} />
                     ))}
@@ -436,12 +436,12 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent"></div>
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
           
-          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
             {t.description}
           </p>
         </div>

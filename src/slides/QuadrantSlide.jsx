@@ -40,7 +40,7 @@ const QuadrantSlide = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col items-center justify-center p-8 relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col items-center justify-center p-6 relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -116,40 +116,40 @@ const QuadrantSlide = () => {
       </div>
 
       {/* 标题 */}
-      <div className="text-center mb-6 relative z-10">
-        <h1 className="text-6xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
+      <div className="text-center mb-4 relative z-10">
+        <h1 className="text-4xl font-extrabold tracking-tight mb-1 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
           {t.title}
         </h1>
-        <p className="text-slate-600 text-xl font-medium">{t.subtitle}</p>
+        <p className="text-slate-600 text-base font-medium">{t.subtitle}</p>
       </div>
 
       {/* 四象限图容器 - 调整高度给旁白留空间 */}
-      <div className="relative w-full max-w-7xl h-[750px] bg-white rounded-3xl shadow-lg border border-slate-200 z-10 mb-20">
+      <div className="relative w-full max-w-6xl h-[520px] bg-white rounded-2xl shadow-lg border border-slate-200 z-10 mb-16">
         
         {/* Y轴标签（左侧） */}
-        <div className="absolute left-6 top-16 bottom-20 flex flex-col justify-between items-center">
-          <div className="text-lg font-bold text-slate-700">{t.higher}</div>
-          <div className="writing-mode-vertical text-xl font-extrabold text-blue-600 flex items-center gap-2" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
-            <Target size={24} className="inline-block" style={{ transform: 'rotate(90deg)' }} />
+        <div className="absolute left-4 top-12 bottom-14 flex flex-col justify-between items-center">
+          <div className="text-sm font-bold text-slate-700">{t.higher}</div>
+          <div className="writing-mode-vertical text-base font-extrabold text-blue-600 flex items-center gap-1" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
+            <Target size={18} className="inline-block" style={{ transform: 'rotate(90deg)' }} />
             <span>{t.accuracy}</span>
-            <Target size={24} className="inline-block" style={{ transform: 'rotate(90deg)' }} />
+            <Target size={18} className="inline-block" style={{ transform: 'rotate(90deg)' }} />
           </div>
-          <div className="text-lg font-bold text-slate-700">{t.lower}</div>
+          <div className="text-sm font-bold text-slate-700">{t.lower}</div>
         </div>
 
         {/* X轴标签（底部） */}
-        <div className="absolute bottom-6 left-32 right-32 flex justify-between items-center">
-          <div className="text-lg font-bold text-slate-700">{t.slower}</div>
-          <div className="flex items-center gap-2 font-extrabold text-xl text-amber-600">
-            <Zap size={24} />
+        <div className="absolute bottom-4 left-24 right-24 flex justify-between items-center">
+          <div className="text-sm font-bold text-slate-700">{t.slower}</div>
+          <div className="flex items-center gap-1 font-extrabold text-base text-amber-600">
+            <Zap size={18} />
             <span>{t.inferenceSpeed}</span>
-            <Zap size={24} />
+            <Zap size={18} />
           </div>
-          <div className="text-lg font-bold text-slate-700">{t.faster}</div>
+          <div className="text-sm font-bold text-slate-700">{t.faster}</div>
         </div>
 
         {/* 主图表区域 */}
-        <div className="absolute top-16 bottom-20 left-32 right-16">
+        <div className="absolute top-12 bottom-14 left-24 right-12">
           
           {/* 坐标轴 */}
           <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-slate-300"></div>
@@ -162,20 +162,20 @@ const QuadrantSlide = () => {
           <div className="absolute top-[50%] left-[50%] right-0 bottom-0 bg-blue-50/40"></div>
 
           {/* 象限标签 */}
-          <div className="absolute top-4 left-4 flex items-center gap-2 text-amber-700 font-bold text-sm bg-white/80 px-3 py-1.5 rounded-lg">
-            <AlertCircle size={16} />
+          <div className="absolute top-3 left-3 flex items-center gap-1 text-amber-700 font-bold text-xs bg-white/80 px-2 py-1 rounded-md">
+            <AlertCircle size={12} />
             <span>{t.quadrant2}</span>
           </div>
-          <div className="absolute top-4 right-4 flex items-center gap-2 text-emerald-700 font-bold text-sm bg-white/80 px-3 py-1.5 rounded-lg">
-            <CheckCircle2 size={16} />
+          <div className="absolute top-3 right-3 flex items-center gap-1 text-emerald-700 font-bold text-xs bg-white/80 px-2 py-1 rounded-md">
+            <CheckCircle2 size={12} />
             <span>{t.quadrant1}</span>
           </div>
-          <div className="absolute bottom-4 left-4 flex items-center gap-2 text-rose-700 font-bold text-sm bg-white/80 px-3 py-1.5 rounded-lg">
-            <AlertCircle size={16} />
+          <div className="absolute bottom-3 left-3 flex items-center gap-1 text-rose-700 font-bold text-xs bg-white/80 px-2 py-1 rounded-md">
+            <AlertCircle size={12} />
             <span>{t.quadrant3}</span>
           </div>
-          <div className="absolute bottom-4 right-4 flex items-center gap-2 text-blue-700 font-bold text-sm bg-white/80 px-3 py-1.5 rounded-lg">
-            <TrendingUp size={16} />
+          <div className="absolute bottom-3 right-3 flex items-center gap-1 text-blue-700 font-bold text-xs bg-white/80 px-2 py-1 rounded-md">
+            <TrendingUp size={12} />
             <span>{t.quadrant4}</span>
           </div>
 
@@ -205,9 +205,9 @@ const QuadrantSlide = () => {
                 ></div>
 
                 {/* 永久显示的标签 */}
-                <div className="absolute left-1/2 top-full mt-3 -translate-x-1/2 pointer-events-none z-20">
+                <div className="absolute left-1/2 top-full mt-2 -translate-x-1/2 pointer-events-none z-20">
                   <div className={`
-                    px-3.5 py-1.5 rounded-full shadow-lg border-2 whitespace-nowrap text-sm font-bold
+                    px-2 py-1 rounded-full shadow-md border whitespace-nowrap text-xs font-bold
                     ${arch.isBest 
                       ? 'bg-gradient-to-br from-rose-500 to-pink-600 text-white border-rose-300 shadow-rose-500/50' 
                       : 'bg-white text-slate-700 border-slate-200'
@@ -215,7 +215,7 @@ const QuadrantSlide = () => {
                   `}>
                     {arch.name}
                     {arch.isBest && (
-                      <span className="ml-1.5 text-rose-100">★</span>
+                      <span className="ml-1 text-rose-100">★</span>
                     )}
                   </div>
                 </div>
@@ -227,12 +227,12 @@ const QuadrantSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-rose-400/60 to-transparent"></div>
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-rose-400/50 to-transparent"></div>
           
-          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
             {t.description}
           </p>
         </div>

@@ -2,6 +2,150 @@ import React from 'react';
 import { Brain, FileText } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
+// 高维数据可视化组件 - 密集点阵表示大量体素
+const HighDimVisualization = ({ delay }) => {
+  // 生成12x12的密集点阵
+  const gridSize = 12;
+  const dots = [];
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      dots.push({ x: i, y: j, delay: (i + j) * 0.01 });
+    }
+  }
+  
+  return (
+    <div 
+      className="relative w-[120px] h-[120px] reveal-line"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        <defs>
+          <linearGradient id="highDimGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2563eb" />
+            <stop offset="50%" stopColor="#9333ea" />
+            <stop offset="100%" stopColor="#ec4899" />
+          </linearGradient>
+        </defs>
+        {/* 背景框 */}
+        <rect 
+          x="5" y="5" width="90" height="90" 
+          rx="8" 
+          fill="none" 
+          stroke="url(#highDimGradient)" 
+          strokeWidth="1.5"
+          opacity="0.3"
+        />
+        {/* 密集的点阵 */}
+        {dots.map((dot, idx) => (
+          <circle
+            key={idx}
+            cx={12 + dot.x * 6.5}
+            cy={12 + dot.y * 6.5}
+            r="2"
+            fill="url(#highDimGradient)"
+            opacity={0.7 + Math.random() * 0.3}
+            className="animate-pulse"
+            style={{ 
+              animationDelay: `${dot.delay}s`,
+              animationDuration: `${1.5 + Math.random()}s`
+            }}
+          />
+        ))}
+        {/* 维度标注 */}
+        <text x="50" y="98" textAnchor="middle" fontSize="8" fill="#64748b" fontWeight="500">
+          10⁷ voxels
+        </text>
+      </svg>
+    </div>
+  );
+};
+
+// 低维数据可视化组件 - 稀疏点表示少量变量
+const LowDimVisualization = ({ delay }) => {
+  // 生成约20个稀疏的点
+  const points = [
+    { x: 20, y: 25, label: 'Age' },
+    { x: 45, y: 20, label: 'Onset' },
+    { x: 70, y: 30, label: 'ASM' },
+    { x: 30, y: 50, label: '' },
+    { x: 55, y: 45, label: '' },
+    { x: 80, y: 55, label: '' },
+    { x: 25, y: 75, label: '' },
+    { x: 50, y: 70, label: '' },
+    { x: 75, y: 80, label: '' },
+    { x: 40, y: 35, label: '' },
+    { x: 65, y: 60, label: '' },
+    { x: 35, y: 65, label: '' },
+    { x: 60, y: 25, label: '' },
+    { x: 85, y: 40, label: '' },
+    { x: 15, y: 45, label: '' },
+    { x: 45, y: 85, label: '' },
+    { x: 70, y: 15, label: '' },
+    { x: 20, y: 60, label: '' },
+    { x: 55, y: 55, label: '' },
+    { x: 80, y: 70, label: '' },
+  ];
+  
+  return (
+    <div 
+      className="relative w-[120px] h-[120px] reveal-line"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        <defs>
+          <linearGradient id="lowDimGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2563eb" />
+            <stop offset="50%" stopColor="#9333ea" />
+            <stop offset="100%" stopColor="#ec4899" />
+          </linearGradient>
+        </defs>
+        {/* 背景框 */}
+        <rect 
+          x="5" y="5" width="90" height="90" 
+          rx="8" 
+          fill="none" 
+          stroke="url(#lowDimGradient)" 
+          strokeWidth="1.5"
+          opacity="0.3"
+        />
+        {/* 稀疏的点 */}
+        {points.map((point, idx) => (
+          <g key={idx}>
+            <circle
+              cx={point.x}
+              cy={point.y}
+              r="5"
+              fill="url(#lowDimGradient)"
+              opacity="0.8"
+              className="animate-pulse"
+              style={{ 
+                animationDelay: `${idx * 0.1}s`,
+                animationDuration: '2s'
+              }}
+            />
+            {point.label && (
+              <text 
+                x={point.x} 
+                y={point.y + 3} 
+                textAnchor="middle" 
+                fontSize="4" 
+                fill="white" 
+                fontWeight="600"
+              >
+                {point.label.charAt(0)}
+              </text>
+            )}
+          </g>
+        ))}
+        {/* 维度标注 */}
+        <text x="50" y="98" textAnchor="middle" fontSize="8" fill="#64748b" fontWeight="500">
+          ~20 vars
+        </text>
+      </svg>
+    </div>
+  );
+};
+
 const UseCaseSlide = () => {
   const { language } = useLanguage();
 
@@ -14,17 +158,19 @@ const UseCaseSlide = () => {
           title: 'Dense Imaging',
           highlight: '(High-Dim)',
           descriptionLine1: '结构性 MRI（磁共振成像）：T1w（T1加权）+ FLAIR（液体衰减反转恢复），约 10^7 体素/体积。',
-          descriptionLine2: '需要稳健特征提取（DINOv3: 自监督视觉 Transformer）。'
+          descriptionLine2: '需要稳健特征提取（DINOv3: 自监督视觉 Transformer）。',
+          visualization: 'high'
         },
         {
           icon: FileText,
           title: 'Sparse Clinical',
           highlight: '(Low-Dim)',
           descriptionLine1: '约 20 个变量：年龄、起病、症状学、ASM（抗癫痫药物）。',
-          descriptionLine2: '关键上下文常被影像淹没。'
+          descriptionLine2: '关键上下文常被影像淹没。',
+          visualization: 'low'
         }
       ],
-      narration: '医院的数据有两种：MRI 图像数据量很大，病人信息表数据量小但很关键。'
+      narration: '我们的应用场景结合了高维的医学影像数据和低维的临床数据。这两种数据需要有效融合。'
     },
     en: {
       title: 'Use Case',
@@ -34,17 +180,19 @@ const UseCaseSlide = () => {
           title: 'Dense Imaging',
           highlight: '(High-Dim)',
           descriptionLine1: 'Structural MRI (Magnetic Resonance Imaging): T1w (T1-weighted) + FLAIR (Fluid-Attenuated Inversion Recovery). ~10^7 voxels per volume.',
-          descriptionLine2: 'Requires robust feature extraction (DINOv3: self-supervised Vision Transformer).'
+          descriptionLine2: 'Requires robust feature extraction (DINOv3: self-supervised Vision Transformer).',
+          visualization: 'high'
         },
         {
           icon: FileText,
           title: 'Sparse Clinical',
           highlight: '(Low-Dim)',
           descriptionLine1: '~20 variables: Age, Onset, Semiology, ASM (Anti-Seizure Medications).',
-          descriptionLine2: 'Critical context often drowned by imaging.'
+          descriptionLine2: 'Critical context often drowned by imaging.',
+          visualization: 'low'
         }
       ],
-      narration: 'Hospital data comes in two types: MRI images are large, patient records are small but crucial.'
+      narration: 'Our use case combines high-dimensional medical imaging data with low-dimensional clinical data. These two data types need effective fusion.'
     }
   };
 
@@ -55,7 +203,7 @@ const UseCaseSlide = () => {
   return (
     <div
       className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
-      style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
+      style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -134,17 +282,17 @@ const UseCaseSlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl flex flex-col gap-14">
+      <div className="relative z-10 w-full max-w-6xl flex flex-col gap-8">
         <h1
-          className="text-[64px] font-black tracking-[-0.01em] text-slate-900"
-          style={{ animationDelay: `${baseDelay}s` }}
+          className="text-[48px] font-black tracking-[-0.01em] text-slate-900"
+          style={{ animationDelay: `${baseDelay}s`, fontSize: 'clamp(32px, 5vw, 48px)' }}
         >
           <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent reveal-line inline-block">
             {t.title}
           </span>
         </h1>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-10">
           {t.items.map((item, index) => {
             const Icon = item.icon;
             const blockDelay = baseDelay + (index + 1) * stepDelay * 2;
@@ -154,25 +302,26 @@ const UseCaseSlide = () => {
 
             return (
               <div key={item.title} className="flex items-start gap-8">
-                <div 
-                  className="flex-shrink-0 w-14 h-14 rounded-2xl icon-aurora flex items-center justify-center mt-1 reveal-line relative overflow-hidden"
-                  style={{ animationDelay: `${titleDelay}s` }}
-                >
-                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-                  <Icon className="w-8 h-8 text-white relative z-10" strokeWidth={1.6} />
+                {/* 可视化图形替代原来的图标 */}
+                <div className="flex-shrink-0">
+                  {item.visualization === 'high' ? (
+                    <HighDimVisualization delay={titleDelay} />
+                  ) : (
+                    <LowDimVisualization delay={titleDelay} />
+                  )}
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-3 flex-wrap">
                     <h2
-                      className="text-[36px] font-black leading-none tracking-[-0.01em] text-slate-900 reveal-line"
-                      style={{ animationDelay: `${titleDelay}s` }}
+                      className="text-[28px] font-black leading-none tracking-[-0.01em] text-slate-900 reveal-line"
+                      style={{ animationDelay: `${titleDelay}s`, fontSize: 'clamp(20px, 3vw, 28px)' }}
                     >
                       {item.title}
                     </h2>
                     <span
-                      className="text-[36px] font-black tracking-[-0.01em] bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent reveal-line flex-shrink-0"
-                      style={{ animationDelay: `${titleDelay}s` }}
+                      className="text-[28px] font-black tracking-[-0.01em] bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent reveal-line flex-shrink-0"
+                      style={{ animationDelay: `${titleDelay}s`, fontSize: 'clamp(20px, 3vw, 28px)' }}
                     >
                       {item.highlight}
                     </span>
@@ -207,11 +356,11 @@ const UseCaseSlide = () => {
         </div>
       </div>
 
-      {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-6xl">
-        <div className="relative px-12 py-4 rounded-xl bg-slate-800/90 backdrop-blur-xl shadow-xl shadow-slate-900/20 border border-slate-700/50">
-          <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-pink-400/60 to-transparent"></div>
-          <p className="text-xl leading-snug text-white font-medium text-center tracking-wide animate-fade-in">
+      {/* Bottom Description Bar - 旁白区域 */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-pink-400/50 to-transparent"></div>
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide">
             {t.narration}
           </p>
         </div>
