@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  font-size: clamp(13px, calc(8px + 0.55vw), 16px);
+/* Set in App.jsx from visualViewport (fallbacks for first paint) */
+:root {
+  --app-vh: 100dvh;
+  --app-vw: 100dvw;
 }
 
-html, body, #root {
-  height: 100%;
+html {
+  /* Scale with both width and height so ultrawide / short windows stay balanced */
+  font-size: clamp(12px, min(0.52vw + 0.42vh, 0.95rem), 18px);
+}
+
+html,
+body,
+#root {
+  height: var(--app-vh, 100dvh);
+  min-height: var(--app-vh, 100dvh);
+  max-width: 100%;
+  overflow-x: hidden;
 }

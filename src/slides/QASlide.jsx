@@ -126,7 +126,7 @@ const QASlide = () => {
 
   return (
     <div
-      className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
       style={{
         fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
         maxWidth: '100vw',
@@ -167,9 +167,14 @@ const QASlide = () => {
 
           {/* Left column — NeuroHydra Team */}
           <div className="reveal-line" style={{ animationDelay: '0.15s' }}>
-            <h3 className="text-[24px] font-extrabold mb-8 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
-              {t.teamLabel}
-            </h3>
+            <h2
+              className="font-black leading-[1.1] tracking-[-0.02em] mb-8"
+              style={{ fontSize: 'clamp(28px, 4.5vw, 48px)' }}
+            >
+              <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-500 bg-clip-text text-transparent">
+                {t.teamLabel}
+              </span>
+            </h2>
             <ul className="space-y-6">
               {t.team.map((person, i) => (
                 <PersonCard key={i} person={person} delay={0.25 + i * 0.1} dotColor="bg-indigo-400" />
@@ -179,9 +184,14 @@ const QASlide = () => {
 
           {/* Right column — Collaborators */}
           <div className="reveal-line" style={{ animationDelay: '0.25s' }}>
-            <h3 className="text-[24px] font-extrabold mb-8 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
-              {t.collabLabel}
-            </h3>
+            <h2
+              className="font-black leading-[1.1] tracking-[-0.02em] mb-8"
+              style={{ fontSize: 'clamp(28px, 4.5vw, 48px)' }}
+            >
+              <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 bg-clip-text text-transparent">
+                {t.collabLabel}
+              </span>
+            </h2>
             <ul className="space-y-6">
               {t.collaborators.map((person, i) => (
                 <PersonCard key={i} person={person} delay={0.35 + i * 0.1} dotColor="bg-purple-400" />

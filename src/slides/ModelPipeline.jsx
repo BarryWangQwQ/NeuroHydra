@@ -305,7 +305,7 @@ const ModelPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   );
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="min-h-slide bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');

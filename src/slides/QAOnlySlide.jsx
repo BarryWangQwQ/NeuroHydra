@@ -6,7 +6,7 @@ const QAOnlySlide = () => {
 
   return (
     <div
-      className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}
     >
       <style>{`

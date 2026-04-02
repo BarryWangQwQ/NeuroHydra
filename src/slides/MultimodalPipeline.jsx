@@ -597,7 +597,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const isMambaActive = isStageActive(2) || isAnimationComplete;
 
   return (
-    <div className="h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-slide bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       {/* Legend - 固定在左下角，低调设计不抢主要内容 */}
       <div className="absolute bottom-6 left-6 z-50 bg-white/70 backdrop-blur-sm border border-slate-200 rounded-lg px-3 py-2 shadow-md">

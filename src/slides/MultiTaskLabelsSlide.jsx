@@ -103,7 +103,7 @@ const MultiTaskLabelsSlide = () => {
 
   return (
     <div
-      className="min-h-screen w-full bg-white flex flex-col items-center justify-center px-12 py-8 relative overflow-hidden"
+      className="min-h-slide w-full bg-white flex flex-col items-center justify-center px-12 py-8 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}
     >
       <style>{`

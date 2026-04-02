@@ -171,7 +171,7 @@ const BenchmarkTableSlide = () => {
 
   return (
     <div
-      className="h-screen bg-white flex items-center justify-center px-12 py-8 relative overflow-hidden"
+      className="h-slide bg-white flex items-center justify-center px-12 py-8 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`

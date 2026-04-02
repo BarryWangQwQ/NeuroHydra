@@ -8,7 +8,7 @@ const ASVSFSlide = () => {
 
   return (
     <div
-      className="h-screen bg-white flex flex-col justify-center px-6 py-4 relative overflow-hidden"
+      className="h-slide bg-white flex flex-col justify-center px-6 py-4 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`

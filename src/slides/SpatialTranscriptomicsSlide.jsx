@@ -12,7 +12,7 @@ const SpatialTranscriptomicsSlide = ({ autoPlay, manualTick }) => {
 
   return (
     <div
-      className="min-h-screen bg-white flex items-center justify-center px-16 py-12 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-16 py-12 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`

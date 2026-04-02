@@ -202,30 +202,27 @@ function AppContent() {
     currentPageRef.current = currentPage
   }, [currentPage])
 
+  // Match slide height to the real visual viewport (Chrome vs Safari, DPI, moving window across monitors)
   useEffect(() => {
-    const htmlEl = document.documentElement
-    if (!('zoom' in htmlEl.style)) return
+    const root = document.documentElement
 
-    const BASE_W = 1440
-    const BASE_H = 900
-
-    const updateZoom = () => {
-      const currentZoom = parseFloat(htmlEl.style.zoom) || 1
-      const realW = window.innerWidth * currentZoom
-      const realH = window.innerHeight * currentZoom
-      const scale = Math.min(realW / BASE_W, realH / BASE_H)
-      if (scale > 1) {
-        htmlEl.style.zoom = String(Math.min(1.5, scale))
-      } else {
-        htmlEl.style.zoom = '1'
-      }
+    const syncViewport = () => {
+      const vv = window.visualViewport
+      const h = vv?.height ?? window.innerHeight
+      const w = vv?.width ?? window.innerWidth
+      root.style.setProperty('--app-vh', `${h}px`)
+      root.style.setProperty('--app-vw', `${w}px`)
     }
 
-    updateZoom()
-    window.addEventListener('resize', updateZoom)
+    syncViewport()
+    window.addEventListener('resize', syncViewport)
+    const vv = window.visualViewport
+    vv?.addEventListener('resize', syncViewport)
+    vv?.addEventListener('scroll', syncViewport)
     return () => {
-      window.removeEventListener('resize', updateZoom)
-      htmlEl.style.zoom = '1'
+      window.removeEventListener('resize', syncViewport)
+      vv?.removeEventListener('resize', syncViewport)
+      vv?.removeEventListener('scroll', syncViewport)
     }
   }, [])
 
@@ -326,8 +323,9 @@ function AppContent() {
         /* 禁用页面级滚动 / Disable page-level scrolling */
         body, html {
           overflow: hidden !important;
-          height: 100vh;
-          width: 100vw;
+          height: var(--app-vh, 100dvh);
+          width: 100%;
+          max-width: 100%;
         }
         
         /* 页面过渡动画 / Page transition animation */

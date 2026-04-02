@@ -316,7 +316,7 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
   };
 
   return (
-    <div className="h-screen bg-white text-[#1C1E21] selection:bg-blue-100 flex flex-col overflow-y-auto overflow-x-hidden relative flat-scrollbar" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-slide min-h-slide bg-white text-[#1C1E21] selection:bg-blue-100 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden relative flat-scrollbar px-12 py-8" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -367,6 +367,16 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
         .animate-fade-in {
           animation: fade-in 0.5s ease-out forwards;
         }
+
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-shift {
+          background-size: 200% auto;
+          animation: gradient-shift 8s ease infinite;
+        }
       `}</style>
 
       {/* Background Gradient Blurs - Natural Colors */}
@@ -404,22 +414,23 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
              }}></div>
       </div>
       
-      {/* Main Container */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col h-screen px-12 py-4 relative z-10">
+      {/* Main block — vertically centered as one unit (like BenchmarkTableSlide), not stuck to top */}
+      <div className="relative z-10 w-full max-w-7xl flex flex-col shrink-0">
           
-          {/* Title Section */}
-          <div className="mb-4 pt-3 flex-shrink-0">
-              <h1 className="text-3xl font-black tracking-tight mb-1 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
-                {t.title}
+          {/* Title — matches BenchmarkTableSlide heading treatment */}
+          <div className="mb-2 w-full">
+              <h1 className="text-[48px] font-black leading-[1.1] tracking-[-0.02em]">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient-shift">
+                  {t.title}
+                </span>
               </h1>
-              <p className="text-sm text-slate-600 font-semibold">
+              <p className="mt-1.5 text-[14px] text-slate-500 leading-snug max-w-6xl">
                 {t.scenario}
               </p>
           </div>
 
-          {/* Race Area */}
-          <div className="flex-1 flex flex-col justify-center min-h-0">
-              
+          {/* Race rows — tight under title; whole column is centered in viewport */}
+          <div className="pt-1">
               <LayoutGroup>
                 <div className="flex flex-col gap-3">
                     {sortedModels.map((modelId) => (
@@ -429,8 +440,8 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
               </LayoutGroup>
           </div>
 
-          {/* Description Bar - in flow below race table */}
-          <div className="mt-3 mb-3 w-[90%] max-w-5xl mx-auto flex-shrink-0">
+          {/* Description Bar */}
+          <div className="mt-3 w-full">
             <div className="relative px-6 py-2.5 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
               <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
               <p className="text-base leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
