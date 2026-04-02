@@ -214,7 +214,11 @@ function AppContent() {
       const realW = window.innerWidth * currentZoom
       const realH = window.innerHeight * currentZoom
       const scale = Math.min(realW / BASE_W, realH / BASE_H)
-      htmlEl.style.zoom = String(Math.max(0.65, Math.min(1.5, scale)))
+      if (scale > 1) {
+        htmlEl.style.zoom = String(Math.min(1.5, scale))
+      } else {
+        htmlEl.style.zoom = '1'
+      }
     }
 
     updateZoom()
