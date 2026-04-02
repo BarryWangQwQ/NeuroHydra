@@ -9,18 +9,12 @@ const TitleSlide = () => {
       mainTitle: 'NeuroHydra',
       subtitle: '通用多模态生物医学 AI 框架',
       description: '整合多模态 MRI 和临床数据预测癫痫手术结果',
-      event: 'AAAI 2026: SPARTA Workshop',
-      date: 'January 26, 2026',
-      speaker: 'Yuhan Wang, Bo Wang',
       narration: '大家好！今天介绍 NeuroHydra，一个帮助医生分析医学影像的 AI 系统。'
     },
     en: {
       mainTitle: 'NeuroHydra',
       subtitle: 'A Generalizable Multimodal Biomedical AI Framework',
       description: 'Integrating multimodal MRI and clinical data to predict surgical outcomes in epilepsy',
-      event: 'AAAI 2026: SPARTA Workshop',
-      date: 'January 26, 2026',
-      speaker: 'Yuhan Wang, Bo Wang',
       narration: 'Hello everyone! Today I\'ll introduce NeuroHydra, an AI system that helps doctors analyze medical images.'
     }
   };
@@ -177,21 +171,6 @@ const TitleSlide = () => {
         <p className="text-[22px] font-normal text-slate-500 leading-[1.4] tracking-[-0.005em] mb-16 break-words">
           {t.description}
         </p>
-
-        {/* Event Information */}
-        <div className="flex flex-row items-center gap-3 flex-wrap">
-          <p className="text-[16px] font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent break-words">
-            <span className="font-semibold">Event:</span> {t.event}
-          </p>
-          <span className="text-slate-400">|</span>
-          <p className="text-[16px] font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent break-words">
-            <span className="font-semibold">Date:</span> {t.date}
-          </p>
-          <span className="text-slate-400">|</span>
-          <p className="text-[16px] font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent break-words">
-            <span className="font-semibold">Speaker:</span> {t.speaker}
-          </p>
-        </div>
 
       </div>
     </div>

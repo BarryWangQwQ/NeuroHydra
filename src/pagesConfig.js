@@ -17,6 +17,8 @@ import QuadrantSlide from './slides/QuadrantSlide.jsx'
 import BenchmarkTableSlide from './slides/BenchmarkTableSlide.jsx'
 import QASlide from './slides/QASlide.jsx'
 import QAOnlySlide from './slides/QAOnlySlide.jsx'
+import SpatialTranscriptomicsSlide from './slides/SpatialTranscriptomicsSlide.jsx'
+import StatusRoadmapSlide from './slides/StatusRoadmapSlide.jsx'
 
 // Wrapper component for FullScreenImageSlide with image path
 const FullScreenImageSlideWrapper = (props) =>
@@ -41,8 +43,10 @@ export const pages = [
   { id: 9, component: QuadrantSlide, key: 'quadrant' },
   { id: 10, component: BenchmarkTableSlide, key: 'benchmark-table' },
   { id: 11, component: MultimodalPipeline, key: 'multi' },
-  { id: 12, component: QASlide, key: 'acknowledgements' },
-  { id: 13, component: QAOnlySlide, key: 'qa' }
+  { id: 12, component: SpatialTranscriptomicsSlide, key: 'spatial-transcriptomics' },
+  { id: 13, component: StatusRoadmapSlide, key: 'status-roadmap' },
+  { id: 14, component: QASlide, key: 'acknowledgements' },
+  { id: 15, component: QAOnlySlide, key: 'qa' }
 ]
 
 // 导出总页数 / Export total pages count
