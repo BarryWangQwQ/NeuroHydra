@@ -201,7 +201,30 @@ function AppContent() {
   useEffect(() => {
     currentPageRef.current = currentPage
   }, [currentPage])
-  
+
+  useEffect(() => {
+    const htmlEl = document.documentElement
+    if (!('zoom' in htmlEl.style)) return
+
+    const BASE_W = 1440
+    const BASE_H = 900
+
+    const updateZoom = () => {
+      const currentZoom = parseFloat(htmlEl.style.zoom) || 1
+      const realW = window.innerWidth * currentZoom
+      const realH = window.innerHeight * currentZoom
+      const scale = Math.min(realW / BASE_W, realH / BASE_H)
+      htmlEl.style.zoom = String(Math.max(0.65, Math.min(1.5, scale)))
+    }
+
+    updateZoom()
+    window.addEventListener('resize', updateZoom)
+    return () => {
+      window.removeEventListener('resize', updateZoom)
+      htmlEl.style.zoom = '1'
+    }
+  }, [])
+
   // 上一页处理（淡出 → 切换 → 淡入）
   // Previous page handler (fade out → switch → fade in)
   const handlePrevPage = useCallback(() => {
