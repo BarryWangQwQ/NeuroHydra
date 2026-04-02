@@ -23,7 +23,12 @@ const QASlide = () => {
         },
         {
           name: 'Bo Wang',
-          lines: ['Barry@owo.ai'],
+          lines: [
+            'M.S. in Computer Science, Boston University',
+            'Technical Advisor, Beijing Kangren Medical Device Co., Ltd.',
+            'Founder, Beijing Möbius Future Technology Co., Ltd.',
+            'Founder, OwO.AI',
+          ],
         },
       ],
       collaborators: [
@@ -36,7 +41,9 @@ const QASlide = () => {
         },
         {
           name: 'Liu Meng',
-          lines: [],
+          lines: [
+            'M.S. in Computer Science, Osaka Institute of Technology',
+          ],
         },
         {
           name: 'Felix Nwajei',
@@ -66,7 +73,12 @@ const QASlide = () => {
         },
         {
           name: 'Bo Wang',
-          lines: ['Barry@owo.ai'],
+          lines: [
+            'M.S. in Computer Science, Boston University',
+            'Technical Advisor, Beijing Kangren Medical Device Co., Ltd.',
+            'Founder, Beijing Möbius Future Technology Co., Ltd.',
+            'Founder, OwO.AI',
+          ],
         },
       ],
       collaborators: [
@@ -79,7 +91,9 @@ const QASlide = () => {
         },
         {
           name: 'Liu Meng',
-          lines: [],
+          lines: [
+            'M.S. in Computer Science, Osaka Institute of Technology',
+          ],
         },
         {
           name: 'Felix Nwajei',
@@ -116,7 +130,7 @@ const QASlide = () => {
 
   return (
     <div
-      className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="h-full bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
       style={{
         fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
         maxWidth: '100vw',
