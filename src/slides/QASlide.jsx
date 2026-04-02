@@ -6,73 +6,125 @@ const QASlide = () => {
 
   const content = {
     zh: {
-      title: 'Acknowledgements',
+      teamLabel: 'NeuroHydra Team',
+      collabLabel: 'Collaborators',
+      team: [
+        {
+          name: 'Tim Pagliaro',
+          lines: ['Imaging Scientist', 'Formerly: Novartis & Novo Nordisk'],
+        },
+        {
+          name: 'Yuhan Wang',
+          lines: [
+            'Independent Researcher',
+            'Duke MSQM: Health Analytics',
+            'Finance Liaison to Medical Affairs (Biotech/Pharma)',
+          ],
+        },
+        {
+          name: 'Bo Wang',
+          lines: ['Barry@owo.ai'],
+        },
+      ],
       collaborators: [
         {
           name: 'Christopher P. Eckstein, MD',
-          title: 'Associate Professor of Neurology',
-          subtitle: 'Division Chief, Neuroimmunology and Multiple Sclerosis'
+          lines: [
+            'Associate Professor of Neurology',
+            'Division Chief, Neuroimmunology and Multiple Sclerosis',
+          ],
         },
         {
-          name: 'Tim Pagliaro',
-          title: 'Imaging Scientist',
-          subtitle: 'Formerly: Novartis & Novo Nordisk'
-        }
+          name: 'Liu Meng',
+          lines: [],
+        },
+        {
+          name: 'Felix Nwajei',
+          lines: [
+            'Residency: Duke University School of Medicine (Neurology)',
+            'MD: University of Lagos College of Medicine',
+            'PhD: University of Lagos College of Medicine',
+          ],
+        },
       ],
-      contacts: [
-        { name: 'YuHan Wang', email: 'wandereryuhan@gmail.com' },
-        { name: 'Bo Wang', email: 'Barry@owo.ai' }
-      ]
     },
     en: {
-      title: 'Acknowledgements',
+      teamLabel: 'NeuroHydra Team',
+      collabLabel: 'Collaborators',
+      team: [
+        {
+          name: 'Tim Pagliaro',
+          lines: ['Imaging Scientist', 'Formerly: Novartis & Novo Nordisk'],
+        },
+        {
+          name: 'Yuhan Wang',
+          lines: [
+            'Independent Researcher',
+            'Duke MSQM: Health Analytics',
+            'Finance Liaison to Medical Affairs (Biotech/Pharma)',
+          ],
+        },
+        {
+          name: 'Bo Wang',
+          lines: ['Barry@owo.ai'],
+        },
+      ],
       collaborators: [
         {
           name: 'Christopher P. Eckstein, MD',
-          title: 'Associate Professor of Neurology',
-          subtitle: 'Division Chief, Neuroimmunology and Multiple Sclerosis'
+          lines: [
+            'Associate Professor of Neurology',
+            'Division Chief, Neuroimmunology and Multiple Sclerosis',
+          ],
         },
         {
-          name: 'Tim Pagliaro',
-          title: 'Imaging Scientist',
-          subtitle: 'Formerly: Novartis & Novo Nordisk'
-        }
+          name: 'Liu Meng',
+          lines: [],
+        },
+        {
+          name: 'Felix Nwajei',
+          lines: [
+            'Residency: Duke University School of Medicine (Neurology)',
+            'MD: University of Lagos College of Medicine',
+            'PhD: University of Lagos College of Medicine',
+          ],
+        },
       ],
-      contacts: [
-        { name: 'YuHan Wang', email: 'wandereryuhan@gmail.com' },
-        { name: 'Bo Wang', email: 'Barry@owo.ai' }
-      ]
-    }
+    },
   };
 
   const t = content[language] ?? content.en;
 
+  const PersonCard = ({ person, delay, dotColor }) => (
+    <li
+      className="flex items-start gap-3 reveal-line"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <span className={`flex-shrink-0 w-2 h-2 rounded-full mt-2.5 ${dotColor}`} />
+      <div className="flex flex-col">
+        <span className="text-[20px] font-semibold text-slate-800 leading-relaxed">
+          {person.name}
+        </span>
+        {person.lines.map((line, i) => (
+          <span key={i} className="text-[15px] font-medium text-slate-500 leading-relaxed">
+            {line}
+          </span>
+        ))}
+      </div>
+    </li>
+  );
+
   return (
     <div
       className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
-      style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}
+      style={{
+        fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+        maxWidth: '100vw',
+        overflowX: 'hidden',
+      }}
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-
-        @keyframes gradient-shift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .animate-gradient-shift {
-          background-size: 200% auto;
-          animation: gradient-shift 8s ease infinite;
-        }
-
-        @keyframes fade-in {
-          0% { opacity: 0; transform: translateY(8px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-out forwards;
-        }
 
         @keyframes fade-up {
           0% { opacity: 0; transform: translateY(18px); }
@@ -84,7 +136,7 @@ const QASlide = () => {
         }
       `}</style>
 
-      {/* Background gradients (match existing slides) */}
+      {/* Background gradients */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-24 -left-24 w-[720px] h-[720px] rounded-full blur-3xl"
@@ -100,63 +152,41 @@ const QASlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center justify-center gap-20">
-        <h1 className="text-[132px] font-black leading-[0.95] tracking-[-0.02em] text-center break-words" style={{ fontSize: 'clamp(48px, 12vw, 132px)' }}>
-          <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient-shift">
-            {t.title}
-          </span>
-        </h1>
+      <div className="relative z-10 w-full max-w-6xl">
+        <div className="grid grid-cols-2 gap-10">
 
-        {/* Collaborators and Contacts - Two distinct sections */}
-        <div className="w-full flex flex-col gap-8 max-w-4xl">
-          {/* Collaborators Section */}
-          <div className="relative px-8 py-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm reveal-line" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
-            <h3 className="text-[20px] font-bold text-slate-800 mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Collaborators
+          {/* Left column — NeuroHydra Team */}
+          <div
+            className="relative px-10 py-8 rounded-3xl bg-gradient-to-br from-indigo-50/80 to-blue-50/60 border border-indigo-100 shadow-sm reveal-line"
+            style={{ animationDelay: '0.15s' }}
+          >
+            <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-indigo-300 to-transparent" />
+            <h3 className="text-[24px] font-extrabold mb-6 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
+              {t.teamLabel}
             </h3>
-            <ul className="space-y-4">
-              {t.collaborators.map((collaborator, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-2 h-2 rounded-full mt-2 bg-gradient-to-r from-blue-600 to-indigo-600"></span>
-                  <div className="flex flex-col">
-                    <span className="text-[18px] font-semibold text-slate-800 leading-relaxed">
-                      {collaborator.name}
-                    </span>
-                    <span className="text-[15px] font-medium text-slate-600">
-                      {collaborator.title}
-                    </span>
-                    <span className="text-[14px] text-slate-500">
-                      {collaborator.subtitle}
-                    </span>
-                  </div>
-                </li>
+            <ul className="space-y-5">
+              {t.team.map((person, i) => (
+                <PersonCard key={i} person={person} delay={0.25 + i * 0.1} dotColor="bg-indigo-400" />
               ))}
             </ul>
           </div>
 
-          {/* Contacts Section */}
-          <div className="relative px-8 py-6 rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 shadow-sm reveal-line" style={{ animationDelay: '0.4s' }}>
-            <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
-            <h3 className="text-[20px] font-bold text-slate-800 mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Contacts
+          {/* Right column — Collaborators */}
+          <div
+            className="relative px-10 py-8 rounded-3xl bg-gradient-to-br from-purple-50/80 to-pink-50/60 border border-purple-100 shadow-sm reveal-line"
+            style={{ animationDelay: '0.25s' }}
+          >
+            <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent" />
+            <h3 className="text-[24px] font-extrabold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
+              {t.collabLabel}
             </h3>
-            <ul className="space-y-3">
-              {t.contacts.map((contact, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-2 h-2 rounded-full mt-2 bg-gradient-to-r from-purple-600 to-pink-600"></span>
-                  <div className="flex flex-col">
-                    <span className="text-[18px] font-semibold text-slate-800 leading-relaxed">
-                      {contact.name}
-                    </span>
-                    <span className="text-[15px] font-medium text-slate-600">
-                      {contact.email}
-                    </span>
-                  </div>
-                </li>
+            <ul className="space-y-5">
+              {t.collaborators.map((person, i) => (
+                <PersonCard key={i} person={person} delay={0.35 + i * 0.1} dotColor="bg-purple-400" />
               ))}
             </ul>
           </div>
+
         </div>
       </div>
     </div>

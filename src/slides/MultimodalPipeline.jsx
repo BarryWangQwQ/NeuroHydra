@@ -42,8 +42,10 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [showLabels, setShowLabels] = useState(false);
+  const [highlightNextSteps, setHighlightNextSteps] = useState(false);
+  const [highlightDownstream, setHighlightDownstream] = useState(false);
   const firstManual = useRef(true);
-  const manualCenterStep = useRef(false); // 手动模式：下一步回到起点前先停留中心
+  const manualCenterStep = useRef(false);
   
   const scrollContainerRef = useRef(null);
   const stageRefs = useRef([]); 
@@ -51,8 +53,13 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
 
   const stages = ['input', 'encoder', 'processing', 'heads'];
 
-  // 获取当前阶段的描述文本
   const getCurrentDescription = () => {
+    if (isAnimationComplete && highlightDownstream) {
+      return t.stageDescriptions?.downstream || '';
+    }
+    if (isAnimationComplete && highlightNextSteps) {
+      return t.stageDescriptions?.bridge || '';
+    }
     const stageKey = stages[activeStage];
     return t.stageDescriptions?.[stageKey] || '';
   };
@@ -62,9 +69,9 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const encoders = [
     { icon: Brain, name: t.brainMRI, theme: 'indigo', tested: true },
     { icon: Scan, name: t.chestCT, theme: 'blue', tested: false },
-    { icon: Microscope, name: t.pathologyWSI, theme: 'rose', tested: false },   
+    { icon: Microscope, name: t.pathologyWSI, theme: 'rose', tested: false, nextStep: true },   
     { icon: FileText, name: t.clinicalNotes, theme: 'teal', tested: true }, 
-    { icon: Dna, name: t.genomics, theme: 'green', tested: false },    
+    { icon: Dna, name: t.genomics, theme: 'green', tested: false, nextStep: true },    
     { icon: Activity, name: t.leadECG, theme: 'red', tested: false }, 
     { icon: Search, name: t.dermoscopy, theme: 'orange', tested: false }, 
     { icon: Eye, name: t.fundusImage, theme: 'cyan', tested: false },
@@ -104,6 +111,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       setIsAnimationComplete(false);
       setShowLabels(false);
       setScanWave(-1);
+      setHighlightDownstream(false);
     }
     setIsPlaying(autoPlay);
   }, [autoPlay]);
@@ -141,9 +149,15 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       return;
     }
     
-    // 如果上一轮已经在中心视角，当前点击回到起点
     if (manualCenterStep.current) {
+      if (!highlightDownstream) {
+        setHighlightNextSteps(true);
+        setHighlightDownstream(true);
+        return;
+      }
       manualCenterStep.current = false;
+      setHighlightDownstream(false);
+      setHighlightNextSteps(false);
       setIsAnimationComplete(false);
       setShowLabels(false);
       setScanWave(-1);
@@ -181,6 +195,21 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       });
     }
   }, [activeStage, autoPlay, isScrolling]);
+
+  useEffect(() => {
+    if (showLabels && isAnimationComplete) {
+      const timer = setTimeout(() => setHighlightNextSteps(true), 1500);
+      return () => clearTimeout(timer);
+    }
+    setHighlightNextSteps(false);
+  }, [showLabels, isAnimationComplete]);
+
+  useEffect(() => {
+    if (highlightNextSteps && !highlightDownstream && autoPlay) {
+      const timer = setTimeout(() => setHighlightDownstream(true), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [highlightNextSteps, highlightDownstream, autoPlay]);
 
   // 扫描动画控制：波浪式扫描
   useEffect(() => {
@@ -270,11 +299,29 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const isStageActive = (index) => activeStage === index;
   
   // 核心样式逻辑
-  const getCardStyle = (stageIndex, themeColor, itemIndex = -1, isTested = true) => {
+  const getCardStyle = (stageIndex, themeColor, itemIndex = -1, isTested = true, isNextStep = false, isDownstreamHighlight = false) => {
     const stageActive = isStageActive(stageIndex);
     const isPast = activeStage > stageIndex;
     
     let base = "transition-all duration-500 ease-out rounded-2xl relative overflow-hidden flex border fix-safari-radius will-change-transform ";
+
+    if (isDownstreamHighlight) {
+      const dsBorders = {
+        blue: "border-blue-400 shadow-[0_4px_20px_-4px_rgba(59,130,246,0.35)] ring-2 ring-blue-300/30",
+        purple: "border-purple-400 shadow-[0_4px_20px_-4px_rgba(168,85,247,0.35)] ring-2 ring-purple-300/30",
+        rose: "border-rose-400 shadow-[0_4px_20px_-4px_rgba(244,114,182,0.35)] ring-2 ring-rose-300/30",
+        amber: "border-amber-400 shadow-[0_4px_20px_-4px_rgba(251,191,36,0.35)] ring-2 ring-amber-300/30",
+        orange: "border-orange-400 shadow-[0_4px_20px_-4px_rgba(251,146,60,0.35)] ring-2 ring-orange-300/30",
+        cyan: "border-cyan-400 shadow-[0_4px_20px_-4px_rgba(34,211,238,0.35)] ring-2 ring-cyan-300/30",
+        green: "border-emerald-400 shadow-[0_4px_20px_-4px_rgba(52,211,153,0.35)] ring-2 ring-emerald-300/30",
+        indigo: "border-indigo-400 shadow-[0_4px_20px_-4px_rgba(99,102,241,0.35)] ring-2 ring-indigo-300/30",
+        teal: "border-teal-400 shadow-[0_4px_20px_-4px_rgba(45,212,191,0.35)] ring-2 ring-teal-300/30",
+        red: "border-red-400 shadow-[0_4px_20px_-4px_rgba(248,113,113,0.35)] ring-2 ring-red-300/30",
+      };
+      base += "scale-100 opacity-90 bg-gradient-to-br from-white via-white to-slate-50 border-2 border-dashed z-10 ";
+      base += (dsBorders[themeColor] || "border-blue-400") + " ";
+      return base;
+    }
     
     let isFocused = false; 
     let isDone = false;    
@@ -307,8 +354,16 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       isPending = true;
     }
 
-    // 如果项目未测试，使用灰色虚线样式（除非它是 RawData 或 NeuroHydra）
     if (!isTested && stageIndex !== 0 && stageIndex !== 2) {
+      if (isNextStep) {
+        const nextStepBorders = {
+          rose: "border-rose-400 shadow-[0_4px_20px_-4px_rgba(244,114,182,0.35)] ring-2 ring-rose-300/30",
+          green: "border-emerald-400 shadow-[0_4px_20px_-4px_rgba(52,211,153,0.35)] ring-2 ring-emerald-300/30",
+        };
+        base += "scale-100 opacity-90 bg-gradient-to-br from-white via-white to-slate-50 border-2 border-dashed z-10 ";
+        base += (nextStepBorders[themeColor] || "border-blue-400") + " ";
+        return base;
+      }
       base += "scale-95 opacity-50 bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-dashed border-slate-400 z-0 ";
       return base;
     }
@@ -366,11 +421,35 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
     return "text-slate-400";
   };
 
-  const IconBox = ({ children, active, done, themeColor = 'blue', untested = false, pending = false }) => {
+  const IconBox = ({ children, active, done, themeColor = 'blue', untested = false, pending = false, nextStepHighlighted = false, downstreamHighlighted = false }) => {
     let bgClass = "bg-white border border-slate-100 shadow-sm";
     let colorClass = "text-slate-400";
     
-    if (untested) {
+    if (downstreamHighlighted) {
+      const dsStyles = {
+        blue: { bg: "bg-blue-50 border-2 border-blue-300 shadow-sm", color: "text-blue-600" },
+        purple: { bg: "bg-purple-50 border-2 border-purple-300 shadow-sm", color: "text-purple-600" },
+        rose: { bg: "bg-rose-50 border-2 border-rose-300 shadow-sm", color: "text-rose-600" },
+        amber: { bg: "bg-amber-50 border-2 border-amber-300 shadow-sm", color: "text-amber-600" },
+        orange: { bg: "bg-orange-50 border-2 border-orange-300 shadow-sm", color: "text-orange-600" },
+        cyan: { bg: "bg-cyan-50 border-2 border-cyan-300 shadow-sm", color: "text-cyan-600" },
+        green: { bg: "bg-emerald-50 border-2 border-emerald-300 shadow-sm", color: "text-emerald-600" },
+        indigo: { bg: "bg-indigo-50 border-2 border-indigo-300 shadow-sm", color: "text-indigo-600" },
+        teal: { bg: "bg-teal-50 border-2 border-teal-300 shadow-sm", color: "text-teal-600" },
+        red: { bg: "bg-red-50 border-2 border-red-300 shadow-sm", color: "text-red-600" },
+      };
+      const ds = dsStyles[themeColor] || { bg: "bg-slate-100 border-2 border-slate-300", color: "text-slate-500" };
+      bgClass = ds.bg;
+      colorClass = ds.color;
+    } else if (nextStepHighlighted) {
+      const nsStyles = {
+        rose: { bg: "bg-rose-50 border-2 border-rose-300 shadow-sm", color: "text-rose-600" },
+        green: { bg: "bg-emerald-50 border-2 border-emerald-300 shadow-sm", color: "text-emerald-600" },
+      };
+      const ns = nsStyles[themeColor] || { bg: "bg-slate-100 border-2 border-slate-300", color: "text-slate-500" };
+      bgClass = ns.bg;
+      colorClass = ns.color;
+    } else if (untested) {
       bgClass = "bg-slate-50 border-2 border-slate-300 shadow-sm";
       colorClass = "text-slate-500";
     } else if (active || done) {
@@ -647,7 +726,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                 return (
                     <div 
                       key={index} 
-                      className={`w-full h-22 ${getCardStyle(1, encoder.theme, index, encoder.tested)} relative`}
+                      className={`w-full h-22 ${getCardStyle(1, encoder.theme, index, encoder.tested, encoder.nextStep && highlightNextSteps)} relative`}
                     >
                     <div className="w-full h-full p-3 pl-4 flex items-center gap-3">
                         <IconBox 
@@ -656,11 +735,12 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                           pending={isPending}
                           themeColor={encoder.theme} 
                           untested={!encoder.tested}
+                          nextStepHighlighted={encoder.nextStep && highlightNextSteps}
                         >
                         <IconComponent size={18} strokeWidth={2.5} />
                         </IconBox>
                         <div className="flex-1 min-w-0 flex flex-col justify-center">
-                        <div className={`text-[13px] font-bold tracking-tight leading-tight break-words ${!encoder.tested ? 'text-slate-600' : isPending ? 'text-slate-700' : ''}`}>
+                        <div className={`text-[13px] font-bold tracking-tight leading-tight break-words ${(encoder.nextStep && highlightNextSteps) ? 'text-slate-800' : !encoder.tested ? 'text-slate-600' : isPending ? 'text-slate-700' : ''}`}>
                           {encoder.name}
                         </div>
                         </div>
@@ -730,7 +810,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                 return (
                     <div 
                       key={index} 
-                      className={`w-full h-22 ${getCardStyle(3, task.theme, index, task.tested)} relative`}
+                      className={`w-full h-22 ${getCardStyle(3, task.theme, index, task.tested, false, highlightDownstream)} relative`}
                     >
                     <div className="w-full h-full p-3 pl-4 flex items-center gap-3">
                         <div className="flex-shrink-0">
@@ -740,15 +820,16 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
                           pending={isPending}
                           themeColor={task.theme} 
                           untested={!task.tested}
+                          downstreamHighlighted={highlightDownstream}
                         >
                             <IconComponent size={18} strokeWidth={2.5} />
                         </IconBox>
                         </div>
                         <div className="flex-1 min-w-0 flex flex-col justify-center">
-                        <div className={`text-[13px] font-bold tracking-tight leading-tight mb-0.5 ${!task.tested ? 'text-slate-600' : isPending ? 'text-slate-700' : ''}`}>
+                        <div className={`text-[13px] font-bold tracking-tight leading-tight mb-0.5 ${highlightDownstream ? 'text-slate-800' : !task.tested ? 'text-slate-600' : isPending ? 'text-slate-700' : ''}`}>
                           {task.name}
                         </div>
-                        <div className={`text-[11px] font-medium leading-tight truncate ${!task.tested ? 'text-slate-500' : isPending ? 'text-slate-600' : getSubtitleColor(task.theme, isFocused, isDone)}`}>
+                        <div className={`text-[11px] font-medium leading-tight truncate ${highlightDownstream ? 'text-slate-500' : !task.tested ? 'text-slate-500' : isPending ? 'text-slate-600' : getSubtitleColor(task.theme, isFocused, isDone)}`}>
                             {task.subtitle}
                         </div>
                         </div>
@@ -769,7 +850,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent"></div>
           
           <p 
-            key={activeStage}
+            key={`${activeStage}-${highlightNextSteps}-${highlightDownstream}`}
             className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in"
           >
             {getCurrentDescription()}
