@@ -283,7 +283,7 @@ const ComponentsSlide = () => {
 
   return (
     <div
-      className="min-h-slide bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-slide-x py-slide-y relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}
     >
       <style>{`
@@ -335,7 +335,7 @@ const ComponentsSlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl flex flex-col gap-6 items-center">
+      <div className="relative z-10 w-full max-w-slide flex flex-col gap-6 items-center">
         {t.items.map((item, index) => {
           const itemDelay = baseDelay + index * stepDelay;
 
@@ -364,7 +364,7 @@ const ComponentsSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent"></div>
           <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide">

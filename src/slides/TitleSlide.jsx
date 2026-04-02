@@ -22,7 +22,7 @@ const TitleSlide = () => {
   const t = content[language];
 
   return (
-    <div className="min-h-slide bg-white flex items-center justify-start px-20 py-20 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}>
+    <div className="min-h-slide bg-white flex items-center justify-start px-slide-x py-slide-y relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -152,7 +152,7 @@ const TitleSlide = () => {
       </div>
 
       {/* 主内容 */}
-      <div className="max-w-6xl w-full relative z-10">
+      <div className="max-w-slide w-full relative z-10">
         
         {/* 主标题  */}
         <h1 className="text-[130px] font-black leading-[1.25] tracking-[-0.01em] mb-16 title-with-stroke relative break-words" style={{ fontSize: 'clamp(48px, 10vw, 130px)' }}>

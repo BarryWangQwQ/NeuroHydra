@@ -6,11 +6,28 @@
 :root {
   --app-vh: 100dvh;
   --app-vw: 100dvw;
+  /* Mirrors tailwind max-w-slide* — usable in raw CSS / inline if needed */
+  --content-max: min(92vw, 1440px);
+  --content-max-lg: min(94vw, 1600px);
+  --inset-x: clamp(1rem, 4.2vw, 3rem);
+  --inset-y: clamp(0.75rem, 3vh, 2.5rem);
 }
 
 html {
-  /* Scale with both width and height so ultrawide / short windows stay balanced */
-  font-size: clamp(12px, min(0.52vw + 0.42vh, 0.95rem), 18px);
+  /* Slightly larger type on big screens; still fluid, no zoom/transform */
+  font-size: clamp(13px, min(0.54vw + 0.44vh, 1.02rem), 19px);
+}
+
+@layer components {
+  /* Optional shell: center fluid width + horizontal inset (use with min-h-slide pages) */
+  .slide-container {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--inset-x);
+    padding-right: var(--inset-x);
+  }
 }
 
 html,

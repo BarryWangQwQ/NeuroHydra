@@ -126,7 +126,7 @@ const QASlide = () => {
 
   return (
     <div
-      className="min-h-slide bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-slide-x py-slide-y relative overflow-hidden"
       style={{
         fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
         maxWidth: '100vw',
@@ -162,8 +162,8 @@ const QASlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl">
-        <div className="grid grid-cols-2 gap-16">
+      <div className="relative z-10 w-full max-w-slide">
+        <div className="grid grid-cols-2 gap-section-lg">
 
           {/* Left column — NeuroHydra Team */}
           <div className="reveal-line" style={{ animationDelay: '0.15s' }}>
@@ -175,7 +175,7 @@ const QASlide = () => {
                 {t.teamLabel}
               </span>
             </h2>
-            <ul className="space-y-6">
+            <ul className="space-y-4">
               {t.team.map((person, i) => (
                 <PersonCard key={i} person={person} delay={0.25 + i * 0.1} dotColor="bg-indigo-400" />
               ))}
@@ -192,7 +192,7 @@ const QASlide = () => {
                 {t.collabLabel}
               </span>
             </h2>
-            <ul className="space-y-6">
+            <ul className="space-y-4">
               {t.collaborators.map((person, i) => (
                 <PersonCard key={i} person={person} delay={0.35 + i * 0.1} dotColor="bg-purple-400" />
               ))}

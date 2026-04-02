@@ -171,7 +171,7 @@ const BenchmarkTableSlide = () => {
 
   return (
     <div
-      className="h-slide bg-white flex items-center justify-center px-12 py-8 relative overflow-hidden"
+      className="h-slide bg-white flex items-center justify-center px-slide-x py-slide-y relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`
@@ -213,14 +213,14 @@ const BenchmarkTableSlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl pb-16">
+      <div className="relative z-10 w-full max-w-slide-lg pb-10">
         <div className="mb-4">
           <h1 className="text-[48px] font-black leading-[1.1] tracking-[-0.02em]">
             <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient-shift">
               {t.title}
             </span>
           </h1>
-          <p className="mt-2 text-[14px] text-slate-500 leading-relaxed max-w-6xl">
+          <p className="mt-2 text-[14px] text-slate-500 leading-relaxed max-w-readable">
             {t.subtitle}
           </p>
         </div>
@@ -276,7 +276,7 @@ const BenchmarkTableSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent"></div>

@@ -12,7 +12,7 @@ const SpatialTranscriptomicsSlide = ({ autoPlay, manualTick }) => {
 
   return (
     <div
-      className="min-h-slide bg-white flex items-center justify-center px-16 py-12 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-slide-x py-slide-y relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`
@@ -55,7 +55,7 @@ const SpatialTranscriptomicsSlide = ({ autoPlay, manualTick }) => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl flex flex-col gap-8">
+      <div className="relative z-10 w-full max-w-slide-lg flex flex-col gap-section">
         {/* Title */}
         <div className="reveal-line" style={{ animationDelay: `${baseDelay}s` }}>
           <h1
@@ -191,7 +191,7 @@ const SpatialTranscriptomicsSlide = ({ autoPlay, manualTick }) => {
       </div>
 
       {/* Bottom narration bar */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
           <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">

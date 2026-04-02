@@ -17,7 +17,7 @@ const FullScreenImageSlide = ({ imagePath = '/images/slide-image.png' }) => {
 
   return (
     <div 
-      className="min-h-slide h-slide w-full bg-white flex items-center justify-center relative overflow-hidden"
+      className="min-h-slide h-slide w-full bg-white flex items-center justify-center relative overflow-hidden px-slide-x py-slide-y"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`

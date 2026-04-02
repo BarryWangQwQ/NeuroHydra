@@ -316,7 +316,7 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
   };
 
   return (
-    <div className="h-slide min-h-slide bg-white text-[#1C1E21] selection:bg-blue-100 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden relative flat-scrollbar px-12 py-8" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-slide min-h-slide bg-white text-[#1C1E21] selection:bg-blue-100 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden relative flat-scrollbar px-slide-x py-slide-y" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -414,8 +414,8 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
              }}></div>
       </div>
       
-      {/* Main block — vertically centered as one unit (like BenchmarkTableSlide), not stuck to top */}
-      <div className="relative z-10 w-full max-w-7xl flex flex-col shrink-0">
+      {/* Main block — padding-bottom reserves space for fixed narration (matches BenchmarkTableSlide) */}
+      <div className="relative z-10 w-full max-w-slide-lg flex flex-col shrink-0 pb-28">
           
           {/* Title — matches BenchmarkTableSlide heading treatment */}
           <div className="mb-2 w-full">
@@ -424,12 +424,12 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
                   {t.title}
                 </span>
               </h1>
-              <p className="mt-1.5 text-[14px] text-slate-500 leading-snug max-w-6xl">
+              <p className="mt-1.5 text-[14px] text-slate-500 leading-snug max-w-readable">
                 {t.scenario}
               </p>
           </div>
 
-          {/* Race rows — tight under title; whole column is centered in viewport */}
+          {/* Race rows */}
           <div className="pt-1">
               <LayoutGroup>
                 <div className="flex flex-col gap-3">
@@ -440,16 +440,16 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
               </LayoutGroup>
           </div>
 
-          {/* Description Bar */}
-          <div className="mt-3 w-full">
-            <div className="relative px-6 py-2.5 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
-              <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
-              <p className="text-base leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
-                {t.description}
-              </p>
-            </div>
-          </div>
+      </div>
 
+      {/* Bottom narration — same placement as other slides (e.g. BenchmarkTableSlide) */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
+        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
+          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
+          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
+            {t.description}
+          </p>
+        </div>
       </div>
     </div>
   );
