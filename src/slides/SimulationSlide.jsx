@@ -267,51 +267,47 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
           duration: 0.2,
           ease: "easeOut"
         }}
-        className="w-full flex flex-col gap-4"
+        className="w-full flex flex-col gap-1.5"
       > 
         <div className="flex justify-between items-center"> 
-          <div className="flex items-center gap-4 flex-1"> 
-                {/* 排名标识 */}
+          <div className="flex items-center gap-3 flex-1"> 
                 {showRank && (
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full font-black text-lg shadow-lg ${
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full font-black text-sm shadow-lg ${
                     rank === 1 ? 'bg-gradient-to-br from-yellow-400 to-amber-500 text-white' :
                     rank === 2 ? 'bg-gradient-to-br from-gray-300 to-slate-400 text-white' :
                     'bg-gradient-to-br from-amber-600 to-orange-700 text-white'
                   }`}>
-                    {rank === 1 ? <Trophy size={20} strokeWidth={2.5} /> :
-                     rank === 2 ? <Medal size={20} strokeWidth={2.5} /> :
-                     <Medal size={20} strokeWidth={2.5} />}
+                    {rank === 1 ? <Trophy size={16} strokeWidth={2.5} /> :
+                     rank === 2 ? <Medal size={16} strokeWidth={2.5} /> :
+                     <Medal size={16} strokeWidth={2.5} />}
                   </div>
                 )}
                 
-                <span className="font-bold text-2xl text-slate-800 tracking-tight">{config.shortName}</span>
+                <span className="font-bold text-lg text-slate-800 tracking-tight">{config.shortName}</span>
                 {config.badge && (
-                    <span className="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold uppercase tracking-wider shadow-sm">
+                    <span className="text-[10px] px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold uppercase tracking-wider shadow-sm">
                         {config.badge}
                     </span>
                 )}
           </div>
           
-          <div className="text-right flex items-center gap-6">
+          <div className="text-right flex items-center gap-4">
              {id !== 'transformer' && results && (
-                <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                <span className="text-base font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                     {speedup}x
                 </span>
              )}
-             <span className={`font-mono text-3xl font-bold tabular-nums min-w-[160px] text-right transition-all duration-300 ${isFinished ? 'text-slate-800' : 'text-slate-300'}`}> 
-               {time}<span className="text-xl text-slate-500 font-semibold ml-2">s</span>
+             <span className={`font-mono text-2xl font-bold tabular-nums min-w-[120px] text-right transition-all duration-300 ${isFinished ? 'text-slate-800' : 'text-slate-300'}`}> 
+               {time}<span className="text-base text-slate-500 font-semibold ml-1">s</span>
              </span>
           </div>
         </div>
         
-        {/* Progress Bar - Meta style with soft shadows */}
-        <div className="h-8 w-full bg-[#F0F2F5] rounded-full overflow-hidden relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)]"> 
-           {/* Progress Bar: Soft gradient */}
+        <div className="h-5 w-full bg-[#F0F2F5] rounded-full overflow-hidden relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)]"> 
            <div 
              className={`h-full transition-all duration-100 ease-out rounded-full ${config.gradient} relative overflow-hidden`}
              style={{ width: `${progress[id]}%` }}
            >
-             {/* Subtle shine overlay */}
              <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent" />
            </div>
         </div>
@@ -409,23 +405,23 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
       </div>
       
       {/* Main Container */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col h-screen justify-center px-12 py-6 pb-20 relative z-10">
+      <div className="w-full max-w-6xl mx-auto flex flex-col h-screen px-12 py-4 relative z-10">
           
           {/* Title Section */}
-          <div className="mb-6">
-              <h1 className="text-4xl font-black tracking-tight mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
+          <div className="mb-4 pt-3 flex-shrink-0">
+              <h1 className="text-3xl font-black tracking-tight mb-1 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
                 {t.title}
               </h1>
-              <p className="text-base text-slate-600 font-semibold">
+              <p className="text-sm text-slate-600 font-semibold">
                 {t.scenario}
               </p>
           </div>
 
           {/* Race Area */}
-          <div className="flex-1 flex flex-col justify-center max-h-[600px]">
+          <div className="flex-1 flex flex-col justify-center min-h-0">
               
               <LayoutGroup>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
                     {sortedModels.map((modelId) => (
                       <ModelRow key={modelId} id={modelId} />
                     ))}
@@ -433,18 +429,16 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
               </LayoutGroup>
           </div>
 
-      </div>
+          {/* Description Bar - in flow below race table */}
+          <div className="mt-3 mb-3 w-[90%] max-w-5xl mx-auto flex-shrink-0">
+            <div className="relative px-6 py-2.5 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
+              <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
+              <p className="text-base leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
+                {t.description}
+              </p>
+            </div>
+          </div>
 
-      {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
-        <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
-          {/* 装饰光效 */}
-          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
-          
-          <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
-            {t.description}
-          </p>
-        </div>
       </div>
     </div>
   );

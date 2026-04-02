@@ -10,6 +10,15 @@ const QASlide = () => {
       collabLabel: 'Collaborators',
       team: [
         {
+          name: 'Bo Wang',
+          lines: [
+            'M.S. in Computer Science, Boston University',
+            'Technical Advisor, Beijing Kangren Medical Device Co., Ltd.',
+            'Founder, Beijing Möbius Future Technology Co., Ltd.',
+            'Founder, OwO.AI',
+          ],
+        },
+        {
           name: 'Tim Pagliaro',
           lines: ['Imaging Scientist', 'Formerly: Novartis & Novo Nordisk'],
         },
@@ -21,10 +30,6 @@ const QASlide = () => {
             'Finance Liaison to Medical Affairs (Biotech/Pharma)',
           ],
         },
-        {
-          name: 'Bo Wang',
-          lines: ['Barry@owo.ai'],
-        },
       ],
       collaborators: [
         {
@@ -35,16 +40,16 @@ const QASlide = () => {
           ],
         },
         {
-          name: 'Liu Meng',
-          lines: [],
-        },
-        {
-          name: 'Felix Nwajei',
+          name: 'Felix Nwajei, MD/PhD',
           lines: [
             'Residency: Duke University School of Medicine (Neurology)',
             'MD: University of Lagos College of Medicine',
             'PhD: University of Lagos College of Medicine',
           ],
+        },
+        {
+          name: 'Liu Meng',
+          lines: ['M.S. in Computer Science, Osaka Institute of Technology'],
         },
       ],
     },
@@ -53,6 +58,15 @@ const QASlide = () => {
       collabLabel: 'Collaborators',
       team: [
         {
+          name: 'Bo Wang',
+          lines: [
+            'M.S. in Computer Science, Boston University',
+            'Technical Advisor, Beijing Kangren Medical Device Co., Ltd.',
+            'Founder, Beijing Möbius Future Technology Co., Ltd.',
+            'Founder, OwO.AI',
+          ],
+        },
+        {
           name: 'Tim Pagliaro',
           lines: ['Imaging Scientist', 'Formerly: Novartis & Novo Nordisk'],
         },
@@ -64,10 +78,6 @@ const QASlide = () => {
             'Finance Liaison to Medical Affairs (Biotech/Pharma)',
           ],
         },
-        {
-          name: 'Bo Wang',
-          lines: ['Barry@owo.ai'],
-        },
       ],
       collaborators: [
         {
@@ -78,16 +88,16 @@ const QASlide = () => {
           ],
         },
         {
-          name: 'Liu Meng',
-          lines: [],
-        },
-        {
-          name: 'Felix Nwajei',
+          name: 'Felix Nwajei, MD/PhD',
           lines: [
             'Residency: Duke University School of Medicine (Neurology)',
             'MD: University of Lagos College of Medicine',
             'PhD: University of Lagos College of Medicine',
           ],
+        },
+        {
+          name: 'Liu Meng',
+          lines: ['M.S. in Computer Science, Osaka Institute of Technology'],
         },
       ],
     },
@@ -153,18 +163,14 @@ const QASlide = () => {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl">
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-2 gap-16">
 
           {/* Left column — NeuroHydra Team */}
-          <div
-            className="relative px-10 py-8 rounded-3xl bg-gradient-to-br from-indigo-50/80 to-blue-50/60 border border-indigo-100 shadow-sm reveal-line"
-            style={{ animationDelay: '0.15s' }}
-          >
-            <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-indigo-300 to-transparent" />
-            <h3 className="text-[24px] font-extrabold mb-6 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
+          <div className="reveal-line" style={{ animationDelay: '0.15s' }}>
+            <h3 className="text-[24px] font-extrabold mb-8 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
               {t.teamLabel}
             </h3>
-            <ul className="space-y-5">
+            <ul className="space-y-6">
               {t.team.map((person, i) => (
                 <PersonCard key={i} person={person} delay={0.25 + i * 0.1} dotColor="bg-indigo-400" />
               ))}
@@ -172,15 +178,11 @@ const QASlide = () => {
           </div>
 
           {/* Right column — Collaborators */}
-          <div
-            className="relative px-10 py-8 rounded-3xl bg-gradient-to-br from-purple-50/80 to-pink-50/60 border border-purple-100 shadow-sm reveal-line"
-            style={{ animationDelay: '0.25s' }}
-          >
-            <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent" />
-            <h3 className="text-[24px] font-extrabold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
+          <div className="reveal-line" style={{ animationDelay: '0.25s' }}>
+            <h3 className="text-[24px] font-extrabold mb-8 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
               {t.collabLabel}
             </h3>
-            <ul className="space-y-5">
+            <ul className="space-y-6">
               {t.collaborators.map((person, i) => (
                 <PersonCard key={i} person={person} delay={0.35 + i * 0.1} dotColor="bg-purple-400" />
               ))}
