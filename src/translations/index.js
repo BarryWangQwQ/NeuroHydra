@@ -169,7 +169,7 @@ export const translations = {
       coAxialMerge: '压缩 Token',
       outputCompact: '✓ 紧凑表示',
       keyInsight: '核心思想',
-      insightDetail: '接下来看看 AS-VSF 是怎么工作的。MRI 是 3D 数据，但 DINOv3 只能处理 2D 图像。所以我们把 3D 切成三个方向的切片，加上位置编码保留空间信息。然后用 Fusion 融合 MRI 和病人信息。最后用可学习的 Merge 模块压缩 token 数量，大大降低计算量。',
+      insightDetail: 'AS-VSF 将 3D MRI 沿三轴切片并添加位置编码，融合影像与临床数据后，通过可学习的 Merge 压缩 token，大幅降低计算量。',
     },
     spatialTranscriptomicsSlide: {
       title: '框架的自然延伸：空间转录组学',
@@ -402,7 +402,7 @@ export const translations = {
       coAxialMerge: 'Compress Tokens',
       outputCompact: '✓ Compact Output',
       keyInsight: 'Key Idea',
-      insightDetail: 'Now let me show you how AS-VSF works. MRI is 3D, but DINOv3 only works on 2D images. So we slice 3D into three directions, and add position encoding to keep spatial info. Then Fusion combines MRI with patient data. Finally, a learnable Merge module compresses the token count, greatly reducing computation.',
+      insightDetail: 'AS-VSF slices 3D MRI along three axes with position encoding, fuses imaging and clinical data, then compresses tokens via learnable Merge to cut computation.',
     },
     spatialTranscriptomicsSlide: {
       title: 'A Natural Extension of the Framework: Spatial Transcriptomics',

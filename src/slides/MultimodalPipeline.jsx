@@ -44,6 +44,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const [showLabels, setShowLabels] = useState(false);
   const [highlightNextSteps, setHighlightNextSteps] = useState(false);
   const [highlightDownstream, setHighlightDownstream] = useState(false);
+  const [pipelineZoom, setPipelineZoom] = useState(1);
   const firstManual = useRef(true);
   const manualCenterStep = useRef(false);
   
@@ -211,6 +212,63 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
     }
   }, [highlightNextSteps, highlightDownstream, autoPlay]);
 
+  // Zoom out and center full butterfly when animation completes
+  useEffect(() => {
+    if (!(isAnimationComplete && showLabels)) {
+      setPipelineZoom(1);
+      return;
+    }
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const first = stageRefs.current[0];
+    const last = stageRefs.current[3];
+    if (!first || !last) return;
+
+    // Measure pipeline width at zoom=1 using offsetParent walk
+    let left = 0;
+    let el = first;
+    while (el && el !== container) { left += el.offsetLeft; el = el.offsetParent; }
+
+    let right = 0;
+    el = last;
+    while (el && el !== container) { right += el.offsetLeft; el = el.offsetParent; }
+    right += last.offsetWidth;
+
+    const pipelineWidth = right - left;
+    const containerWidth = container.clientWidth;
+    const margin = 100;
+    let targetZoom = 1;
+
+    if (pipelineWidth > containerWidth - margin) {
+      targetZoom = Math.max(0.5, (containerWidth - margin) / pipelineWidth);
+    }
+
+    setPipelineZoom(targetZoom);
+
+    // After zoom layout settles, re-center using getBoundingClientRect
+    // (robust against zoom coordinate-space issues)
+    const timer = setTimeout(() => {
+      const f = stageRefs.current[0];
+      const l = stageRefs.current[3];
+      if (!f || !l || !scrollContainerRef.current) return;
+
+      const cr = scrollContainerRef.current;
+      const containerRect = cr.getBoundingClientRect();
+      const firstRect = f.getBoundingClientRect();
+      const lastRect = l.getBoundingClientRect();
+
+      const firstLeft = firstRect.left - containerRect.left + cr.scrollLeft;
+      const lastRight = lastRect.right - containerRect.left + cr.scrollLeft;
+
+      const mid = (firstLeft + lastRight) / 2;
+      const cw = cr.clientWidth;
+      scrollToPosition(cr, mid - cw / 2, 1500, () => {});
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [isAnimationComplete, showLabels]);
+
   // 扫描动画控制：波浪式扫描
   useEffect(() => {
     let scanInterval;
@@ -271,6 +329,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
 
   useEffect(() => {
     if (!scrollContainerRef.current) return;
+    if (isAnimationComplete) return;
 
     const container = scrollContainerRef.current;
     const activeElement = stageRefs.current[activeStage];
@@ -289,12 +348,11 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       const elementWidth = activeElement.clientWidth;
       const targetScrollLeft = offsetLeft - (containerWidth / 2) + (elementWidth / 2);
 
-      // 优化：恢复到 1200ms 的平滑运镜速度
       scrollToPosition(container, targetScrollLeft, 1200, () => {
         setIsScrolling(false);
       });
     }
-  }, [activeStage]);
+  }, [activeStage, isAnimationComplete]);
 
   const isStageActive = (index) => activeStage === index;
   
@@ -539,7 +597,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
   const isMambaActive = isStageActive(2) || isAnimationComplete;
 
   return (
-    <div className="h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-slide bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col relative px-slide-x py-slide-y" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       {/* Legend - 固定在左下角，低调设计不抢主要内容 */}
       <div className="absolute bottom-6 left-6 z-50 bg-white/70 backdrop-blur-sm border border-slate-200 rounded-lg px-3 py-2 shadow-md">
@@ -669,7 +727,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
         className="flex-1 overflow-x-auto overflow-y-hidden scroll-smooth flex items-center relative z-10"
         style={{ scrollBehavior: 'auto' }}
       >
-        <div className="flex items-center min-w-max px-[50vw] py-8 space-x-0">
+        <div className="flex items-center min-w-max px-[50vw] py-8 space-x-0" style={pipelineZoom < 1 ? { zoom: pipelineZoom } : undefined}>
           
           {/* --- STAGE 1: INPUTS --- */}
           <div className="flex flex-col justify-center h-full">
@@ -844,7 +902,7 @@ const MultimodalPipeline = ({ autoPlay = true, manualTick = 0 }) => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent"></div>

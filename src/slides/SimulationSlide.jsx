@@ -267,51 +267,47 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
           duration: 0.2,
           ease: "easeOut"
         }}
-        className="w-full flex flex-col gap-4"
+        className="w-full flex flex-col gap-1.5"
       > 
         <div className="flex justify-between items-center"> 
-          <div className="flex items-center gap-4 flex-1"> 
-                {/* 排名标识 */}
+          <div className="flex items-center gap-3 flex-1"> 
                 {showRank && (
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full font-black text-lg shadow-lg ${
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full font-black text-sm shadow-lg ${
                     rank === 1 ? 'bg-gradient-to-br from-yellow-400 to-amber-500 text-white' :
                     rank === 2 ? 'bg-gradient-to-br from-gray-300 to-slate-400 text-white' :
                     'bg-gradient-to-br from-amber-600 to-orange-700 text-white'
                   }`}>
-                    {rank === 1 ? <Trophy size={20} strokeWidth={2.5} /> :
-                     rank === 2 ? <Medal size={20} strokeWidth={2.5} /> :
-                     <Medal size={20} strokeWidth={2.5} />}
+                    {rank === 1 ? <Trophy size={16} strokeWidth={2.5} /> :
+                     rank === 2 ? <Medal size={16} strokeWidth={2.5} /> :
+                     <Medal size={16} strokeWidth={2.5} />}
                   </div>
                 )}
                 
-                <span className="font-bold text-2xl text-slate-800 tracking-tight">{config.shortName}</span>
+                <span className="font-bold text-lg text-slate-800 tracking-tight">{config.shortName}</span>
                 {config.badge && (
-                    <span className="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold uppercase tracking-wider shadow-sm">
+                    <span className="text-[10px] px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold uppercase tracking-wider shadow-sm">
                         {config.badge}
                     </span>
                 )}
           </div>
           
-          <div className="text-right flex items-center gap-6">
+          <div className="text-right flex items-center gap-4">
              {id !== 'transformer' && results && (
-                <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                <span className="text-base font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                     {speedup}x
                 </span>
              )}
-             <span className={`font-mono text-3xl font-bold tabular-nums min-w-[160px] text-right transition-all duration-300 ${isFinished ? 'text-slate-800' : 'text-slate-300'}`}> 
-               {time}<span className="text-xl text-slate-500 font-semibold ml-2">s</span>
+             <span className={`font-mono text-2xl font-bold tabular-nums min-w-[120px] text-right transition-all duration-300 ${isFinished ? 'text-slate-800' : 'text-slate-300'}`}> 
+               {time}<span className="text-base text-slate-500 font-semibold ml-1">s</span>
              </span>
           </div>
         </div>
         
-        {/* Progress Bar - Meta style with soft shadows */}
-        <div className="h-8 w-full bg-[#F0F2F5] rounded-full overflow-hidden relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)]"> 
-           {/* Progress Bar: Soft gradient */}
+        <div className="h-5 w-full bg-[#F0F2F5] rounded-full overflow-hidden relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)]"> 
            <div 
              className={`h-full transition-all duration-100 ease-out rounded-full ${config.gradient} relative overflow-hidden`}
              style={{ width: `${progress[id]}%` }}
            >
-             {/* Subtle shine overlay */}
              <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent" />
            </div>
         </div>
@@ -320,7 +316,7 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
   };
 
   return (
-    <div className="h-screen bg-white text-[#1C1E21] selection:bg-blue-100 flex flex-col overflow-y-auto overflow-x-hidden relative flat-scrollbar" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-slide min-h-slide bg-white text-[#1C1E21] selection:bg-blue-100 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden relative flat-scrollbar px-slide-x py-slide-y" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -371,6 +367,16 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
         .animate-fade-in {
           animation: fade-in 0.5s ease-out forwards;
         }
+
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-shift {
+          background-size: 200% auto;
+          animation: gradient-shift 8s ease infinite;
+        }
       `}</style>
 
       {/* Background Gradient Blurs - Natural Colors */}
@@ -408,24 +414,25 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
              }}></div>
       </div>
       
-      {/* Main Container */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col h-screen justify-center px-12 py-6 pb-20 relative z-10">
+      {/* Main block — padding-bottom reserves space for fixed narration (matches BenchmarkTableSlide) */}
+      <div className="relative z-10 w-full max-w-slide-lg flex flex-col shrink-0 pb-28">
           
-          {/* Title Section */}
-          <div className="mb-6">
-              <h1 className="text-4xl font-black tracking-tight mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-rose-600 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.3' }}>
-                {t.title}
+          {/* Title — matches BenchmarkTableSlide heading treatment */}
+          <div className="mb-2 w-full">
+              <h1 className="text-[48px] font-black leading-[1.1] tracking-[-0.02em]">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient-shift">
+                  {t.title}
+                </span>
               </h1>
-              <p className="text-base text-slate-600 font-semibold">
+              <p className="mt-1.5 text-[14px] text-slate-500 leading-snug max-w-readable">
                 {t.scenario}
               </p>
           </div>
 
-          {/* Race Area */}
-          <div className="flex-1 flex flex-col justify-center max-h-[600px]">
-              
+          {/* Race rows */}
+          <div className="pt-1">
               <LayoutGroup>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
                     {sortedModels.map((modelId) => (
                       <ModelRow key={modelId} id={modelId} />
                     ))}
@@ -435,12 +442,10 @@ const SimulationDemo = ({ autoPlay = false, manualTick = 0 }) => {
 
       </div>
 
-      {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      {/* Bottom narration — same placement as other slides (e.g. BenchmarkTableSlide) */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
-          {/* 装饰光效 */}
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
-          
           <p className="text-lg leading-snug text-white/95 font-medium text-center tracking-wide animate-fade-in">
             {t.description}
           </p>

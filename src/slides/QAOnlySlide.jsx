@@ -6,7 +6,7 @@ const QAOnlySlide = () => {
 
   return (
     <div
-      className="min-h-screen bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
+      className="min-h-slide bg-white flex items-center justify-center px-slide-x py-slide-y relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", maxWidth: '100vw', overflowX: 'hidden' }}
     >
       <style>{`
@@ -40,7 +40,7 @@ const QAOnlySlide = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center justify-center">
+      <div className="relative z-10 w-full max-w-slide flex flex-col items-center justify-center">
         <h1 className="text-[180px] font-black leading-[0.95] tracking-[-0.02em] text-center break-words" style={{ fontSize: 'clamp(80px, 18vw, 180px)' }}>
           <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient-shift">
             Q&A

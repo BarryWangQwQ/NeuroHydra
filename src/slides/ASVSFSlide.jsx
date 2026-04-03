@@ -8,7 +8,7 @@ const ASVSFSlide = () => {
 
   return (
     <div
-      className="h-screen bg-white flex flex-col justify-center px-6 py-4 relative overflow-hidden"
+      className="h-slide bg-white flex flex-col justify-center px-slide-x py-3 relative overflow-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`
@@ -816,7 +816,7 @@ const ASVSFSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-fuchsia-400/50 to-transparent"></div>

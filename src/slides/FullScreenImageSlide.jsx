@@ -17,15 +17,15 @@ const FullScreenImageSlide = ({ imagePath = '/images/slide-image.png' }) => {
 
   return (
     <div 
-      className="min-h-screen w-full bg-white flex items-center justify-center relative overflow-hidden"
+      className="min-h-slide h-slide w-full bg-white flex items-center justify-center relative overflow-hidden px-slide-x py-slide-y"
       style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         
         .fullscreen-image {
-          width: 100vw;
-          height: 100vh;
+          width: var(--app-vw, 100dvw);
+          height: var(--app-vh, 100dvh);
           object-fit: contain;
           object-position: center;
           display: block;

@@ -40,7 +40,7 @@ const QuadrantSlide = () => {
   };
 
   return (
-    <div className="h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col items-center justify-center p-6 relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
+    <div className="h-slide bg-white text-slate-800 font-sans selection:bg-blue-100 overflow-hidden flex flex-col items-center justify-center px-slide-x py-slide-y relative" style={{ fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -124,7 +124,7 @@ const QuadrantSlide = () => {
       </div>
 
       {/* 四象限图容器 - 调整高度给旁白留空间 */}
-      <div className="relative w-full max-w-6xl h-[520px] bg-white rounded-2xl shadow-lg border border-slate-200 z-10 mb-16">
+      <div className="relative w-full max-w-slide h-[520px] bg-white rounded-2xl shadow-lg border border-slate-200 z-10 mb-10">
         
         {/* Y轴标签（左侧） */}
         <div className="absolute left-4 top-12 bottom-14 flex flex-col justify-between items-center">
@@ -227,7 +227,7 @@ const QuadrantSlide = () => {
       </div>
 
       {/* Bottom Description Bar - 悬浮旁白区域 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-5xl">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-slide">
         <div className="relative px-8 py-3 rounded-xl bg-slate-800/75 backdrop-blur-2xl shadow-lg shadow-slate-900/20 border border-slate-700/50">
           {/* 装饰光效 */}
           <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-rose-400/50 to-transparent"></div>
