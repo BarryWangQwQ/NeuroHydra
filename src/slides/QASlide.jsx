@@ -30,6 +30,15 @@ const QASlide = () => {
             'Finance Liaison to Medical Affairs (Biotech/Pharma)',
           ],
         },
+        {
+          name: 'Bo Wang',
+          lines: [
+            'M.S. in Computer Science, Boston University',
+            'Technical Advisor, Beijing Kangren Medical Device Co., Ltd.',
+            'Founder, Beijing Möbius Future Technology Co., Ltd.',
+            'Founder, OwO.AI',
+          ],
+        },
       ],
       collaborators: [
         {
@@ -40,7 +49,13 @@ const QASlide = () => {
           ],
         },
         {
-          name: 'Felix Nwajei, MD/PhD',
+          name: 'Liu Meng',
+          lines: [
+            'M.S. in Computer Science, Osaka Institute of Technology',
+          ],
+        },
+        {
+          name: 'Felix Nwajei',
           lines: [
             'Residency: Duke University School of Medicine (Neurology)',
             'MD: University of Lagos College of Medicine',
@@ -78,6 +93,15 @@ const QASlide = () => {
             'Finance Liaison to Medical Affairs (Biotech/Pharma)',
           ],
         },
+        {
+          name: 'Bo Wang',
+          lines: [
+            'M.S. in Computer Science, Boston University',
+            'Technical Advisor, Beijing Kangren Medical Device Co., Ltd.',
+            'Founder, Beijing Möbius Future Technology Co., Ltd.',
+            'Founder, OwO.AI',
+          ],
+        },
       ],
       collaborators: [
         {
@@ -88,7 +112,13 @@ const QASlide = () => {
           ],
         },
         {
-          name: 'Felix Nwajei, MD/PhD',
+          name: 'Liu Meng',
+          lines: [
+            'M.S. in Computer Science, Osaka Institute of Technology',
+          ],
+        },
+        {
+          name: 'Felix Nwajei',
           lines: [
             'Residency: Duke University School of Medicine (Neurology)',
             'MD: University of Lagos College of Medicine',
@@ -126,7 +156,7 @@ const QASlide = () => {
 
   return (
     <div
-      className="min-h-slide bg-white flex items-center justify-center px-slide-x py-slide-y relative overflow-hidden"
+      className="h-full bg-white flex items-center justify-center px-20 py-20 relative overflow-hidden"
       style={{
         fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
         maxWidth: '100vw',
